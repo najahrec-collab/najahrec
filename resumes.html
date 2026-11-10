@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>تصفح السير الذاتية | مكتب النجاح للاستقدام</title>
+  <meta name="description" content="تصفح السير الذاتية للعمالة المنزلية المتاحة: عاملات منزليات، سائقين خاصين، مربيات أطفال." />
+  <meta name="theme-color" content="#0b2545" />
+  <link rel="icon" href="images/logo.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="resumes.css" />
+</head>
+<body>
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol>
+    <symbol id="i-shield-check" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-badge-check" viewBox="0 0 24 24"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-map-pin" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></symbol>
+    <symbol id="i-sparkles" viewBox="0 0 24 24"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/></symbol>
+    <symbol id="i-user-round" viewBox="0 0 24 24"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></symbol>
+    <symbol id="i-quote" viewBox="0 0 24 24"><path d="M16 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/><path d="M5 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/></symbol>
+    <symbol id="i-chevron-up" viewBox="0 0 24 24"><path d="m18 15-6-6-6 6"/></symbol>
+    <symbol id="i-message" viewBox="0 0 24 24"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></symbol>
+    <symbol id="i-ghost" viewBox="0 0 24 24"><path d="M9 10h.01"/><path d="M15 10h.01"/><path d="M12 2a8 8 0 0 0-8 8v12l3-3 2.5 2.5L12 19l2.5 2.5L17 19l3 3V10a8 8 0 0 0-8-8z"/></symbol>
+    <symbol id="i-instagram" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></symbol>
+    <symbol id="i-youtube" viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></symbol>
+    <symbol id="i-tiktok" viewBox="0 0 24 24"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></symbol>
+    <symbol id="i-x-brand" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></symbol>
+  </svg>
+  <!-- ===== الهيدر وشريط الملاحة ===== -->
+  <header class="site-header">
+    <div class="topbar">
+      <div class="container topbar-inner">
+        <div class="topbar-info">
+          <span class="topbar-item">
+            <svg class="icon-sm"><use href="#i-phone"/></svg>
+            <a href="tel:0555021298" dir="ltr">055 502 1298</a>
+          </span>
+          <span class="topbar-item">
+            <svg class="icon-sm"><use href="#i-mail"/></svg>
+            <a href="mailto:najah.rec@gmail.com">najah.rec@gmail.com</a>
+          </span>
+          <span class="topbar-item">
+            <svg class="icon-sm"><use href="#i-clock"/></svg>
+            الأحد — الخميس، 9 صباحًا حتى 9 مساءً
+          </span>
+        </div>
+        <span class="topbar-license">
+          <svg class="icon-xs"><use href="#i-shield-check"/></svg>
+          مكتب مرخّص ومعتمد من وزارة الموارد البشرية والتنمية الاجتماعية
+        </span>
+      </div>
+    </div>
+
+    <div class="mainnav" id="mainnav">
+      <div class="container nav-inner">
+        <a href="index.html" class="brand" aria-label="مكتب النجاح للاستقدام">
+          <span class="brand-logo"><img src="images/logo.jpg" alt="شعار مكتب النجاح للاستقدام" width="44" height="44" /></span>
+          <span class="brand-name">
+            <span class="brand-title">مكتب النجاح</span><br />
+            <span class="brand-sub">للاستقدام</span>
+          </span>
+        </a>
+
+        <nav class="nav-links">
+
+          <a href="index.html" class="">الرئيسية</a>
+          <a href="about.html" class="">نبذة عنا</a>
+          <a href="services.html" class="">خدماتنا</a>
+          <a href="nationalities.html" class="">الجنسيات</a>
+          <a href="resumes.html" class="active">السير الذاتية</a>
+          <a href="steps.html" class="">خطوات الاستقدام</a>
+          <a href="faq.html" class="">الأسئلة الشائعة</a>
+          <a href="offers.html" class="">العروض</a>
+          <a href="contact.html" class="">تواصل معنا</a>
+
+        </nav>
+
+        <div class="nav-actions">
+          <a href="https://wa.me/966555021298?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8a%D9%83%D9%85%D8%8C%20%D8%A3%D8%B1%D8%BA%D8%A8%20%D8%A8%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D8%AE%D8%AF%D9%85%D8%A7%D8%AA%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%82%D8%AF%D8%A7%D9%85." target="_blank" rel="noopener noreferrer" class="btn-gold btn-gold-sm header-cta">اطلب استقدامك الآن</a>
+          <button type="button" class="menu-btn" id="menuOpen" aria-label="فتح القائمة">
+            <svg><use href="#i-menu"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- قائمة الجوال -->
+    <div class="mobile-menu" id="mobileMenu">
+      <div class="mm-backdrop" id="menuClose"></div>
+      <div class="mm-panel">
+        <div class="mm-head">
+          <span class="brand">
+            <span class="brand-logo"><img src="images/logo.jpg" alt="شعار مكتب النجاح للاستقدام" width="44" height="44" /></span>
+            <span class="brand-name">
+              <span class="brand-title">مكتب النجاح</span><br />
+              <span class="brand-sub">للاستقدام</span>
+            </span>
+          </span>
+          <button type="button" class="menu-btn" id="menuCloseBtn" aria-label="إغلاق القائمة">
+            <svg><use href="#i-x"/></svg>
+          </button>
+        </div>
+        <nav class="mm-nav">
+
+          <a href="index.html" class="">الرئيسية</a>
+          <a href="about.html" class="">نبذة عنا</a>
+          <a href="services.html" class="">خدماتنا</a>
+          <a href="nationalities.html" class="">الجنسيات</a>
+          <a href="resumes.html" class="active">السير الذاتية</a>
+          <a href="steps.html" class="">خطوات الاستقدام</a>
+          <a href="faq.html" class="">الأسئلة الشائعة</a>
+          <a href="offers.html" class="">العروض</a>
+          <a href="contact.html" class="">تواصل معنا</a>
+
+        </nav>
+        <div class="mm-foot">
+          <a href="https://wa.me/966555021298?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8a%D9%83%D9%85%D8%8C%20%D8%A3%D8%B1%D8%BA%D8%A8%20%D8%A8%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D8%AE%D8%AF%D9%85%D8%A7%D8%AA%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%82%D8%AF%D8%A7%D9%85." target="_blank" rel="noopener noreferrer" class="btn-gold">اطلب استقدامك الآن</a>
+          <p class="mm-trust">
+            <svg class="icon-xs"><use href="#i-shield-check"/></svg>
+            مكتب معتمد ومرخص
+          </p>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <section class="hero subpage-bg" style="padding: 60px 0 80px;">
+      <div class="hero-deco">
+        <div class="hero-blob-1"></div>
+        <div class="hero-blob-2"></div>
+      </div>
+      <div class="container hero-inner">
+        <h1 class="hero-title" style="font-size: 2.5rem; margin-bottom: 10px;">السير الذاتية</h1>
+        <p class="hero-sub" style="font-size: 1.1rem; margin-bottom: 0;">اختر من بين الكفاءات المنزلية المتاحة للاستقدام الفوري وحجز طلبك الآن.</p>
+      </div>
+    </section>
+
+    <section class="section bg-white">
+      <div class="container">
+        <!-- شريط البحث والتصفية الزجاجي -->
+        <div class="filter-bar">
+          <div class="filter-group">
+            <label class="filter-label" for="searchInput">البحث بالاسم والمهارات</label>
+            <input type="text" id="searchInput" class="form-input" placeholder="اكتب اسم أو مهارة أو ديانة..." />
+          </div>
+          <div class="filter-group">
+            <label class="filter-label" for="nationalityFilter">الجنسية</label>
+            <select id="nationalityFilter" class="form-select">
+              <option value="">كل الجنسيات</option>
+              <option value="ethiopia">إثيوبيا</option>
+              <option value="kenya">كينيا</option>
+              <option value="uganda">أوغندا</option>
+              <option value="philippines">الفلبين</option>
+              <option value="tanzania">تنزانيا</option>
+              <option value="bangladesh">بنجلاديش</option>
+              <option value="srilanka">سريلانكا</option>
+              <option value="india">الهند</option>
+              <option value="sudan">السودان</option>
+              <option value="burundi">بوروندي</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label class="filter-label" for="jobFilter">المهنة</label>
+            <select id="jobFilter" class="form-select">
+              <option value="">كل المهن</option>
+              <option value="maid">عاملة منزلية</option>
+              <option value="houseboy">عامل منزلي</option>
+              <option value="driver">سائق خاص</option>
+              <option value="chef">طباخ/ة منزلي</option>
+              <option value="nurse">ممرض/ة منزلي</option>
+              <option value="babysitter">مربية أطفال</option>
+              <option value="elderly">رعاية كبار السن</option>
+              <option value="guard">حارس منزلي</option>
+              <option value="gardener">مزارع/بستاني</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label class="filter-label" for="experienceFilter">الخبرة</label>
+            <select id="experienceFilter" class="form-select">
+              <option value="">كل مستويات الخبرة</option>
+              <option value="fresh">حديثة تخرج</option>
+              <option value="1-5">من 1 إلى 5 سنوات</option>
+              <option value="5+">أكثر من 5 سنوات</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label class="filter-label" for="sortSelector">ترتيب حسب</label>
+            <select id="sortSelector" class="form-select">
+              <option value="">الافتراضي</option>
+              <option value="age-asc">العمر: من الأصغر للأكبر</option>
+              <option value="age-desc">العمر: من الأكبر للأصغر</option>
+              <option value="exp-desc">الخبرة: الأكثر خبرة</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- شبكة السير الذاتية -->
+        <div class="cv-grid" id="resumesGrid">
+          <!-- يتم ملء البيانات ديناميكياً عبر resumes.js -->
+        </div>
+      </div>
+    </section>
+  </main>
+  <!-- ===== التذييل ===== -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="brand">
+            <span class="brand-logo"><img src="images/logo.jpg" alt="شعار مكتب النجاح للاستقدام" width="44" height="44" /></span>
+            <span class="brand-name">
+              <span class="brand-title" style="color:#fff">مكتب النجاح</span><br />
+              <span class="brand-sub">للاستقدام</span>
+            </span>
+          </a>
+          <p>مكتب معتمد من وزارة الموارد البشرية والتنمية الاجتماعية لاستقدام العمالة المنزلية من أفضل الجنسيات، مع ضمان شامل ومتابعة على مدار الساعة من أول طلب حتى التسليم وما بعده.</p>
+          <span class="footer-license">
+            <svg class="icon-md"><use href="#i-badge-check"/></svg>
+            رخصة استقدام معتمدة برقم 3801328 من وزارة الموارد البشرية والتنمية الاجتماعية
+          </span>
+          <div class="footer-social">
+            <a href="https://instagram.com/najah.rec" target="_blank" rel="noopener noreferrer" aria-label="إنستغرام" class="social-btn"><svg><use href="#i-instagram"/></svg></a>
+            <a href="https://x.com/najah_rec" target="_blank" rel="noopener noreferrer" aria-label="إكس (تويتر)" class="social-btn"><svg><use href="#i-x-brand"/></svg></a>
+            <a href="https://www.tiktok.com/@alnajah.rec" target="_blank" rel="noopener noreferrer" aria-label="تيك توك" class="social-btn"><svg><use href="#i-tiktok"/></svg></a>
+            <a href="https://snapchat.com" target="_blank" rel="noopener noreferrer" aria-label="سناب شات" class="social-btn"><svg><use href="#i-ghost"/></svg></a>
+            <a href="https://www.youtube.com/@NAJAH_Rec" target="_blank" rel="noopener noreferrer" aria-label="يوتيوب" class="social-btn"><svg><use href="#i-youtube"/></svg></a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h3>روابط سريعة</h3>
+          <ul>
+            <li><a href="index.html">الرئيسية</a></li>
+            <li><a href="about.html">نبذة عنا</a></li>
+            <li><a href="services.html">خدماتنا</a></li>
+            <li><a href="nationalities.html">الجنسيات</a></li>
+            <li><a href="resumes.html">السير الذاتية</a></li>
+            <li><a href="steps.html">خطوات الاستقدام</a></li>
+            <li><a href="faq.html">الأسئلة الشائعة</a></li>
+            <li><a href="offers.html">العروض</a></li>
+            <li><a href="contact.html">تواصل معنا</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h3>خدماتنا</h3>
+          <ul>
+            <li><a href="services.html">استقدام عاملة منزلية</a></li>
+            <li><a href="services.html">استقدام عامل منزلي</a></li>
+            <li><a href="services.html">استقدام سائق خاص</a></li>
+            <li><a href="services.html">استقدام طباخ أو طباخة</a></li>
+            <li><a href="services.html">استقدام ممرض أو ممرضة</a></li>
+            <li><a href="services.html">استقدام مربية أطفال</a></li>
+            <li><a href="services.html">استقدام رعاية كبار السن</a></li>
+            <li><a href="services.html">استقدام حارس منزلي</a></li>
+            <li><a href="services.html">استقدام مزارع أو بستاني</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h3>تواصل معنا</h3>
+          <ul>
+            <li class="contact">
+              <svg class="icon-xs"><use href="#i-phone"/></svg>
+              <span>
+                <span class="sub">خدمة العملاء</span>
+                <a href="tel:0555021298" dir="ltr">0555021298</a>
+                <a href="tel:0552932521" dir="ltr">0552932521</a>
+              </span>
+            </li>
+            <li class="contact">
+              <svg class="icon-xs"><use href="#i-mail"/></svg>
+              <a href="mailto:najah.rec@gmail.com">najah.rec@gmail.com</a>
+            </li>
+            <li class="contact">
+              <svg class="icon-xs"><use href="#i-map-pin"/></svg>
+              <span>مكتب النجاح للاستقدام، شارع الطائف، ظهرة لبن، الرياض 13786</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2026 مكتب النجاح للاستقدام — جميع الحقوق محفوظة.</p>
+        <p class="footer-credit">تم التصميم بواسطة <b>ابتكار للحلول التقنية</b> | <a href="admin.html" class="admin-footer-link" style="color: var(--text-muted); text-decoration: none; font-weight: 700; margin-right: 8px; transition: var(--transition);">لوحة التحكم 🔒</a></p>
+      </div>
+    </div>
+  </footer>
+  <!-- زر العودة إلى الأعلى -->
+  <button type="button" id="backToTop" class="back-to-top" aria-label="العودة إلى الأعلى">
+    <svg><use href="#i-chevron-up"/></svg>
+  </button>
+  <!-- زر واتساب العائم -->
+  <a href="https://wa.me/966555021298?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8a%D9%83%D9%85%D8%8C%20%D8%A3%D8%B1%D8%BA%D8%A8%20%D8%A8%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D8%AE%D8%AF%D9%85%D8%A7%D8%AA%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%82%D8%AF%D8%A7%D9%85." target="_blank" rel="noopener noreferrer" aria-label="تواصل معنا عبر واتساب" class="whatsapp-float">
+    <svg><use href="#i-message"/></svg>
+    <span class="wf-text">تواصل معنا</span>
+  </a>
+  <!-- نافذة التنبيه والتحذير الأمني المنبثقة -->
+  <div id="warningModal" class="modal">
+    <div class="modal-backdrop" onclick="closeWarningModal()"></div>
+    <div class="modal-container">
+      <div class="modal-header" style="background-color: #dc2626;">
+        <h3 class="modal-header-title">🚨 تنبيه وتحذير هام ضد الاحتيال</h3>
+        <button type="button" class="modal-close" onclick="closeWarningModal()" aria-label="إغلاق">&times;</button>
+      </div>
+      <div class="modal-body" style="padding: 0;">
+        <img src="images/security_alert.jpg" alt="تحذير أمني" style="width: 100%; display: block;" />
+        <div style="padding: 24px; direction: rtl; text-align: right;">
+          <h4 style="color: #dc2626; font-weight: 800; font-size: 1.25rem; margin-top: 0; margin-bottom: 12px;">عملاءنا الكرام،</h4>
+          <p style="font-size: 0.95rem; line-height: 1.7; color: var(--text-dark); margin-bottom: 20px; font-weight: 600;">
+            حرصًا من مكتب النجاح للاستقدام على حماية عملائه والحفاظ على حقوقهم، نود التنويه إلى رصد جهات وأشخاص ينتحلون اسم المكتب عبر خرائط Google (Google Maps)، ويقومون بإضافة أرقام هواتف أو بيانات اتصال غير رسمية بهدف تضليل العملاء ومحاولة الاحتيال.
+          </p>
+          <h5 style="color: var(--primary-color); font-weight: 800; font-size: 1.05rem; margin-top: 0; margin-bottom: 12px;">⚠️ نرجو منكم الانتباه إلى ما يلي:</h5>
+          <ul style="list-style: none; padding: 0; margin: 0 0 20px 0; display: flex; flex-direction: column; gap: 10px; font-size: 0.9rem; font-weight: 600; line-height: 1.6;">
+            <li style="display: flex; gap: 8px;"><span style="color: var(--success-color);">✓</span> <span>يتم التواصل مع العملاء حصريًا عبر أرقامنا الرسمية المعتمدة.</span></li>
+            <li style="display: flex; gap: 8px;"><span style="color: var(--success-color);">✓</span> <span>جميع إجراءات الاستقدام، وإبرام العقود، وسداد الرسوم تتم فقط من خلال القنوات الرسمية للمكتب.</span></li>
+            <li style="display: flex; gap: 8px;"><span style="color: var(--success-color);">✓</span> <span>في حال تلقي أي اتصال أو رسالة من جهة تدّعي تمثيل مكتب النجاح للاستقدام، يرجى التحقق من صحة بياناتها قبل إجراء أي تحويل مالي أو مشاركة أي معلومات شخصية.</span></li>
+            <li style="display: flex; gap: 8px;"><span style="color: var(--success-color);">✓</span> <span>عند وجود أي استفسار أو شك، يرجى التواصل معنا مباشرة عبر أحد أرقامنا الرسمية.</span></li>
+          </ul>
+          <h5 style="color: var(--primary-color); font-weight: 800; font-size: 1.05rem; margin-top: 0; margin-bottom: 10px;">📱 أرقام التواصل الرسمية:</h5>
+          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; background-color: var(--bg-light); padding: 15px; border-radius: var(--radius-md); border: 1px solid var(--border-color); margin-bottom: 20px; font-weight: 700; text-align: center;">
+            <a href="tel:0555021298" dir="ltr" style="color: var(--primary-color); text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 4px;">055 502 1298 📞</a>
+            <a href="tel:0538632332" dir="ltr" style="color: var(--primary-color); text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 4px;">053 863 2332 📞</a>
+            <a href="tel:0538552332" dir="ltr" style="color: var(--primary-color); text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 4px;">053 855 2332 📞</a>
+            <a href="tel:0536802332" dir="ltr" style="color: var(--primary-color); text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 4px;">053 680 2332 📞</a>
+            <a href="tel:0552932521" dir="ltr" style="color: var(--primary-color); text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 4px; grid-column: span 2;">055 293 2521 📞</a>
+          </div>
+          <div style="background-color: rgba(220, 38, 38, 0.08); border-right: 4px solid #dc2626; padding: 12px 15px; border-radius: var(--radius-sm); font-size: 0.85rem; font-weight: 700; color: #b91c1c; margin-bottom: 5px; line-height: 1.6;">
+            ❗ تنبيه مهم: لا يتحمل مكتب النجاح للاستقدام أي مسؤولية عن أي تعامل أو تحويل مالي يتم خارج قنواته الرسمية أو عبر أرقام غير معتمدة.
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-gold" style="padding: 10px 40px; font-size: 0.95rem; font-weight: 700; border: none; cursor: pointer; border-radius: var(--radius-sm);" onclick="closeWarningModal()">فهمت وأوافق</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="resumes.js"></script>
+  <script>
+/* --- INLINED script.js --- */
+window.closeWarningModal = function() {
+  const modal = document.getElementById('warningModal');
+  if (modal) {
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+    sessionStorage.setItem('alnajah_warning_dismissed', 'true');
+  }
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+  const warningModal = document.getElementById('warningModal');
+  if (warningModal && !sessionStorage.getItem('alnajah_warning_dismissed')) {
+    setTimeout(() => {
+      warningModal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }, 1000);
+  }
+
+  const mainNav = document.getElementById('mainnav');
+  if (mainNav) {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        mainNav.classList.add('scrolled');
+      } else {
+        mainNav.classList.remove('scrolled');
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+  }
+
+  const menuOpenBtn = document.getElementById('menuOpen');
+  const menuCloseBtn = document.getElementById('menuCloseBtn');
+  const menuCloseBackdrop = document.getElementById('menuClose');
+  const mobileMenu = document.getElementById('mobileMenu');
+
+  if (menuOpenBtn && mobileMenu) {
+    const openMenu = () => {
+      mobileMenu.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    };
+
+    const closeMenu = () => {
+      mobileMenu.classList.remove('open');
+      document.body.style.overflow = '';
+    };
+
+    menuOpenBtn.addEventListener('click', openMenu);
+    if (menuCloseBtn) menuCloseBtn.addEventListener('click', closeMenu);
+    if (menuCloseBackdrop) menuCloseBackdrop.addEventListener('click', closeMenu);
+
+    const mobileLinks = mobileMenu.querySelectorAll('.mm-nav a');
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', closeMenu);
+    });
+  }
+
+  const faqItems = document.querySelectorAll('.faq-item');
+  faqItems.forEach(item => {
+    const questionButton = item.querySelector('.faq-q');
+    const answerContainer = item.querySelector('.faq-a');
+    if (questionButton && answerContainer) {
+      questionButton.addEventListener('click', () => {
+        const isActive = item.classList.contains('active');
+        faqItems.forEach(otherItem => {
+          if (otherItem !== item) {
+            otherItem.classList.remove('active');
+            const otherAnswer = otherItem.querySelector('.faq-a');
+            if (otherAnswer) otherAnswer.style.maxHeight = null;
+          }
+        });
+        if (isActive) {
+          item.classList.remove('active');
+          answerContainer.style.maxHeight = null;
+        } else {
+          item.classList.add('active');
+          answerContainer.style.maxHeight = answerContainer.scrollHeight + 'px';
+        }
+      });
+    }
+  });
+
+  const backToTopBtn = document.getElementById('backToTop');
+  if (backToTopBtn) {
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 400) {
+        backToTopBtn.classList.add('show');
+      } else {
+        backToTopBtn.classList.remove('show');
+      }
+    });
+
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+  }
+
+  // حاسبة تكلفة الاستقدام
+  const calcNat = document.getElementById('calc-nationality');
+  const calcJob = document.getElementById('calc-job');
+  const resBase = document.getElementById('res-base');
+  const resVat = document.getElementById('res-vat');
+  const resTotal = document.getElementById('res-total');
+  const resSalary = document.getElementById('res-salary');
+  const resTime = document.getElementById('res-time');
+  const calcWaBtn = document.getElementById('calc-whatsapp-btn');
+
+  if (calcNat && calcJob && resBase && resVat && resTotal && resSalary && resTime) {
+    const defaultPricingData = {
+      // الفلبين
+      "philippines_maid": { total: 14500, base: 12609, vat: 1891, salary: 1500, time: 89, label: "الفلبين" },
+      "philippines_nanny": { total: 14500, base: 12609, vat: 1891, salary: 1500, time: 89, label: "الفلبين" },
+      "philippines_cook": { total: 14500, base: 12609, vat: 1891, salary: 1500, time: 89, label: "الفلبين" },
+      "philippines_houseboy": { total: 12000, base: 10435, vat: 1565, salary: 1500, time: 89, label: "الفلبين" },
+      "philippines_driver": { total: 12000, base: 10435, vat: 1565, salary: 1500, time: 89, label: "الفلبين" },
+      "philippines_server": { total: 11119, base: 9669, vat: 1450, salary: 1500, time: 89, label: "الفلبين" },
+      
+      // بوروندي
+      "burundi_maid": { total: 4530, base: 3939, vat: 591, salary: 900, time: 85, label: "بوروندي" },
+      "burundi_nanny": { total: 4530, base: 3939, vat: 591, salary: 900, time: 85, label: "بوروندي" },
+      "burundi_cook": { total: 4530, base: 3939, vat: 591, salary: 900, time: 85, label: "بوروندي" },
+      
+      // إثيوبيا
+      "ethiopia_maid": { total: 3530, base: 3070, vat: 460, salary: 900, time: 89, label: "إثيوبيا" },
+      "ethiopia_nanny": { total: 3530, base: 3070, vat: 460, salary: 900, time: 89, label: "إثيوبيا" },
+      "ethiopia_cook": { total: 3530, base: 3070, vat: 460, salary: 900, time: 89, label: "إثيوبيا" },
+      "ethiopia_houseboy": { total: 4188, base: 3642, vat: 546, salary: 900, time: 85, label: "إثيوبيا" },
+      "ethiopia_driver": { total: 4344, base: 3777, vat: 567, salary: 900, time: 85, label: "إثيوبيا" },
+      "ethiopia_guard": { total: 3970, base: 3452, vat: 518, salary: 900, time: 85, label: "إثيوبيا" },
+      
+      // كينيا
+      "kenya_maid": { total: 4530, base: 3939, vat: 591, salary: 900, time: 89, label: "كينيا" },
+      "kenya_nanny": { total: 4530, base: 3939, vat: 591, salary: 900, time: 89, label: "كينيا" },
+      "kenya_cook": { total: 4530, base: 3939, vat: 591, salary: 900, time: 89, label: "كينيا" },
+      
+      // أوغندا
+      "uganda_maid": { total: 4990, base: 4339, vat: 651, salary: 900, time: 85, label: "أوغندا" },
+      "uganda_nanny": { total: 4990, base: 4339, vat: 651, salary: 900, time: 85, label: "أوغندا" },
+      "uganda_cook": { total: 4990, base: 4339, vat: 651, salary: 900, time: 85, label: "أوغندا" },
+      
+      // بنجلاديش
+      "bangladesh_maid": { total: 7070, base: 6148, vat: 922, salary: 1000, time: 89, label: "بنجلاديش" },
+      "bangladesh_nanny": { total: 7070, base: 6148, vat: 922, salary: 1000, time: 89, label: "بنجلاديش" },
+      "bangladesh_cook": { total: 7070, base: 6148, vat: 922, salary: 1000, time: 89, label: "بنجلاديش" },
+      "bangladesh_houseboy": { total: 3402, base: 2958, vat: 444, salary: 1000, time: 89, label: "بنجلاديش" },
+      "bangladesh_driver": { total: 3450, base: 3000, vat: 450, salary: 1000, time: 89, label: "بنجلاديش" },
+      
+      // سريلانكا
+      "srilanka_maid": { total: 8000, base: 6957, vat: 1043, salary: 1200, time: 89, label: "سريلانكا" },
+      "srilanka_nanny": { total: 8000, base: 6957, vat: 1043, salary: 1200, time: 89, label: "سريلانكا" },
+      "srilanka_cook": { total: 8000, base: 6957, vat: 1043, salary: 1200, time: 89, label: "سريلانكا" },
+      "srilanka_houseboy": { total: 4500, base: 3913, vat: 587, salary: 1200, time: 89, label: "سريلانكا" },
+      "srilanka_driver": { total: 3000, base: 2609, vat: 391, salary: 1200, time: 89, label: "سريلانكا" },
+      
+      // الهند
+      "india_maid": { total: 5665, base: 4926, vat: 739, salary: 1200, time: 55, label: "الهند" },
+      "india_nanny": { total: 5665, base: 4926, vat: 739, salary: 1200, time: 55, label: "الهند" },
+      "india_cook": { total: 5665, base: 4926, vat: 739, salary: 1200, time: 55, label: "الهند" },
+      "india_houseboy": { total: 4059, base: 3530, vat: 529, salary: 1200, time: 89, label: "الهند" },
+      "india_driver": { total: 4070, base: 3539, vat: 531, salary: 1500, time: 89, label: "الهند" },
+      
+      // السودان
+      "sudan_houseboy": { total: 4057, base: 3528, vat: 529, salary: 1500, time: 85, label: "السودان" },
+      "sudan_driver": { total: 3672, base: 3193, vat: 479, salary: 1500, time: 85, label: "السودان" },
+      "sudan_gardener": { total: 2228, base: 1937, vat: 291, salary: 1500, time: 85, label: "السودان" },
+      
+      // مصر
+      "egypt_houseboy": { total: 3940, base: 3426, vat: 514, salary: 1500, time: 89, label: "مصر" },
+      "egypt_driver": { total: 3115, base: 2709, vat: 406, salary: 1500, time: 89, label: "مصر" },
+      
+      // اليمن
+      "yemen_houseboy": { total: 3345, base: 2909, vat: 436, salary: 1500, time: 89, label: "اليمن" },
+      "yemen_driver": { total: 4069, base: 3538, vat: 531, salary: 1500, time: 89, label: "اليمن" },
+      
+      // باكستان
+      "pakistan_driver": { total: 2230, base: 1939, vat: 291, salary: 1500, time: 85, label: "باكستان" },
+      "pakistan_gardener": { total: 3615, base: 3143, vat: 472, salary: 1500, time: 89, label: "باكستان" }
+    };
+
+    let costData = {};
+    const localPricing = localStorage.getItem('alnajah_pricing_data');
+    if (localPricing) {
+      costData = JSON.parse(localPricing);
+    } else {
+      costData = defaultPricingData;
+      localStorage.setItem('alnajah_pricing_data', JSON.stringify(costData));
+    }
+
+    const jobLabels = {
+      maid: "عاملة منزلية",
+      houseboy: "عامل منزلي",
+      driver: "سائق خاص",
+      cook: "طباخ / طباخة",
+      nanny: "مربية أطفال",
+      gardener: "مزارع منزلي",
+      guard: "حارس منزلي",
+      server: "سفرجي منزلي"
+    };
+
+    const adjustJobOptions = (nat) => {
+      const options = Array.from(calcJob.options);
+      options.forEach(opt => {
+        const val = opt.value;
+        const key = `${nat}_${val}`;
+        if (costData[key]) {
+          opt.disabled = false;
+          opt.style.display = ""; // Show
+        } else {
+          opt.disabled = true;
+          opt.style.display = "none"; // Hide
+        }
+      });
+      
+      if (calcJob.selectedOptions.length > 0 && calcJob.selectedOptions[0].disabled) {
+        const firstEnabled = options.find(opt => !opt.disabled);
+        if (firstEnabled) {
+          calcJob.value = firstEnabled.value;
+        }
+      }
+    };
+
+    const updateCalc = (event) => {
+      const nat = calcNat.value;
+      
+      // If nationality changed, adjust the job options accordingly
+      if (event && event.target === calcNat) {
+        adjustJobOptions(nat);
+      }
+      
+      const job = calcJob.value;
+      const key = `${nat}_${job}`;
+      const data = costData[key];
+      
+      if (data) {
+        resBase.textContent = data.base.toLocaleString('en-US');
+        resVat.textContent = data.vat.toLocaleString('en-US');
+        resTotal.textContent = data.total.toLocaleString('en-US');
+        resSalary.textContent = data.salary.toLocaleString('en-US');
+        resTime.textContent = data.time;
+        
+        if (calcWaBtn) {
+          const natText = data.label;
+          const jobText = jobLabels[job] || job;
+          const waMsg = `مرحباً مكتب النجاح، قمت بحساب تكلفة الاستقدام عبر الحاسبة التفاعلية:\n- الجنسية: ${natText}\n- المهنة: ${jobText}\n- التكلفة التقريبية: ${data.total.toLocaleString('en-US')} ر.س (شامل الضريبة)\n- الراتب الشهري: ${data.salary.toLocaleString('en-US')} ر.س\nأرغب بالاستفسار والبدء في الإجراءات.`;
+          calcWaBtn.href = `https://wa.me/966555021298?text=${encodeURIComponent(waMsg)}`;
+          calcWaBtn.innerHTML = `اطلب هذه العمالة الآن 📲`;
+          calcWaBtn.style.opacity = "1";
+          calcWaBtn.style.pointerEvents = "auto";
+        }
+      } else {
+        resBase.textContent = "—";
+        resVat.textContent = "—";
+        resTotal.textContent = "غير متوفر حالياً";
+        resSalary.textContent = "—";
+        resTime.textContent = "—";
+        
+        if (calcWaBtn) {
+          const natText = calcNat.options[calcNat.selectedIndex].text;
+          const jobText = jobLabels[job] || job;
+          const waMsg = `مرحباً مكتب النجاح، أود الاستفسار عن إمكانية وتوفر خدمة استقدام مهنة (${jobText}) من جنسية (${natText}).`;
+          calcWaBtn.href = `https://wa.me/966555021298?text=${encodeURIComponent(waMsg)}`;
+          calcWaBtn.innerHTML = `استفسر عن توفر الخدمة عبر واتساب 💬`;
+        }
+      }
+    };
+
+    // Trigger initial adjustment on load
+    adjustJobOptions(calcNat.value);
+
+    calcNat.addEventListener('change', updateCalc);
+    calcJob.addEventListener('change', updateCalc);
+    updateCalc();
+  }
+
+  // متتبع حالة الطلب التفاعلي
+  const trackInput = document.getElementById('track-input');
+  const trackBtn = document.getElementById('track-btn');
+  const trackResult = document.getElementById('tracker-result');
+
+  if (trackInput && trackBtn && trackResult) {
+    const trackData = {
+      "2026-1584": {
+        name: "سارة م.",
+        nationality: "إثيوبيا — عاملة منزلية",
+        status: "تحت التنفيذ",
+        currentStage: 4,
+        stages: [
+          "المرحلة 1: تقديم الطلب وتوقيع العقد وقبول الشروط",
+          "المرحلة 2: سداد الرسوم وإرسال ملف المعاملة للخارج",
+          "المرحلة 3: إجراء الفحص الطبي المعتمد والتحقق من الخلفية",
+          "المرحلة 4: إصدار التأشيرة الرسمية وحجز تذكرة الطيران",
+          "المرحلة 5: إنهاء إجراءات السفارة وتفويض مساند الحكومي",
+          "المرحلة 6: المغادرة وحجز رحلة الطيران المباشرة للمملكة",
+          "المرحلة 7: الوصول لمطار الملك خالد بالرياض ومباشرة العمل"
+        ]
+      },
+      "2026-2001": {
+        name: "كومار س.",
+        nationality: "الهند — سائق خاص",
+        status: "مكتمل وتم التسليم",
+        currentStage: 7,
+        stages: [
+          "المرحلة 1: تقديم الطلب وتوقيع العقد وقبول الشروط",
+          "المرحلة 2: سداد الرسوم وإرسال ملف المعاملة للخارج",
+          "المرحلة 3: إجراء الفحص الطبي المعتمد والتحقق من الخلفية",
+          "المرحلة 4: إصدار التأشيرة الرسمية وحجز تذكرة الطيران",
+          "المرحلة 5: إنهاء إجراءات السفارة وتفويض مساند الحكومي",
+          "المرحلة 6: المغادرة وحجز رحلة الطيران المباشرة للمملكة",
+          "المرحلة 7: الوصول لمطار الملك خالد بالرياض ومباشرة العمل"
+        ]
+      },
+      "2026-1102": {
+        name: "جريس ب.",
+        nationality: "الفلبين — مربية أطفال",
+        status: "بانتظار الإجراءات الأولى",
+        currentStage: 1,
+        stages: [
+          "المرحلة 1: تقديم الطلب وتوقيع العقد وقبول الشروط",
+          "المرحلة 2: سداد الرسوم وإرسال ملف المعاملة للخارج",
+          "المرحلة 3: إجراء الفحص الطبي المعتمد والتحقق من الخلفية",
+          "المرحلة 4: إصدار التأشيرة الرسمية وحجز تذكرة الطيران",
+          "المرحلة 5: إنهاء إجراءات السفارة وتفويض مساند الحكومي",
+          "المرحلة 6: المغادرة وحجز رحلة الطيران المباشرة للمملكة",
+          "المرحلة 7: الوصول لمطار الملك خالد بالرياض ومباشرة العمل"
+        ]
+      }
+    };
+
+    trackBtn.addEventListener('click', () => {
+      const code = trackInput.value.trim();
+      if (!code) {
+        alert("يرجى إدخال رقم الطلب أولاً.");
+        return;
+      }
+
+      const data = trackData[code];
+      if (data) {
+        let stagesHtml = "";
+        data.stages.forEach((stage, idx) => {
+          const stageNum = idx + 1;
+          let statusClass = "waiting"; 
+          let icon = "⭕";
+          
+          if (stageNum < data.currentStage) {
+            statusClass = "completed";
+            icon = "✅";
+          } else if (stageNum === data.currentStage) {
+            statusClass = "active";
+            icon = "⏳";
+          }
+          
+          stagesHtml += `
+            <div class="tracker-stage ${statusClass}" style="display: flex; gap: 15px; margin-bottom: 20px; align-items: flex-start; position: relative; padding-bottom: 20px;">
+              <div class="tracker-icon" style="font-size: 1.3rem; z-index: 2;">${icon}</div>
+              <div class="tracker-text" style="flex: 1;">
+                <h4 style="font-weight: 700; color: ${statusClass === 'active' ? 'var(--gold-color)' : statusClass === 'completed' ? 'var(--primary-color)' : 'var(--text-muted)'}; margin-bottom: 4px; font-size: 1rem; text-align: right;">
+                  ${stage}
+                </h4>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0; text-align: right;">
+                  ${statusClass === 'completed' ? 'تم الانتهاء بنجاح' : statusClass === 'active' ? 'قيد المراجعة والإصدار حالياً' : 'بانتظار اكتمال المراحل السابقة'}
+                </p>
+              </div>
+            </div>
+          `;
+        });
+
+        trackResult.innerHTML = `
+          <div style="background: var(--bg-light); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 25px; margin-bottom: 30px; border-right: 4px solid var(--gold-color); text-align: right;">
+            <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 15px;">
+              <div>
+                <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 700;">رمز المعاملة المتابع:</span>
+                <h3 style="font-weight: 800; color: var(--primary-color); margin: 5px 0 0 0;">طلبك #${code}</h3>
+              </div>
+              <div>
+                <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 700;">حالة الطلب:</span>
+                <div style="background: rgba(197, 155, 39, 0.1); color: var(--gold-color); padding: 5px 15px; border-radius: var(--radius-full); font-weight: 800; font-size: 0.9rem; margin-top: 5px; text-align: center;">
+                  ${data.status}
+                </div>
+              </div>
+            </div>
+            <div style="margin-top: 15px; font-weight: 700; font-size: 0.95rem; color: var(--text-dark);">
+              👤 العمالة المنزلية: <span style="color: var(--primary-color); font-weight: 800;">${data.name}</span> (${data.nationality})
+            </div>
+          </div>
+          
+          <h3 style="font-size: 1.2rem; font-weight: 800; margin-bottom: 25px; color: var(--primary-color); position: relative; padding-bottom: 10px; border-bottom: 1px solid var(--border-color); text-align: right;">
+            مراحل سير المعاملة (المرحلة ${data.currentStage} من 7)
+          </h3>
+          
+          <div class="tracker-stages-list" style="position: relative; padding-right: 15px; text-align: right;">
+            <div style="position: absolute; right: 26px; top: 15px; bottom: 35px; width: 2px; background: var(--border-color); z-index: 1;"></div>
+            ${stagesHtml}
+          </div>
+        `;
+        trackResult.style.display = "block";
+      } else {
+        trackResult.innerHTML = `
+          <div style="background: #fdf2f2; border: 1px solid #fde8e8; border-radius: var(--radius-md); padding: 25px; color: #9b1c1c; text-align: center; font-weight: 700; border-right: 4px solid #f05252;">
+            ⚠️ عذرًا، رقم الطلب المدخل غير موجود. يرجى التحقق من الرقم أو التواصل مع خدمة عملاء مكتب النجاح للاستعلام عن حالة معاملتك.
+          </div>
+        `;
+        trackResult.style.display = "block";
+      }
+    });
+
+    trackInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') trackBtn.click();
+    });
+  }
+});
+</script>
+</body>
+</html>

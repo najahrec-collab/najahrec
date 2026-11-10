@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>لوحة التحكم | مكتب النجاح للاستقدام</title>
+  <meta name="description" content="لوحة تحكم إدارية مخصصة لإدارة وتعديل السير الذاتية للعمالة المنزلية." />
+  <meta name="theme-color" content="#0b2545" />
+  <link rel="icon" href="images/logo.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol>
+    <symbol id="i-shield-check" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-badge-check" viewBox="0 0 24 24"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-map-pin" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></symbol>
+    <symbol id="i-sparkles" viewBox="0 0 24 24"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/></symbol>
+    <symbol id="i-user-round" viewBox="0 0 24 24"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></symbol>
+    <symbol id="i-quote" viewBox="0 0 24 24"><path d="M16 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/><path d="M5 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/></symbol>
+    <symbol id="i-chevron-up" viewBox="0 0 24 24"><path d="m18 15-6-6-6 6"/></symbol>
+    <symbol id="i-message" viewBox="0 0 24 24"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></symbol>
+    <symbol id="i-ghost" viewBox="0 0 24 24"><path d="M9 10h.01"/><path d="M15 10h.01"/><path d="M12 2a8 8 0 0 0-8 8v12l3-3 2.5 2.5L12 19l2.5 2.5L17 19l3 3V10a8 8 0 0 0-8-8z"/></symbol>
+    <symbol id="i-instagram" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></symbol>
+    <symbol id="i-youtube" viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></symbol>
+    <symbol id="i-tiktok" viewBox="0 0 24 24"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></symbol>
+    <symbol id="i-x-brand" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></symbol>
+  </svg>
+
+  <div class="admin-container">
+    <!-- 1. شاشة تسجيل الدخول -->
+    <div id="loginSection" class="login-wrapper">
+      <div class="login-card">
+        <img src="images/logo.jpg" alt="مكتب النجاح" class="login-logo" onerror="this.src='images/logo.jpg'" />
+        <h2>تسجيل الدخول للنظام</h2>
+        <p>يرجى إدخال كلمة مرور الإدارة لتعديل السير الذاتية</p>
+        <div style="margin-bottom: 20px; text-align: right;">
+          <label class="form-label" for="adminPassword" style="font-weight: 700; margin-bottom: 5px; display: block;">كلمة المرور</label>
+          <div style="position: relative;">
+            <input type="password" id="adminPassword" class="form-input" placeholder="••••••••" style="text-align: center; font-weight: 900; padding-left: 45px; width: 100%; padding: 12px; border-radius: var(--radius-sm); outline: none;" />
+            <button type="button" onclick="togglePasswordVisibility(event)" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: var(--text-muted); font-size: 1.1rem; display: flex; align-items: center; justify-content: center; width: 30px; height: 30px; padding: 0;" aria-label="إظهار/إخفاء كلمة المرور">
+              👁️
+            </button>
+          </div>
+          <div id="loginError" style="color: #ef4444; font-size: 0.85rem; font-weight: 700; margin-top: 5px; display: none;">كلمة المرور غير صحيحة!</div>
+        </div>
+        <button type="button" class="btn-action" style="width: 100%; justify-content: center;" onclick="attemptLogin()">دخول لوحة التحكم</button>
+      </div>
+    </div>
+
+    <!-- 2. لوحة التحكم الرئيسية -->
+    <div id="dashboardSection" style="display: none;">
+      <!-- الهيدر -->
+      <header class="dashboard-header">
+        <a href="index.html" class="dashboard-title" style="text-decoration: none; cursor: pointer; display: flex; align-items: center; gap: 15px;">
+          <img src="images/logo.jpg" alt="شعار مكتب النجاح" onerror="this.src='images/logo.jpg'" />
+          <div>
+            <h2 style="font-size: 1.4rem; margin: 0; color: #fff;">لوحة التحكم بالسير الذاتية</h2>
+            <p style="font-size: 0.8rem; color: #94a3b8; margin: 0; font-weight: 700;">مكتب النجاح للاستقدام — ترخيص رقم 3801328</p>
+          </div>
+        </a>
+        <button type="button" class="btn-logout" onclick="logout()">خروج</button>
+      </header>
+
+      <!-- الإحصائيات -->
+      <section class="stats-grid">
+        <div class="stat-card">
+          <span class="stat-label">إجمالي السير الذاتية</span>
+          <span class="stat-value" id="statTotal">0</span>
+        </div>
+        <div class="stat-card" style="border-right: 4px solid #10b981;">
+          <span class="stat-label">المتاحة للحجز</span>
+          <span class="stat-value" id="statAvailable" style="color: #10b981;">0</span>
+        </div>
+        <div class="stat-card" style="border-right: 4px solid #ef4444;">
+          <span class="stat-label">المحجوزة فعلياً</span>
+          <span class="stat-value" id="statReserved" style="color: #ef4444;">0</span>
+        </div>
+        <div class="stat-card" style="border-right: 4px solid var(--gold-color);">
+          <span class="stat-label">نسبة الإشغال الحالية</span>
+          <span class="stat-value" id="statPercent" style="color: var(--gold-color);">0%</span>
+        </div>
+      </section>
+
+      <!-- شريط الإجراءات العامة -->
+      <div class="actions-bar">
+        <button type="button" class="btn-action" onclick="openAddModal()">
+          إضافة سيرة ذاتية جديدة +
+        </button>
+        <div class="action-buttons">
+          <button type="button" class="btn-action btn-secondary" onclick="exportData()">تصدير نسخة احتياطية (JSON)</button>
+          <button type="button" class="btn-action btn-secondary" onclick="triggerImport()">استيراد بيانات</button>
+          <button type="button" class="btn-action btn-danger" onclick="resetToDefaults()">إعادة تعيين الافتراضي</button>
+          <input type="file" id="importFileInput" accept=".json" style="display: none;" onchange="importData(event)" />
+        </div>
+      </div>
+
+      <!-- جدول البيانات -->
+      <div class="data-table-container">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>الصورة</th>
+              <th>الاسم الكامل</th>
+              <th>المهنة</th>
+              <th>الجنسية</th>
+              <th>العمر</th>
+              <th>الخبرة</th>
+              <th>الديانة</th>
+              <th>الراتب</th>
+              <th>الحالة</th>
+              <th>الإجراءات</th>
+            </tr>
+          </thead>
+          <tbody id="resumesTableBody">
+            <!-- سيتم تعبئة الأسطر ديناميكياً -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- قسم إدارة أسعار الاستقدام للحاسبة -->
+      <div class="pricing-management-section" style="margin-top: 50px; background: var(--bg-white); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 30px; box-shadow: var(--shadow-md);">
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border-color); padding-bottom: 15px; margin-bottom: 20px;">
+          <h3 style="font-size: 1.4rem; font-weight: 800; color: var(--primary-color); margin: 0;">🛠️ إدارة تكاليف ومدد الاستقدام للحاسبة</h3>
+          <button type="button" class="btn-action btn-secondary" onclick="resetPricingToDefaults()">إعادة تعيين الأسعار الافتراضية</button>
+        </div>
+        
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px; font-weight: 600; text-align: right;">
+          يمكنك تعديل أسعار الاستقدام، المدة المتوقعة، والراتب الشهري للعمالة المنزلية لكل جنسية ومهنة. سيتم تحديث حاسبة الاستقدام بالصفحة الرئيسية فوراً طبقاً للتعديلات.
+        </p>
+
+        <div class="data-table-container" style="max-height: 400px; overflow-y: auto;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>الجنسية</th>
+                <th>المهنة</th>
+                <th>التكلفة الأساسية</th>
+                <th>الضريبة (15%)</th>
+                <th>السعر الإجمالي</th>
+                <th>المدة (يوم)</th>
+                <th>الراتب الشهري</th>
+                <th>الإجراءات</th>
+              </tr>
+            </thead>
+            <tbody id="pricingTableBody">
+              <!-- سيتم تعبئتها ديناميكياً -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div style="margin-top: 25px; text-align: center;">
+        <a href="resumes.html" target="_blank" class="btn-action btn-secondary" style="font-weight: 700; gap: 8px;">
+          فتح صفحة السير الذاتية العامة المعروضة للمستخدمين ↗
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. مودال تعديل أسعار الحاسبة -->
+  <div id="pricingEditorModal" class="admin-modal">
+    <div class="admin-modal-backdrop" onclick="closePricingModal()"></div>
+    <div class="admin-modal-container" style="max-width: 500px; background: #fff; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-xl); position: relative; z-index: 100;">
+      <div class="admin-modal-header" style="padding: 20px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; background: var(--bg-light);">
+        <h3 style="font-size: 1.2rem; font-weight: 800; color: var(--primary-color); margin: 0;">تعديل تكاليف الاستقدام</h3>
+        <button type="button" class="admin-modal-close" onclick="closePricingModal()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-muted);">&times;</button>
+      </div>
+      <form id="pricingForm" onsubmit="savePricingForm(event)">
+        <input type="hidden" id="pricingKey" value="" />
+        <div class="admin-modal-body" style="padding: 20px;">
+          <div class="form-grid" style="grid-template-columns: 1fr; gap: 15px;">
+            <div class="form-group" style="text-align: right;">
+              <label class="form-label" style="font-weight: 700; display: block; margin-bottom: 5px;">الجنسية والمهنة المحددة</label>
+              <input type="text" id="pricingLabel" class="form-input" readonly style="background: var(--bg-light); font-weight: 700; color: var(--text-dark); width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: var(--radius-sm);" />
+            </div>
+            <div class="form-group" style="text-align: right;">
+              <label class="form-label" for="pricingTotal" style="font-weight: 700; display: block; margin-bottom: 5px;">السعر الإجمالي شامل الضريبة (ريال)</label>
+              <input type="number" id="pricingTotal" class="form-input" required min="0" placeholder="مثال: 14500" style="width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: var(--radius-sm);" />
+            </div>
+            <div class="form-group" style="text-align: right;">
+              <label class="form-label" for="pricingTime" style="font-weight: 700; display: block; margin-bottom: 5px;">مدة الوصول المتوقعة (أيام)</label>
+              <input type="number" id="pricingTime" class="form-input" required min="1" placeholder="مثال: 89" style="width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: var(--radius-sm);" />
+            </div>
+            <div class="form-group" style="text-align: right;">
+              <label class="form-label" for="pricingSalary" style="font-weight: 700; display: block; margin-bottom: 5px;">الراتب الشهري للعمالة (ريال)</label>
+              <input type="number" id="pricingSalary" class="form-input" required min="0" placeholder="مثال: 1500" style="width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: var(--radius-sm);" />
+            </div>
+          </div>
+        </div>
+        <div class="admin-modal-footer" style="padding: 20px; display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid var(--border-color); background: var(--bg-light);">
+          <button type="button" class="btn-action btn-secondary" onclick="closePricingModal()">إلغاء</button>
+          <button type="submit" class="btn-action">حفظ التغييرات</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 3. مودال إضافة / تعديل سيرة ذاتية -->
+  <div id="cvEditorModal" class="admin-modal">
+    <div class="admin-modal-backdrop" onclick="closeEditorModal()"></div>
+    <div class="admin-modal-container">
+      <div class="admin-modal-header">
+        <h3 id="modalFormTitle">إضافة سيرة ذاتية جديدة</h3>
+        <button type="button" class="admin-modal-close" onclick="closeEditorModal()">&times;</button>
+      </div>
+      <form id="cvForm" onsubmit="saveCvForm(event)">
+        <input type="hidden" id="editIndex" value="" />
+        <div class="admin-modal-body">
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label" for="fullname">الاسم الكامل (أو الرمز)</label>
+              <input type="text" id="fullname" class="form-input" required placeholder="مثال: سارة م." />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="job">المهنة</label>
+              <select id="job" class="form-select" required>
+                <option value="maid">استقدام عاملة منزلية</option>
+                <option value="houseboy">استقدام عامل منزلي</option>
+                <option value="driver">استقدام سائق خاص</option>
+                <option value="chef">استقدام طباخ أو طباخة منزلية</option>
+                <option value="nurse">استقدام ممرض أو ممرضة منزلية</option>
+                <option value="babysitter">استقدام مربية أطفال</option>
+                <option value="elderly">استقدام مقدم رعاية لكبار السن</option>
+                <option value="guard">استقدام حارس منزلي</option>
+                <option value="gardener">استقدام مزارع منزلي أو بستاني</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="nationality">الجنسية</label>
+              <select id="nationality" class="form-select" required>
+                <option value="ethiopia">إثيوبيا</option>
+                <option value="kenya">كينيا</option>
+                <option value="uganda">أوغندا</option>
+                <option value="philippines">الفلبين</option>
+                <option value="tanzania">تنزانيا</option>
+                <option value="bangladesh">بنجلاديش</option>
+                <option value="srilanka">سريلانكا</option>
+                <option value="india">الهند</option>
+                <option value="sudan">السودان</option>
+                <option value="burundi">بوروندي</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="age">العمر (بالسنوات)</label>
+              <input type="number" id="age" class="form-input" min="18" max="60" required placeholder="مثال: 28" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="experience">سنوات الخبرة</label>
+              <input type="number" id="experience" class="form-input" min="0" max="30" required placeholder="مثال: 5 (أدخل 0 للجديدة)" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="salary">الراتب الشهري (ر.س)</label>
+              <input type="number" id="salary" class="form-input" min="500" max="10000" required placeholder="مثال: 1200" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="religion">الديانة</label>
+              <input type="text" id="religion" class="form-input" required placeholder="مثال: مسيحية / مسلمة / هندوسي" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="education">مستوى التعليم</label>
+              <input type="text" id="education" class="form-input" required placeholder="مثال: ثانوي / دبلوم / متوسط" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="marital">الحالة الاجتماعية</label>
+              <input type="text" id="marital" class="form-input" required placeholder="مثال: عزباء / متزوجة / متزوج" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="height">الطول</label>
+              <input type="text" id="height" class="form-input" required placeholder="مثال: 160 سم" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="weight">الوزن</label>
+              <input type="text" id="weight" class="form-input" required placeholder="مثال: 58 كجم" />
+            </div>
+            <div class="form-group full-width photo-manager-card">
+              <label class="form-label" style="margin-bottom: 8px;">الصورة الشخصية للمرشح/ة</label>
+              <div class="photo-manager-layout">
+                <div class="photo-preview-wrap">
+                  <img id="photoPreviewImg" src="images/cv_sara.jpg" alt="معاينة الصورة" onerror="this.src='images/logo.jpg'" />
+                  <span class="photo-preview-badge">معاينة حية</span>
+                </div>
+                <div class="photo-manager-controls">
+                  <div class="photo-upload-actions">
+                    <button type="button" class="btn-action btn-upload-photo" onclick="triggerPhotoUpload()">
+                      📁 رفع صورة جديدة من جهازك
+                    </button>
+                    <input type="file" id="photoFileInput" accept="image/*" style="display: none;" onchange="handleModalPhotoUpload(event)" />
+                    <span class="photo-upload-hint">يدعم JPG, PNG, WEBP — يتم ضغط الصورة وتحسينها تلقائياً للحفظ السريع</span>
+                  </div>
+                  <div class="photo-select-row" style="margin-top: 10px;">
+                    <label class="form-sublabel" style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted); display: block; margin-bottom: 4px;">أو اختيار صورة جاهزة من المكتبة:</label>
+                    <select id="photoSelect" class="form-select" onchange="syncPhotoInput(this.value)">
+                      <option value="images/cv_sara.jpg">سارة (إثيوبيا - عاملة منزلية)</option>
+                      <option value="images/cv_mary.jpg">ماري (كينيا - عاملة منزلية)</option>
+                      <option value="images/cv_john.jpg">جون (أوغندا - سائق خاص)</option>
+                      <option value="images/cv_grace.jpg">جريس (الفلبين - مربية أطفال)</option>
+                      <option value="images/cv_kumar.jpg">كومار (الهند - سائق خاص)</option>
+                      <option value="images/cv_fatima.jpg">فاطمة (إثيوبيا - طباخة)</option>
+                      <option value="images/logo.jpg">شعار المكتب (صورة افتراضية)</option>
+                      <option value="custom">مسار أو رابط خارجي مخصص...</option>
+                    </select>
+                  </div>
+                  <div id="customPathWrapper" style="display: none; margin-top: 8px;">
+                    <label class="form-sublabel" style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted); display: block; margin-bottom: 4px;">رابط أو مسار الصورة المخصص:</label>
+                    <input type="text" id="photoPath" class="form-input" placeholder="images/... أو https://..." oninput="updatePreviewFromInput(this.value)" />
+                  </div>
+                  <input type="hidden" id="photoActualValue" value="images/cv_sara.jpg" />
+                </div>
+              </div>
+            </div>
+            <div class="form-group full-width">
+              <label class="form-label" for="languages">اللغات</label>
+              <input type="text" id="languages" class="form-input" required placeholder="مثال: العربية (ممتاز)، الأمهرية (اللغة الأم)" />
+            </div>
+            <div class="form-group full-width">
+              <label class="form-label" for="skills">المهارات الوظيفية الأساسية (افصل بينها بفاصلة "،")</label>
+              <input type="text" id="skills" class="form-input" required placeholder="مثال: الطهي، التنظيف العالي، الكي، الغسيل" />
+            </div>
+            <div class="form-group full-width">
+              <label class="form-label" for="prevExp">الخبرات العملية السابقة بالتفصيل</label>
+              <input type="text" id="prevExp" class="form-input" required placeholder="مثال: 3 سنوات بالرياض، سنتين ببيروت" />
+            </div>
+            <div class="form-group full-width">
+              <label class="form-label" for="status">حالة السيرة الذاتية</label>
+              <select id="status" class="form-select" required>
+                <option value="available">متاحة للحجز (اللون الأخضر)</option>
+                <option value="reserved">محجوزة (اللون الأحمر)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="admin-modal-footer">
+          <button type="button" class="btn-action btn-secondary" onclick="closeEditorModal()">إلغاء</button>
+          <button type="submit" class="btn-action">حفظ التغييرات</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+    <!-- 5. مودال التعديل السريع للصورة -->
+  <div id="quickPhotoModal" class="admin-modal">
+    <div class="admin-modal-backdrop" onclick="closeQuickPhotoModal()"></div>
+    <div class="admin-modal-container" style="max-width: 500px;">
+      <div class="admin-modal-header">
+        <h3 id="quickPhotoTitle">تغيير الصورة الشخصية</h3>
+        <button type="button" class="admin-modal-close" onclick="closeQuickPhotoModal()">&times;</button>
+      </div>
+      <div class="admin-modal-body" style="text-align: center; padding: 24px;">
+        <input type="hidden" id="quickPhotoCvId" value="" />
+        <div style="margin-bottom: 20px;">
+          <img id="quickPhotoPreview" src="images/logo.jpg" alt="الصورة الحالية" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid var(--gold-color); box-shadow: var(--shadow-md); margin: 0 auto 10px; display: block;" onerror="this.src='images/logo.jpg'" />
+          <h4 id="quickPhotoCandidateName" style="font-weight: 800; font-size: 1.15rem; color: var(--primary-color); margin: 0;"></h4>
+          <span id="quickPhotoCandidateRole" style="font-size: 0.85rem; color: var(--text-muted); font-weight: 700;"></span>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 14px; text-align: right;">
+          <button type="button" class="btn-action" style="justify-content: center; width: 100%;" onclick="triggerQuickPhotoUpload()">
+            📁 اختيار ورفع صورة من جهازك
+          </button>
+          <input type="file" id="quickPhotoFileInput" accept="image/*" style="display: none;" onchange="handleQuickPhotoUpload(event)" />
+          
+          <div>
+            <label class="form-label" style="margin-bottom: 5px; display: block;">أو اختيار صورة جاهزة من المكتبة:</label>
+            <select id="quickPhotoSelect" class="form-select" onchange="syncQuickPhotoSelect(this.value)" style="width: 100%;">
+              <option value="images/cv_sara.jpg">سارة (إثيوبيا)</option>
+              <option value="images/cv_mary.jpg">ماري (كينيا)</option>
+              <option value="images/cv_john.jpg">جون (أوغندا)</option>
+              <option value="images/cv_grace.jpg">جريس (الفلبين)</option>
+              <option value="images/cv_kumar.jpg">كومار (الهند)</option>
+              <option value="images/cv_fatima.jpg">فاطمة (إثيوبيا)</option>
+              <option value="images/logo.jpg">شعار المكتب (افتراضي)</option>
+              <option value="custom">رابط أو مسار خارجي...</option>
+            </select>
+          </div>
+          
+          <div id="quickPhotoCustomWrap" style="display: none;">
+            <label class="form-label" style="margin-bottom: 5px; display: block;">رابط أو مسار الصورة:</label>
+            <input type="text" id="quickPhotoCustomUrl" class="form-input" placeholder="images/... أو https://..." style="width: 100%;" oninput="syncQuickPhotoCustom(this.value)" />
+          </div>
+        </div>
+      </div>
+      <div class="admin-modal-footer">
+        <button type="button" class="btn-action btn-secondary" onclick="closeQuickPhotoModal()">إلغاء</button>
+        <button type="button" class="btn-action" onclick="saveQuickPhoto()">حفظ وتطبيق الصورة 💾</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>
