@@ -1,5 +1,10 @@
 /* ===== متغيرات التصميم ===== */
 :root {
+  --sat: env(safe-area-inset-top, 0px);
+  --sar: env(safe-area-inset-right, 0px);
+  --sab: env(safe-area-inset-bottom, 0px);
+  --sal: env(safe-area-inset-left, 0px);
+
   --navy-50: #eef4fb;
   --navy-100: #d9e6f4;
   --navy-200: #b3cde8;
@@ -68,6 +73,9 @@
 
 html {
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 body {
@@ -77,6 +85,10 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  max-width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  position: relative;
 }
 
 section[id],
@@ -335,12 +347,13 @@ svg {
   position: absolute;
   inset-block: 0;
   inset-inline-end: 0;
-  width: 20rem;
-  max-width: 85vw;
+  width: min(22rem, 85vw);
   display: flex;
   flex-direction: column;
   background: #fff;
   box-shadow: 0 25px 50px -12px rgba(7, 24, 48, 0.5);
+  padding-top: var(--sat);
+  padding-bottom: var(--sab);
 }
 
 .mm-head {
@@ -1846,8 +1859,8 @@ svg {
 /* ===== زر واتساب العائم ===== */
 .whatsapp-float {
   position: fixed;
-  bottom: 1.5rem;
-  left: 1.5rem;
+  bottom: calc(1.5rem + var(--sab));
+  left: calc(1.25rem + var(--sal));
   z-index: 40;
   display: flex;
   align-items: center;
@@ -1855,14 +1868,15 @@ svg {
   border-radius: 999px;
   background-image: linear-gradient(135deg, var(--emerald-500), var(--emerald-600));
   color: #fff;
-  padding: 1rem;
-  box-shadow: 0 25px 50px -12px rgba(16, 185, 129, 0.5);
+  padding: 0.875rem 1rem;
+  box-shadow: 0 20px 35px -8px rgba(16, 185, 129, 0.45);
   transition: transform 0.2s;
+  min-height: 48px;
 }
 
 .whatsapp-float:hover { transform: scale(1.05); }
 
-.whatsapp-float svg { width: 28px; height: 28px; }
+.whatsapp-float svg { width: 28px; height: 28px; flex-shrink: 0; }
 
 .whatsapp-float .wf-text {
   display: none;
@@ -1901,8 +1915,8 @@ svg {
 /* ===== زر العودة إلى الأعلى ===== */
 .back-to-top {
   position: fixed;
-  bottom: 1.5rem;
-  right: 1.5rem;
+  bottom: calc(1.5rem + var(--sab));
+  right: calc(1.25rem + var(--sar));
   z-index: 40;
   display: grid;
   place-items: center;
@@ -2135,32 +2149,373 @@ svg {
 .btn-outline:hover { background: var(--navy-50); border-color: var(--navy-300); color: var(--navy-950); }
 .btn-outline-sm { padding: 0.625rem 1rem; }
 
-/* نافذة منبثقة */
+/* ==========================================================================
+   نافذة التحذير الأمني المنبثقة (Responsive Security Warning Modal)
+   ========================================================================== */
 .modal {
   position: fixed;
   inset: 0;
-  z-index: 60;
+  z-index: 100;
   display: grid;
   place-items: center;
   padding: 1rem;
   visibility: hidden;
   opacity: 0;
-  transition: opacity 0.3s, visibility 0.3s;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
-.modal.open { visibility: visible; opacity: 1; }
+
+.modal.open {
+  visibility: visible;
+  opacity: 1;
+}
 
 .modal-backdrop {
-  position: absolute;
+  position: fixed;
   inset: 0;
-  background: rgba(7, 24, 48, 0.55);
-  backdrop-filter: blur(2px);
+  background: rgba(7, 24, 48, 0.65);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  z-index: 1;
 }
 
+/* حاوية نافذة التحذير */
+.modal-container,
+.warning-modal-container {
+  position: relative;
+  z-index: 2;
+  width: min(580px, 94vw);
+  max-height: 85vh;
+  max-height: 85dvh;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border-radius: 1.25rem;
+  box-shadow: 0 25px 50px -12px rgba(7, 24, 48, 0.45), 0 0 0 1px rgba(7, 24, 48, 0.08);
+  overflow: hidden;
+  margin: auto;
+  transform: translateY(20px) scale(0.97);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+}
+
+.modal.open .modal-container,
+.modal.open .warning-modal-container {
+  transform: translateY(0) scale(1);
+}
+
+/* هيدر نافذة التحذير */
+.modal-header,
+.warning-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%) !important;
+  color: #ffffff;
+  flex-shrink: 0;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.modal-header-title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  line-height: 1.35;
+}
+
+@media (min-width: 640px) {
+  .modal-header-title {
+    font-size: 1.2rem;
+  }
+}
+
+.modal-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  min-width: 38px;
+  min-height: 38px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+  flex-shrink: 0;
+  padding: 0;
+}
+
+.modal-close:hover,
+.modal-close:focus-visible {
+  background: rgba(255, 255, 255, 0.35);
+  transform: scale(1.08);
+  outline: none;
+}
+
+/* جسم نافذة التحذير */
+.modal-body,
+.warning-modal-body {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  flex: 1 1 auto;
+  overscroll-behavior: contain;
+  background: #ffffff;
+}
+
+/* صورة التنبيه الأمني */
+.modal-body img,
+.warning-modal-banner img {
+  width: 100%;
+  max-height: 175px;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  background: #fee2e2;
+  border-bottom: 1px solid #fee2e2;
+}
+
+@media (min-width: 640px) {
+  .modal-body img,
+  .warning-modal-banner img {
+    max-height: 220px;
+  }
+}
+
+/* محتوى النص في نافذة التحذير */
+.warning-modal-content {
+  padding: 1.25rem;
+  direction: rtl;
+  text-align: right;
+}
+
+@media (min-width: 640px) {
+  .warning-modal-content {
+    padding: 1.75rem;
+  }
+}
+
+#warningModal .modal-body > div {
+  padding: 1.25rem !important;
+}
+
+@media (min-width: 640px) {
+  #warningModal .modal-body > div {
+    padding: 1.75rem !important;
+  }
+}
+
+.warning-greeting {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  margin-bottom: 0.75rem;
+}
+
+.warning-badge-sm {
+  background: #fee2e2;
+  color: #dc2626;
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid #fca5a5;
+}
+
+.warning-modal-content h4,
+#warningModal h4 {
+  color: #dc2626 !important;
+  font-weight: 800 !important;
+  font-size: 1.2rem !important;
+  margin-top: 0 !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.warning-text,
+#warningModal p {
+  font-size: 0.925rem !important;
+  line-height: 1.75 !important;
+  color: var(--navy-800, #1e293b) !important;
+  margin-bottom: 1.25rem !important;
+  font-weight: 600 !important;
+}
+
+.warning-points-box,
+#warningModal ul {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.75rem;
+  padding: 1rem 1.25rem !important;
+  margin: 0 0 1.25rem 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.625rem !important;
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  line-height: 1.6 !important;
+  list-style: none !important;
+}
+
+.warning-points-box li,
+#warningModal ul li {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 0.5rem !important;
+  color: var(--navy-900, #0f172a);
+}
+
+.warning-points-box li .chk,
+#warningModal ul li span:first-child {
+  color: #10b981 !important;
+  font-weight: 800 !important;
+  flex-shrink: 0;
+}
+
+.warning-subhead,
+#warningModal h5 {
+  color: var(--navy-900, #0b2545) !important;
+  font-weight: 800 !important;
+  font-size: 0.975rem !important;
+  margin-top: 0 !important;
+  margin-bottom: 0.625rem !important;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* شبكة هواتف التواصل المعتمدة */
+.warning-phones-grid,
+#warningModal .modal-body [style*="grid-template-columns"] {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 0.625rem !important;
+  background: #f1f5f9 !important;
+  padding: 0.875rem !important;
+  border-radius: 0.75rem !important;
+  border: 1px solid #cbd5e1 !important;
+  margin-bottom: 1.25rem !important;
+  font-weight: 700 !important;
+  text-align: center !important;
+}
+
+.warning-phone-item,
+#warningModal .modal-body [style*="grid-template-columns"] a {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.4rem !important;
+  padding: 0.625rem 0.5rem !important;
+  background: #ffffff !important;
+  border: 1.5px solid #e2e8f0 !important;
+  border-radius: 0.5rem !important;
+  color: var(--navy-900, #0b2545) !important;
+  text-decoration: none !important;
+  font-size: 0.875rem !important;
+  font-weight: 700 !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease !important;
+  min-height: 42px;
+}
+
+.warning-phone-item:hover,
+#warningModal .modal-body [style*="grid-template-columns"] a:hover {
+  background: var(--gold-50, #fefce8) !important;
+  border-color: var(--gold-500, #c9a227) !important;
+  color: var(--gold-700, #854d0e) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px -1px rgba(201, 162, 39, 0.2);
+}
+
+.warning-phone-item.full-span,
+#warningModal .modal-body [style*="grid-template-columns"] a[style*="span 2"] {
+  grid-column: span 2 !important;
+}
+
+@media (max-width: 440px) {
+  .warning-phones-grid,
+  #warningModal .modal-body [style*="grid-template-columns"] {
+    grid-template-columns: 1fr !important;
+    gap: 0.5rem !important;
+  }
+  .warning-phone-item.full-span,
+  #warningModal .modal-body [style*="grid-template-columns"] a[style*="span 2"] {
+    grid-column: span 1 !important;
+  }
+}
+
+/* صندوق التنبيه ضد المسؤولية */
+.warning-disclaimer,
+#warningModal div[style*="rgba(220, 38, 38"] {
+  background-color: #fef2f2 !important;
+  border-inline-start: 4px solid #dc2626 !important;
+  padding: 0.875rem 1rem !important;
+  border-radius: 0.5rem !important;
+  font-size: 0.825rem !important;
+  font-weight: 700 !important;
+  color: #991b1b !important;
+  margin-bottom: 0 !important;
+  line-height: 1.65 !important;
+}
+
+/* فوتر نافذة التحذير وزر الموافقة */
+.modal-footer,
+.warning-modal-footer {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0.875rem 1.25rem !important;
+  background: #f8fafc !important;
+  border-top: 1px solid #e2e8f0 !important;
+  flex-shrink: 0 !important;
+  position: sticky !important;
+  bottom: 0 !important;
+  z-index: 10 !important;
+}
+
+.modal-footer .btn-gold,
+.warning-agree-btn {
+  width: 100% !important;
+  max-width: 280px !important;
+  padding: 0.75rem 1.5rem !important;
+  font-size: 1rem !important;
+  font-weight: 800 !important;
+  border: none !important;
+  border-radius: 0.75rem !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.5rem !important;
+  background-image: linear-gradient(120deg, var(--gold-500, #c9a227), var(--gold-400, #dfb83b)) !important;
+  color: var(--navy-950, #030d1a) !important;
+  box-shadow: 0 4px 14px -2px rgba(201, 162, 39, 0.4) !important;
+  transition: transform 0.2s, box-shadow 0.2s !important;
+  min-height: 46px !important;
+}
+
+.modal-footer .btn-gold:hover,
+.warning-agree-btn:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 20px -2px rgba(201, 162, 39, 0.5) !important;
+}
+
+/* نافذة لوحة التحكم */
 .modal-panel {
   position: relative;
+  z-index: 2;
   width: 100%;
   max-width: 42rem;
   max-height: 92vh;
+  max-height: 92dvh;
   overflow-y: auto;
   border-radius: 1.25rem;
   background: #fff;
@@ -2277,3 +2632,372 @@ svg {
   transition: opacity 0.3s, transform 0.3s, visibility 0.3s;
 }
 .toast.show { opacity: 1; visibility: visible; transform: translate(50%, 0); }
+
+/* ==========================================================================
+   حاسبة تكلفة الاستقدام التفاعلية (Cost Calculator)
+   ========================================================================== */
+.calc-wrap {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  max-width: 56rem;
+  margin-inline: auto;
+}
+
+@media (min-width: 860px) {
+  .calc-wrap {
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+  }
+}
+
+.calc-inputs-card,
+.calc-results-card {
+  background: #ffffff;
+  border: 1.5px solid var(--border-color, #e2e8f0);
+  border-radius: var(--radius-lg, 1rem);
+  padding: 1.75rem;
+  box-shadow: 0 10px 25px -5px rgba(7, 24, 48, 0.06);
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 480px) {
+  .calc-inputs-card,
+  .calc-results-card {
+    padding: 1.25rem;
+  }
+}
+
+.calc-card-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--navy-900);
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-bottom: 2px solid var(--navy-50, #f1f5f9);
+  padding-bottom: 0.75rem;
+}
+
+.calc-form-group {
+  margin-bottom: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.calc-form-group label {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--navy-800);
+}
+
+.calc-select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1.5px solid var(--border-color, #cbd5e1);
+  border-radius: var(--radius-md, 0.75rem);
+  background-color: #ffffff;
+  color: var(--navy-900);
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 700;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+  cursor: pointer;
+}
+
+.calc-select:focus {
+  border-color: var(--gold-500);
+  box-shadow: 0 0 0 3px rgba(201, 162, 39, 0.2);
+}
+
+.calc-note {
+  margin-top: auto;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--slate-600);
+  background: var(--navy-50, #f8fafc);
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-md, 0.75rem);
+  border-inline-start: 3px solid var(--gold-500);
+  line-height: 1.5;
+}
+
+.calc-result-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+  margin-bottom: 1.5rem;
+  flex: 1;
+}
+
+.calc-result-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 0.9rem;
+  color: var(--slate-700);
+  font-weight: 600;
+}
+
+.calc-result-row .val {
+  color: var(--navy-900);
+  font-weight: 800;
+}
+
+.calc-result-row .val strong {
+  font-size: 1.15rem;
+}
+
+.calc-result-divider {
+  height: 1px;
+  background: var(--navy-100, #e2e8f0);
+  margin-block: 0.25rem;
+}
+
+.calc-result-row.total {
+  background: rgba(201, 162, 39, 0.1);
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-md, 0.75rem);
+  color: var(--navy-900);
+  font-weight: 800;
+  border: 1px solid rgba(201, 162, 39, 0.3);
+}
+
+.calc-result-row.total .val strong {
+  font-size: 1.35rem;
+  color: var(--gold-600, #b48518);
+}
+
+.calc-result-row.salary,
+.calc-result-row.time {
+  padding-inline: 0.5rem;
+}
+
+.calc-btn {
+  width: 100%;
+  padding: 0.875rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 800;
+  text-align: center;
+  text-decoration: none;
+}
+
+/* ==========================================================================
+   متتبع حالة الطلب التفاعلي (Order Tracker)
+   ========================================================================== */
+.tracker-box {
+  background: #ffffff;
+  border: 1.5px solid var(--border-color, #e2e8f0);
+  border-radius: var(--radius-lg, 1rem);
+  padding: 1.5rem;
+  box-shadow: 0 10px 25px -5px rgba(7, 24, 48, 0.06);
+}
+
+@media (min-width: 640px) {
+  .tracker-box {
+    padding: 2.5rem;
+  }
+}
+
+.tracker-form {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  flex-direction: column;
+}
+
+@media (min-width: 640px) {
+  .tracker-form {
+    flex-direction: row;
+    gap: 1rem;
+  }
+}
+
+.tracker-form input {
+  flex: 1;
+  width: 100%;
+}
+
+.tracker-btn {
+  padding: 0.875rem 2rem;
+  white-space: nowrap;
+}
+
+@media (max-width: 639px) {
+  .tracker-btn {
+    width: 100%;
+  }
+}
+
+/* ==========================================================================
+   تحسينات التوافق والاستجابة الشاملة لكافة الأجهزة الذكية والشاشات
+   (Mobile Phones: iPhone / Samsung / Android, Tablets / iPad, Desktop PCs)
+   ========================================================================== */
+
+/* 1. منع أي سكرول أفقي وتأكيد الانسيابية الكاملة */
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+  position: relative;
+}
+
+img, video, iframe, table {
+  max-width: 100%;
+}
+
+/* 2. تحسينات الهواتف الصغيرة جداً (iPhone SE, 5, 5s, Galaxy Mini <= 380px) */
+@media (max-width: 380px) {
+  .container {
+    padding-inline: 0.75rem;
+  }
+
+  .brand-title {
+    font-size: 1rem;
+  }
+
+  .brand-logo {
+    width: 38px;
+    height: 38px;
+  }
+
+  .hero-inner {
+    padding-top: 3.5rem;
+  }
+
+  .hero-title {
+    font-size: 1.75rem;
+  }
+
+  .hero-sub {
+    font-size: 0.95rem;
+  }
+
+  .section-title {
+    font-size: 1.4rem;
+  }
+
+  .nations-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .hero-actions .btn-gold,
+  .hero-actions .btn-ghost-light {
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* 3. تحسينات الهواتف الذكية عموماً (iPhone كل الإصدارات و Samsung و Android <= 640px) */
+@media (max-width: 640px) {
+  .hero-actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.75rem;
+  }
+
+  .hero-actions .btn-gold,
+  .hero-actions .btn-ghost-light {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .hero-features {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+    width: 100%;
+  }
+
+  .hero-feature {
+    font-size: 0.75rem;
+    padding: 0.5rem 0.625rem;
+    justify-content: center;
+  }
+
+  .hero-card-float {
+    left: 0.5rem;
+    right: 0.5rem;
+    width: auto;
+    max-width: calc(100% - 1rem);
+  }
+
+  /* تكيف نموذج التواصل */
+  .contact-form,
+  .contact-info-box {
+    width: 100%;
+  }
+
+  /* تكيف جدول السير الذاتية والإحصائيات */
+  .table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+}
+
+/* 4. تحسينات أجهزة التابلت والآيباد (iPad Mini / Air / Pro: 641px - 1024px) */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .nations-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .testimonials-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .steps-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+
+  .calc-wrap {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 5. أحجام أهداف اللمس (Touch Targets) المتوافقة مع معايير Apple و Android */
+button,
+a.btn-gold,
+a.btn-outline,
+.menu-btn,
+.modal-close,
+.faq-q,
+.social-btn {
+  min-height: 44px;
+}
+
+/* 6. تحسين الخطوط والتظليل والأناقة الملكية في شاشات الحواسيب (1025px+) */
+@media (min-width: 1025px) {
+  .container {
+    padding-inline: 2rem;
+  }
+
+  .hero-title {
+    font-size: 3.5rem;
+  }
+
+  .section-title {
+    font-size: 2.25rem;
+  }
+}

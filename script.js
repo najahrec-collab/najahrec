@@ -11,6 +11,12 @@ window.closeWarningModal = function () {
   }
 };
 
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    window.closeWarningModal();
+  }
+});
+
 document.addEventListener("DOMContentLoaded", () => {
   // 1. نافذة التنبيه الأمني
   const warningModal = document.getElementById("warningModal");
