@@ -11,7 +11,7 @@
   const AUTH_KEY = "alnajah_admin_auth";
 
   // كلمات المرور المسموح بها للدخول
-  const VALID_PASSWORDS = ["admin123", "123456", "najah2026", "najah123"];
+  const VALID_PASSWORDS = ["Ahmed@1991"];
 
   // خريطة المهن
   const JOB_NAMES = {
