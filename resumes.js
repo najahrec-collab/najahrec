@@ -506,7 +506,7 @@
           <tbody>
             <tr><th>الجنسية</th><td>${nat.flag} ${nat.name}</td></tr>
             <tr><th>العمر</th><td>${cv.age} سنة</td></tr>
-            <tr><th>سنوات الخبرة</th><td>${cv.experience > 0 ? cv.experience + ' سنوات' : 'جديدة كلياً بدون خبرة'}</td></tr>
+            <tr><th>سنوات الخبرة</th><td>${cv.experience > 0 ? 'سبق لها العمل (' + cv.experience + ' سنوات)' : 'لم يسبق لها العمل (جديدة)'}</td></tr>
             <tr><th>الراتب الشهري</th><td>${Number(cv.salary).toLocaleString('en-US')} ريال سعودي</td></tr>
             <tr><th>الديانة</th><td>${cv.religion || '—'}</td></tr>
             <tr><th>الحالة الاجتماعية</th><td>${cv.marital || '—'}</td></tr>
@@ -585,7 +585,7 @@
             </div>
             <div class="cv-fact-item">
               <span class="cv-fact-label">${isEn ? 'Experience' : 'سنوات الخبرة'}</span>
-              <span class="cv-fact-val">${cv.experience > 0 ? cv.experience + (isEn ? ' yrs' : ' سنوات') : (isEn ? 'Fresh' : 'جديدة')}</span>
+              <span class="cv-fact-val">${cv.experience > 0 ? (isEn ? 'Experienced (' + cv.experience + ' yrs)' : 'سبق لها العمل (' + cv.experience + ' سنوات)') : (isEn ? 'Fresh / New' : 'لم يسبق لها العمل (جديدة)')}</span>
             </div>
             <div class="cv-fact-item">
               <span class="cv-fact-label">${isEn ? 'Religion' : 'الديانة'}</span>
@@ -653,12 +653,11 @@
       // تصفية المهنة
       if (job && cv.job !== job) return false;
 
-      // تصفية الخبرة
+      // تصفية الخبرة (خيارين فقط: سبق لها العمل أو لم يسبق لها العمل جديدة)
       if (exp) {
         const years = Number(cv.experience) || 0;
-        if (exp === "fresh" && years !== 0) return false;
-        if (exp === "1-5" && (years < 1 || years > 5)) return false;
-        if (exp === "5+" && years <= 5) return false;
+        if (exp === "fresh" && years > 0) return false;
+        if (exp === "experienced" && years === 0) return false;
       }
 
       // بحث نصي

@@ -631,7 +631,7 @@
             <td>${job}</td>
             <td>${nat.flag} ${nat.name}</td>
             <td>${cv.age} سنة</td>
-            <td>${cv.experience > 0 ? cv.experience + ' سنين' : 'جديدة'}</td>
+            <td>${cv.experience > 0 ? 'سبق لها العمل (' + cv.experience + ' سنوات)' : 'لم يسبق لها العمل (جديدة)'}</td>
             <td>${cv.religion || '—'}</td>
             <td><b>${Number(cv.salary).toLocaleString('en-US')} ر.س</b></td>
             <td>
@@ -836,7 +836,7 @@
     if (liveJob) liveJob.textContent = jobName;
     if (liveNat) liveNat.textContent = `${natObj.flag} ${natObj.name}`;
     if (liveAge) liveAge.textContent = `${ageVal} سنة`;
-    if (liveExp) liveExp.textContent = `${expVal > 0 ? expVal + " سنوات خبرة" : "جديدة كلياً"}`;
+    if (liveExp) liveExp.textContent = Number(expVal) > 0 ? `سبق لها العمل (${expVal} سنوات)` : "لم يسبق لها العمل (جديدة)";
     if (liveSalary) liveSalary.textContent = `${Number(salVal).toLocaleString("en-US")} ر.س`;
     if (liveSkills) liveSkills.textContent = `المهارات: ${skillsVal || "لم تحدد بعد"}`;
 

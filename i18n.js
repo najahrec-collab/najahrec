@@ -550,6 +550,13 @@
     }
 
     // إذا كانت دالة إعادة العرض في resumes.js متوفرة، نقوم باستدعائها
+    const expFilter = document.getElementById("experienceFilter");
+    if (expFilter && expFilter.options.length >= 3) {
+      expFilter.options[0].textContent = isEn ? "All Experience Levels" : "كل مستويات الخبرة";
+      expFilter.options[1].textContent = isEn ? "Previously Worked (Experienced)" : "سبق لها العمل";
+      expFilter.options[2].textContent = isEn ? "No Previous Experience (New)" : "لم يسبق لها العمل (جديدة)";
+    }
+
     if (typeof window.refreshCvList === "function") {
       window.refreshCvList();
     }
