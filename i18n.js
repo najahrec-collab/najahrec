@@ -322,8 +322,8 @@
   }
 
   function storeOriginalHtml(el) {
-    if (!el.dataset.origText) {
-      el.dataset.origText = el.innerHTML;
+    if (!el.dataset.origHtml) {
+      el.dataset.origHtml = el.innerHTML;
     }
   }
 
@@ -374,7 +374,7 @@
       storeOriginalHtml(el);
       el.innerHTML = isEn
         ? `<svg class="icon-xs"><use href="#i-shield-check"/></svg> ${dict.topbarLicense}`
-        : el.dataset.origText;
+        : el.dataset.origHtml;
     });
 
     // ساعات العمل بالشريط العلوي
@@ -383,7 +383,7 @@
         storeOriginalHtml(el);
         el.innerHTML = isEn
           ? `<svg class="icon-sm"><use href="#i-clock"/></svg> ${dict.topbarHours}`
-          : el.dataset.origText;
+          : el.dataset.origHtml;
       }
     });
 
@@ -411,8 +411,8 @@
       }
       if (creditP) {
         creditP.innerHTML = isEn
-          ? 'Designed by <b>Ebtekar Tech Solutions</b> | <a href="admin.html" class="admin-footer-link" style="color: var(--text-muted); text-decoration: none; font-weight: 700; margin-left: 8px;">Admin Panel 🔒</a>'
-          : 'تم التصميم بواسطة <b>ابتكار للحلول التقنية</b> | <a href="admin.html" class="admin-footer-link" style="color: var(--text-muted); text-decoration: none; font-weight: 700; margin-right: 8px;">لوحة التحكم 🔒</a>';
+          ? 'Designed by <b>Ebtekar Tech Solutions</b> | <a href="admin.html" class="admin-footer-link">Admin Panel 🔒</a>'
+          : 'تم التصميم بواسطة <b>ابتكار للحلول التقنية</b> | <a href="admin.html" class="admin-footer-link">لوحة التحكم 🔒</a>';
       }
     });
 

@@ -2022,6 +2022,7 @@ svg {
   display: inline-flex;
   align-items: center;
   gap: 4px;
+  margin: 0 6px;
 }
 .admin-footer-link:hover {
   color: var(--gold-color, #c59b27);
