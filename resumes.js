@@ -34,7 +34,9 @@
     "sri-lanka": { name: "سريلانكا", flag: "🇱🇰" },
     india: { name: "الهند", flag: "🇮🇳" },
     sudan: { name: "السودان", flag: "🇸🇩" },
-    burundi: { name: "بوروندي", flag: "🇧🇮" }
+    burundi: { name: "بوروندي", flag: "🇧🇮" },
+    sierraleone: { name: "سيراليون", flag: "🇸🇱" },
+    "sierra-leone": { name: "سيراليون", flag: "🇸🇱" }
   };
 
   // بطاقات الجنسيات المعتمدة للخطوة الأولى
@@ -49,6 +51,7 @@
     { key: "tanzania", name: "تنزانيا", flag: "🇹🇿", roles: "عمالة منزلية" },
     { key: "sudan", name: "السودان", flag: "🇸🇩", roles: "سائقون وعمالة" },
     { key: "burundi", name: "بوروندي", flag: "🇧🇮", roles: "عمالة منزلية" },
+    { key: "sierraleone", name: "سيراليون", flag: "🇸🇱", roles: "عمالة منزلية" },
     { key: "all", name: "جميع الجنسيات", flag: "🌐", roles: "استعراض كافة السير المتاحة" }
   ];
 

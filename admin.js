@@ -208,24 +208,32 @@
     philippines_driver: { total: 12000, base: 10435, vat: 1565, salary: 1500, time: 89, label: "الفلبين", jobLabel: "سائق خاص" },
     philippines_server: { total: 11119, base: 9669, vat: 1450, salary: 1500, time: 89, label: "الفلبين", jobLabel: "سفرجي منزلي" },
 
-    burundi_maid: { total: 4530, base: 3939, vat: 591, salary: 900, time: 85, label: "بوروندي", jobLabel: "عاملة منزلية" },
-    burundi_nanny: { total: 4530, base: 3939, vat: 591, salary: 900, time: 85, label: "بوروندي", jobLabel: "مربية أطفال" },
-    burundi_cook: { total: 4530, base: 3939, vat: 591, salary: 900, time: 85, label: "بوروندي", jobLabel: "طباخ / طباخة" },
+    burundi_maid: { total: 5000, base: 4348, vat: 652, salary: 900, time: 85, label: "بوروندي", jobLabel: "عاملة منزلية" },
+    burundi_nanny: { total: 5000, base: 4348, vat: 652, salary: 900, time: 85, label: "بوروندي", jobLabel: "مربية أطفال" },
+    burundi_cook: { total: 5000, base: 4348, vat: 652, salary: 900, time: 85, label: "بوروندي", jobLabel: "طباخ / طباخة" },
 
-    ethiopia_maid: { total: 3530, base: 3070, vat: 460, salary: 900, time: 89, label: "إثيوبيا", jobLabel: "عاملة منزلية" },
-    ethiopia_nanny: { total: 3530, base: 3070, vat: 460, salary: 900, time: 89, label: "إثيوبيا", jobLabel: "مربية أطفال" },
-    ethiopia_cook: { total: 3530, base: 3070, vat: 460, salary: 900, time: 89, label: "إثيوبيا", jobLabel: "طباخ / طباخة" },
+    ethiopia_maid: { total: 4500, base: 3913, vat: 587, salary: 900, time: 89, label: "إثيوبيا", jobLabel: "عاملة منزلية" },
+    ethiopia_nanny: { total: 4500, base: 3913, vat: 587, salary: 900, time: 89, label: "إثيوبيا", jobLabel: "مربية أطفال" },
+    ethiopia_cook: { total: 4500, base: 3913, vat: 587, salary: 900, time: 89, label: "إثيوبيا", jobLabel: "طباخ / طباخة" },
     ethiopia_houseboy: { total: 4188, base: 3642, vat: 546, salary: 900, time: 85, label: "إثيوبيا", jobLabel: "عامل منزلي" },
     ethiopia_driver: { total: 4344, base: 3777, vat: 567, salary: 900, time: 85, label: "إثيوبيا", jobLabel: "سائق خاص" },
     ethiopia_guard: { total: 3970, base: 3452, vat: 518, salary: 900, time: 85, label: "إثيوبيا", jobLabel: "حارس منزلي" },
 
-    kenya_maid: { total: 4530, base: 3939, vat: 591, salary: 900, time: 89, label: "كينيا", jobLabel: "عاملة منزلية" },
-    kenya_nanny: { total: 4530, base: 3939, vat: 591, salary: 900, time: 89, label: "كينيا", jobLabel: "مربية أطفال" },
-    kenya_cook: { total: 4530, base: 3939, vat: 591, salary: 900, time: 89, label: "كينيا", jobLabel: "طباخ / طباخة" },
+    kenya_maid: { total: 5000, base: 4348, vat: 652, salary: 900, time: 89, label: "كينيا", jobLabel: "عاملة منزلية" },
+    kenya_nanny: { total: 5000, base: 4348, vat: 652, salary: 900, time: 89, label: "كينيا", jobLabel: "مربية أطفال" },
+    kenya_cook: { total: 5000, base: 4348, vat: 652, salary: 900, time: 89, label: "كينيا", jobLabel: "طباخ / طباخة" },
 
-    uganda_maid: { total: 4990, base: 4339, vat: 651, salary: 900, time: 85, label: "أوغندا", jobLabel: "عاملة منزلية" },
-    uganda_nanny: { total: 4990, base: 4339, vat: 651, salary: 900, time: 85, label: "أوغندا", jobLabel: "مربية أطفال" },
-    uganda_cook: { total: 4990, base: 4339, vat: 651, salary: 900, time: 85, label: "أوغندا", jobLabel: "طباخ / طباخة" },
+    uganda_maid: { total: 5000, base: 4348, vat: 652, salary: 900, time: 85, label: "أوغندا", jobLabel: "عاملة منزلية" },
+    uganda_nanny: { total: 5000, base: 4348, vat: 652, salary: 900, time: 85, label: "أوغندا", jobLabel: "مربية أطفال" },
+    uganda_cook: { total: 5000, base: 4348, vat: 652, salary: 900, time: 85, label: "أوغندا", jobLabel: "طباخ / طباخة" },
+
+    tanzania_maid: { total: 5500, base: 4783, vat: 717, salary: 900, time: 85, label: "تنزانيا", jobLabel: "عاملة منزلية" },
+    tanzania_nanny: { total: 5500, base: 4783, vat: 717, salary: 900, time: 85, label: "تنزانيا", jobLabel: "مربية أطفال" },
+    tanzania_cook: { total: 5500, base: 4783, vat: 717, salary: 900, time: 85, label: "تنزانيا", jobLabel: "طباخ / طباخة" },
+
+    sierraleone_maid: { total: 6000, base: 5217, vat: 783, salary: 900, time: 85, label: "سيراليون", jobLabel: "عاملة منزلية" },
+    sierraleone_nanny: { total: 6000, base: 5217, vat: 783, salary: 900, time: 85, label: "سيراليون", jobLabel: "مربية أطفال" },
+    sierraleone_cook: { total: 6000, base: 5217, vat: 783, salary: 900, time: 85, label: "سيراليون", jobLabel: "طباخ / طباخة" },
 
     bangladesh_maid: { total: 7070, base: 6148, vat: 922, salary: 1000, time: 89, label: "بنجلاديش", jobLabel: "عاملة منزلية" },
     bangladesh_nanny: { total: 7070, base: 6148, vat: 922, salary: 1000, time: 89, label: "بنجلاديش", jobLabel: "مربية أطفال" },
@@ -233,9 +241,9 @@
     bangladesh_houseboy: { total: 3402, base: 2958, vat: 444, salary: 1000, time: 89, label: "بنجلاديش", jobLabel: "عامل منزلي" },
     bangladesh_driver: { total: 3450, base: 3000, vat: 450, salary: 1000, time: 89, label: "بنجلاديش", jobLabel: "سائق خاص" },
 
-    srilanka_maid: { total: 8000, base: 6957, vat: 1043, salary: 1200, time: 89, label: "سريلانكا", jobLabel: "عاملة منزلية" },
-    srilanka_nanny: { total: 8000, base: 6957, vat: 1043, salary: 1200, time: 89, label: "سريلانكا", jobLabel: "مربية أطفال" },
-    srilanka_cook: { total: 8000, base: 6957, vat: 1043, salary: 1200, time: 89, label: "سريلانكا", jobLabel: "طباخ / طباخة" },
+    srilanka_maid: { total: 13500, base: 11739, vat: 1761, salary: 1200, time: 89, label: "سريلانكا", jobLabel: "عاملة منزلية" },
+    srilanka_nanny: { total: 13500, base: 11739, vat: 1761, salary: 1200, time: 89, label: "سريلانكا", jobLabel: "مربية أطفال" },
+    srilanka_cook: { total: 13500, base: 11739, vat: 1761, salary: 1200, time: 89, label: "سريلانكا", jobLabel: "طباخ / طباخة" },
     srilanka_houseboy: { total: 4500, base: 3913, vat: 587, salary: 1200, time: 89, label: "سريلانكا", jobLabel: "عامل منزلي" },
     srilanka_driver: { total: 3000, base: 2609, vat: 391, salary: 1200, time: 89, label: "سريلانكا", jobLabel: "سائق خاص" },
 
