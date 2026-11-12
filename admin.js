@@ -757,8 +757,8 @@
     document.getElementById("religion").value = cv.religion || "";
     document.getElementById("education").value = cv.education || "";
     document.getElementById("marital").value = cv.marital || "";
-    document.getElementById("height").value = cv.height || "";
-    document.getElementById("weight").value = cv.weight || "";
+    document.getElementById("height").value = (cv.height || "").replace(/\s*سم\s*/g, "");
+    document.getElementById("weight").value = (cv.weight || "").replace(/\s*كجم\s*/g, "");
     document.getElementById("languages").value = cv.languages || "";
     document.getElementById("skills").value = cv.skills || "";
     document.getElementById("prevExp").value = cv.prevExp || "";
@@ -823,8 +823,10 @@
     const religion = document.getElementById("religion").value.trim();
     const education = document.getElementById("education").value.trim();
     const marital = document.getElementById("marital").value.trim();
-    const height = document.getElementById("height").value.trim();
-    const weight = document.getElementById("weight").value.trim();
+    const rawHeight = document.getElementById("height").value.trim();
+    const rawWeight = document.getElementById("weight").value.trim();
+    const height = rawHeight ? (rawHeight.includes("سم") ? rawHeight : `${rawHeight} سم`) : "";
+    const weight = rawWeight ? (rawWeight.includes("كجم") ? rawWeight : `${rawWeight} كجم`) : "";
     const actualPhotoInput = document.getElementById("photoActualValue");
     const fallbackPathInput = document.getElementById("photoPath");
     const photoPath = (actualPhotoInput && actualPhotoInput.value.trim()) || 

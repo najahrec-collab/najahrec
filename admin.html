@@ -229,7 +229,7 @@
           <!-- القسم 1: البيانات الشخصية والمهنة -->
           <div class="modal-section">
             <div class="modal-section-title">
-              <span>👤</span>
+              <span class="modal-sec-icon">👤</span>
               <span>البيانات الأساسية والمهنية</span>
             </div>
             <div class="form-grid">
@@ -267,34 +267,71 @@
                 </select>
               </div>
               <div class="form-group">
-                <label class="form-label" for="age">العمر (بالسنوات) *</label>
-                <input type="number" id="age" class="form-input" min="18" max="60" required placeholder="مثال: 28" oninput="updateLivePreview()" />
+                <label class="form-label" for="age">العمر *</label>
+                <div class="input-with-unit">
+                  <input type="number" id="age" class="form-input" min="18" max="60" required placeholder="28" oninput="updateLivePreview()" />
+                  <span class="input-unit-badge">سنة</span>
+                </div>
               </div>
               <div class="form-group">
                 <label class="form-label" for="experience">سنوات الخبرة *</label>
-                <input type="number" id="experience" class="form-input" min="0" max="30" required placeholder="مثال: 5 (أدخل 0 للجديدة)" oninput="updateLivePreview()" />
+                <div class="input-with-unit">
+                  <input type="number" id="experience" class="form-input" min="0" max="30" required placeholder="0" oninput="updateLivePreview()" />
+                  <span class="input-unit-badge">سنوات</span>
+                </div>
               </div>
               <div class="form-group">
-                <label class="form-label" for="salary">الراتب الشهري (ر.س) *</label>
-                <input type="number" id="salary" class="form-input" min="500" max="15000" required placeholder="مثال: 1200" oninput="updateLivePreview()" />
+                <label class="form-label" for="salary">الراتب الشهري *</label>
+                <div class="input-with-unit">
+                  <input type="number" id="salary" class="form-input" min="500" max="15000" required placeholder="1200" oninput="updateLivePreview()" />
+                  <span class="input-unit-badge">ر.س</span>
+                </div>
               </div>
               <div class="form-group">
                 <label class="form-label" for="religion">الديانة</label>
-                <input type="text" id="religion" class="form-input" required placeholder="مثال: مسلمة / مسيحية / هندوسي" oninput="updateLivePreview()" />
+                <input type="text" id="religion" class="form-input" list="religionList" required placeholder="مثال: مسلمة / مسيحية" oninput="updateLivePreview()" />
+                <datalist id="religionList">
+                  <option value="مسلمة" />
+                  <option value="مسلم" />
+                  <option value="مسيحية" />
+                  <option value="مسيحي" />
+                  <option value="هندوسي" />
+                  <option value="بوذية" />
+                </datalist>
               </div>
               <div class="form-group">
                 <label class="form-label" for="education">مستوى التعليم</label>
-                <input type="text" id="education" class="form-input" required placeholder="مثال: ثانوي / دبلوم / متوسط" />
+                <input type="text" id="education" class="form-input" list="educationList" required placeholder="مثال: ثانوي / متوسط / دبلوم" />
+                <datalist id="educationList">
+                  <option value="ثانوي عام" />
+                  <option value="متوسط" />
+                  <option value="ابتدائي" />
+                  <option value="دبلوم تمريض" />
+                  <option value="جامعي" />
+                </datalist>
               </div>
               <div class="form-group">
                 <label class="form-label" for="marital">الحالة الاجتماعية</label>
-                <input type="text" id="marital" class="form-input" required placeholder="مثال: عزباء / متزوجة / متزوج" />
+                <input type="text" id="marital" class="form-input" list="maritalList" required placeholder="مثال: عزباء / متزوجة" />
+                <datalist id="maritalList">
+                  <option value="عزباء" />
+                  <option value="متزوجة" />
+                  <option value="متزوج" />
+                  <option value="مطلقة" />
+                  <option value="أرملة" />
+                </datalist>
               </div>
               <div class="form-group">
-                <label class="form-label" for="height">الطول والوزن</label>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
-                  <input type="text" id="height" class="form-input" required placeholder="الطول (160 سم)" />
-                  <input type="text" id="weight" class="form-input" required placeholder="الوزن (58 كجم)" />
+                <label class="form-label">الطول والوزن</label>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                  <div class="input-with-unit">
+                    <input type="text" id="height" class="form-input" required placeholder="162" />
+                    <span class="input-unit-badge">سم</span>
+                  </div>
+                  <div class="input-with-unit">
+                    <input type="text" id="weight" class="form-input" required placeholder="58" />
+                    <span class="input-unit-badge">كجم</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -303,8 +340,8 @@
           <!-- القسم 2: الصورة الشخصية ومعرض الصور المباشر -->
           <div class="modal-section photo-manager-card">
             <div class="modal-section-title">
-              <span>📸</span>
-              <span>الصورة الشخصية للمرشح/ة</span>
+              <span class="modal-sec-icon">📸</span>
+              <span>الصورة الشخصية ومعرض الصور المباشر</span>
             </div>
             <div class="photo-manager-layout">
               <div class="photo-preview-wrap">
@@ -322,7 +359,7 @@
 
                 <!-- معرض الصور الجاهزة للاختيار السريع بنقرة واحدة -->
                 <div class="avatar-gallery-box">
-                  <span class="avatar-gallery-title">⚡ اختيار سريع من مكتبة الصور الجاهزة (انقر لتطبيق الصورة فوراً):</span>
+                  <span class="avatar-gallery-title">⚡ اختيار سريع بنقرة واحدة من مكتبة الصور الجاهزة:</span>
                   <div class="avatar-gallery" id="avatarQuickGallery">
                     <button type="button" class="avatar-choice" onclick="selectAvatarChoice('images/cv_sara.jpg', this)">
                       <img src="images/cv_sara.jpg" alt="سارة" />
@@ -379,7 +416,7 @@
           <!-- القسم 3: المهارات، اللغات، والخبرات -->
           <div class="modal-section">
             <div class="modal-section-title">
-              <span>💼</span>
+              <span class="modal-sec-icon">💼</span>
               <span>المهارات واللغات والخبرات السابقة</span>
             </div>
             <div class="form-group full-width" style="margin-bottom: 14px;">
@@ -417,7 +454,7 @@
           <!-- القسم 4: حالة السيرة وحجزها -->
           <div class="modal-section">
             <div class="modal-section-title">
-              <span>🏷️</span>
+              <span class="modal-sec-icon">🏷️</span>
               <span>حالة السيرة الذاتية للحجز بالموقع</span>
             </div>
             <div class="status-cards-row">
@@ -442,8 +479,8 @@
           <!-- القسم 5: المعاينة الحية للبطاقة كما ستظهر للعملاء في الموقع -->
           <div class="modal-section" style="background: #ffffff; border: 2px dashed var(--gold-color);">
             <div class="modal-section-title" style="color: var(--gold-700, #a17d1e);">
-              <span>👁️</span>
-              <span>المعاينة الحية للبطاقة (كما ستظهر تماماً للعميل في صفحة السير الذاتية):</span>
+              <span class="modal-sec-icon">👁️</span>
+              <span>المعاينة الحية للبطاقة (تتحدث فوراً مع كل كتابة واختيار):</span>
             </div>
             <div class="cv-live-preview-box">
               <img id="livePreviewImg" src="images/cv_sara.jpg" class="cv-live-preview-photo" alt="معاينة حية" onerror="this.src='images/logo.jpg'" />

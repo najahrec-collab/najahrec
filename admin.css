@@ -315,14 +315,15 @@
   color: #ffffff;
 }
 
-/* --- المودالات والنوافذ المنبثقة --- */
+/* --- المودالات والنوافذ المنبثقة المحسنة --- */
 .admin-modal {
   display: none;
   position: fixed;
   inset: 0;
   z-index: 1000;
-  overflow-y: auto;
-  padding: 20px;
+  overflow: hidden;
+  padding: 16px;
+  box-sizing: border-box;
 }
 
 .admin-modal.open {
@@ -334,29 +335,45 @@
 .admin-modal-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(7, 24, 48, 0.7);
-  backdrop-filter: blur(4px);
+  background: rgba(7, 24, 48, 0.75);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 1000;
 }
 
 .admin-modal-container {
   position: relative;
   background: #ffffff;
-  border-radius: var(--radius-lg);
+  border-radius: 18px;
   width: 100%;
-  max-width: 780px;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3);
+  max-width: 880px;
+  max-height: 92vh;
+  box-shadow: 0 25px 60px -15px rgba(7, 24, 48, 0.45);
   z-index: 1001;
   overflow: hidden;
-  max-height: 90vh;
   display: flex;
   flex-direction: column;
   animation: modalPop 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* النموذج الداخلي يملأ كامل المساحة المتاحة كعمود مرن لمنع انقطاع الأسفل */
+.admin-modal-container form,
+#cvForm {
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 1 1 0% !important;
+  min-height: 0 !important;
+  height: 100% !important;
+  overflow: hidden !important;
+  margin: 0 !important;
 }
 
 .admin-modal-header {
-  padding: 20px 28px;
-  background: var(--bg-light);
-  border-bottom: 1px solid var(--border-color);
+  flex-shrink: 0;
+  padding: 18px 26px;
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -365,36 +382,68 @@
 .admin-modal-header h3 {
   font-size: 1.25rem;
   font-weight: 800;
-  color: var(--primary-color);
+  color: var(--navy-950, #071830);
   margin: 0;
 }
 
 .admin-modal-close {
-  background: none;
+  background: #f1f5f9;
   border: none;
-  font-size: 1.8rem;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
   line-height: 1;
   cursor: pointer;
-  color: var(--text-muted);
-  transition: color 0.2s ease;
+  color: var(--text-muted, #64748b);
+  transition: all 0.2s ease;
 }
 
 .admin-modal-close:hover {
   color: #ef4444;
+  background: #fee2e2;
+  transform: rotate(90deg);
 }
 
 .admin-modal-body {
-  padding: 24px 28px;
+  flex: 1 1 auto;
+  min-height: 0;
+  padding: 22px 26px;
   overflow-y: auto;
+  overflow-x: hidden;
+  background: #f8fafc;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* شريط تمرير أنيق واحترافي داخل المودال */
+.admin-modal-body::-webkit-scrollbar {
+  width: 8px;
+}
+.admin-modal-body::-webkit-scrollbar-track {
+  background: #edf2f7;
+  border-radius: 8px;
+}
+.admin-modal-body::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 8px;
+}
+.admin-modal-body::-webkit-scrollbar-thumb:hover {
+  background: var(--gold-500, #c59b27);
 }
 
 .admin-modal-footer {
-  padding: 18px 28px;
-  background: var(--bg-light);
-  border-top: 1px solid var(--border-color);
+  flex-shrink: 0;
+  padding: 16px 26px;
+  background: #ffffff;
+  border-top: 1px solid #e2e8f0;
   display: flex;
   justify-content: flex-end;
+  align-items: center;
   gap: 12px;
+  box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.03);
 }
 
 /* شبكة الحقول في النموذج */
@@ -418,27 +467,59 @@
 .form-label {
   font-size: 0.88rem;
   font-weight: 700;
-  color: var(--primary-color);
+  color: #1e293b;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .form-input,
 .form-select {
   padding: 11px 14px;
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-sm);
-  font-family: inherit;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 10px;
+  font-family: 'Cairo', sans-serif, system-ui;
   font-size: 0.95rem;
-  background-color: var(--bg-light);
-  color: var(--text-dark);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  font-weight: 600;
+  background-color: #ffffff;
+  color: #0f172a;
+  transition: all 0.2s ease;
   outline: none;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .form-input:focus,
 .form-select:focus {
-  border-color: var(--gold-color);
+  border-color: var(--gold-color, #c59b27);
   background-color: #ffffff;
-  box-shadow: 0 0 0 3px rgba(201, 162, 39, 0.15);
+  box-shadow: 0 0 0 3.5px rgba(197, 155, 39, 0.18);
+}
+
+.input-with-unit {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.input-with-unit .form-input {
+  padding-left: 60px;
+}
+
+.input-unit-badge {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #f1f5f9;
+  color: #64748b;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+  pointer-events: none;
+  user-select: none;
 }
 
 @keyframes fadeIn {
@@ -594,54 +675,81 @@
 
 /* --- تحسينات وتنسيقات نافذة تعديل السيرة الذاتية الاحترافية --- */
 .modal-section {
-  background: var(--bg-light);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  padding: 18px 20px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 20px 22px;
   margin-bottom: 18px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.modal-section:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
 }
 
 .modal-section-title {
-  font-size: 1rem;
+  font-size: 1.05rem;
   font-weight: 800;
-  color: var(--primary-color);
-  margin-bottom: 14px;
+  color: var(--navy-950, #071830);
+  margin-bottom: 16px;
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding-bottom: 8px;
-  border-bottom: 1.5px dashed rgba(201, 162, 39, 0.3);
+  gap: 10px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.modal-sec-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(197, 155, 39, 0.12);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
 }
 
 .avatar-gallery-box {
-  margin-top: 12px;
+  margin-top: 14px;
 }
 
 .avatar-gallery-title {
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   font-weight: 700;
-  color: var(--text-muted);
-  margin-bottom: 8px;
+  color: #475569;
+  margin-bottom: 10px;
   display: block;
 }
 
 .avatar-gallery {
   display: flex;
-  gap: 10px;
+  gap: 12px;
   overflow-x: auto;
-  padding-bottom: 6px;
+  padding: 6px 2px 10px;
+}
+
+.avatar-gallery::-webkit-scrollbar {
+  height: 5px;
+}
+.avatar-gallery::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
 }
 
 .avatar-choice {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
   cursor: pointer;
-  background: transparent;
-  border: none;
-  padding: 4px 6px;
-  border-radius: 8px;
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  padding: 6px 10px;
+  border-radius: 12px;
   transition: all 0.2s ease;
   flex-shrink: 0;
 }
@@ -651,66 +759,72 @@
   height: 48px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid #cbd5e1;
+  border: 2px solid transparent;
   transition: all 0.2s ease;
 }
 
-.avatar-choice:hover img,
+.avatar-choice:hover,
+.avatar-choice.active {
+  border-color: var(--gold-color, #c59b27);
+  background: rgba(197, 155, 39, 0.06);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(197, 155, 39, 0.2);
+}
+
 .avatar-choice.active img {
-  border-color: var(--gold-color);
-  box-shadow: 0 0 0 3px rgba(201, 162, 39, 0.35);
-  transform: scale(1.08);
+  border-color: var(--gold-color, #c59b27);
 }
 
 .avatar-choice span {
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 700;
-  color: var(--text-dark);
+  color: #1e293b;
 }
 
 .quick-tags-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 6px;
+  gap: 8px;
+  margin-top: 8px;
 }
 
 .quick-tag-chip {
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   font-weight: 700;
-  padding: 4px 10px;
-  background: #ffffff;
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-full);
-  color: var(--primary-color);
+  padding: 5px 12px;
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  border-radius: 20px;
+  color: #1e293b;
   cursor: pointer;
   transition: all 0.15s ease;
   user-select: none;
 }
 
 .quick-tag-chip:hover {
-  background: var(--gold-color);
+  background: var(--gold-color, #c59b27);
   color: #ffffff;
-  border-color: var(--gold-color);
+  border-color: var(--gold-color, #c59b27);
   transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(197, 155, 39, 0.3);
 }
 
 .status-cards-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 12px;
+  gap: 14px;
 }
 
 .status-radio-card {
-  border: 2px solid var(--border-color);
-  border-radius: var(--radius-md);
-  padding: 12px 16px;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 14px 18px;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   transition: all 0.2s;
-  background: #fff;
+  background: #ffffff;
   user-select: none;
 }
 
@@ -720,36 +834,36 @@
 
 .status-radio-card.active-available {
   border-color: #10b981;
-  background: rgba(16, 185, 129, 0.08);
-  font-weight: 800;
+  background: rgba(16, 185, 129, 0.06);
+  box-shadow: 0 0 0 1px #10b981;
 }
 
 .status-radio-card.active-reserved {
   border-color: #ef4444;
-  background: rgba(239, 68, 68, 0.08);
-  font-weight: 800;
+  background: rgba(239, 68, 68, 0.06);
+  box-shadow: 0 0 0 1px #ef4444;
 }
 
 /* بطاقة المعاينة المباشرة أثناء التعديل */
 .cv-live-preview-box {
-  background: #ffffff;
-  border: 1.5px solid var(--border-color);
-  border-radius: var(--radius-md);
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
   padding: 16px;
   margin-top: 10px;
   display: flex;
   gap: 16px;
   align-items: center;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.04);
 }
 
 .cv-live-preview-photo {
-  width: 75px;
-  height: 75px;
+  width: 78px;
+  height: 78px;
   border-radius: 12px;
   object-fit: cover;
-  border: 2px solid var(--gold-color);
+  border: 2px solid var(--gold-color, #c59b27);
   flex-shrink: 0;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.06);
 }
 
 .cv-live-preview-details {
