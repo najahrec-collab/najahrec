@@ -433,10 +433,11 @@ svg {
    3. تفعيل زر (تواصل معنا) في البانر للتحويل المباشر إلى الواتساب الرسمي
    4. إنزال شريط الاعتمادات بالكامل تحت الصورة ليظهر كل محتوى الصورة والخلفية
 */
-@media (min-width: 1024px) {
+@media (min-width: 769px) {
   .hero.home-bg {
+    width: 100%;
     aspect-ratio: 1717 / 916;
-    min-height: calc(100vw * 916 / 1717);
+    min-height: 0 !important;
     height: auto;
     background-size: 100% 100%;
     background-position: center top;
@@ -508,10 +509,10 @@ svg {
 .hero-cta-hotspot {
   display: none;
   position: absolute;
-  left: 12.6%;
-  top: 71.6%;
-  width: 19.8%;
-  height: 9.2%;
+  left: 12.5%;
+  top: 74%;
+  width: 20%;
+  height: 8.5%;
   border-radius: 9999px;
   z-index: 20;
   cursor: pointer;
@@ -523,16 +524,16 @@ svg {
   display: none;
   position: absolute;
   left: 13.5%;
-  top: 91.5%;
-  width: 10.5%;
-  height: 6%;
+  top: 84.5%;
+  width: 17%;
+  height: 4.8%;
   border-radius: 6px;
   z-index: 20;
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 769px) {
   .hero-cta-hotspot {
     display: block;
   }

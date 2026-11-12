@@ -146,8 +146,36 @@
 
     <section class="section bg-white">
       <div class="container">
+        <!-- خطوة 1: اختيار الجنسية التفاعلي أولاً -->
+        <div class="nat-step-section" id="natStepSection">
+          <div class="nat-step-header">
+            <span class="nat-step-badge">خطوة 1: تحديد الجنسية</span>
+            <h2 class="nat-step-title">اختر الجنسية المطلوبة لعرض السير الذاتية المتاحة</h2>
+            <p class="nat-step-sub">حدد الدولة التي ترغب بالاستقدام منها لاستعراض الكفاءات الجاهزة للحجز فوراً وفق منصة مساند:</p>
+          </div>
+
+          <div class="nat-cards-grid" id="natCardsGrid">
+            <!-- يتم تعبئة بطاقات الجنسيات التفاعلية مع عدد السير ديناميكياً -->
+          </div>
+        </div>
+
+        <!-- شريط الجنسية النشطة بعد الاختيار -->
+        <div class="active-nat-banner" id="activeNatBanner" style="display: none;">
+          <div class="active-nat-info">
+            <span class="active-nat-flag" id="activeNatFlag">🇪🇹</span>
+            <div class="active-nat-texts">
+              <span class="active-nat-label">الجنسية المحددة حالياً:</span>
+              <h3 class="active-nat-name" id="activeNatName">إثيوبيا</h3>
+            </div>
+            <span class="active-nat-count" id="activeNatCount">2 سيرة متوفرة</span>
+          </div>
+          <button type="button" class="btn-change-nat" id="btnChangeNat" onclick="window.resetNationalityChoice()">
+            🔄 اختيار دولة أخرى
+          </button>
+        </div>
+
         <!-- شريط البحث والتصفية الزجاجي -->
-        <div class="filter-bar">
+        <div class="filter-bar" id="cvFiltersBar" style="display: none;">
           <div class="filter-group">
             <label class="filter-label" for="searchInput">البحث بالاسم والمهارات</label>
             <input type="text" id="searchInput" class="form-input" placeholder="اكتب اسم أو مهارة أو ديانة..." />
@@ -155,14 +183,20 @@
           <div class="filter-group">
             <label class="filter-label" for="nationalityFilter">الجنسية</label>
             <select id="nationalityFilter" class="form-select">
-              <option value="">كل الجنسيات</option>
-              <option value="ethiopia">إثيوبيا</option>
-              <option value="kenya">كينيا</option>
-              <option value="uganda">أوغندا</option>
-              <option value="philippines">الفلبين</option>
-              <option value="tanzania">تنزانيا</option>
-              <option value="bangladesh">بنجلاديش</option>
-              <option value="srilanka">سريلانكا</option>
+              <option value="">-- اختر الجنسية أولاً --</option>
+              <option value="ethiopia">إثيوبيا 🇪🇹</option>
+              <option value="kenya">كينيا 🇰🇪</option>
+              <option value="uganda">أوغندا 🇺🇬</option>
+              <option value="philippines">الفلبين 🇵🇭</option>
+              <option value="tanzania">تنزانيا 🇹🇿</option>
+              <option value="bangladesh">بنجلاديش 🇧🇩</option>
+              <option value="srilanka">سريلانكا 🇱🇰</option>
+              <option value="india">الهند 🇮🇳</option>
+              <option value="sudan">السودان 🇸🇩</option>
+              <option value="burundi">بوروندي 🇧🇮</option>
+              <option value="all">عرض جميع الجنسيات 🌐</option>
+            </select>
+          </div>
               <option value="india">الهند</option>
               <option value="sudan">السودان</option>
               <option value="burundi">بوروندي</option>
@@ -801,5 +835,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 </script>
+  <script src="resumes.js"></script>
 </body>
 </html>

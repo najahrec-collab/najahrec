@@ -205,143 +205,273 @@
     </div>
   </div>
 
-  <!-- 3. مودال إضافة / تعديل سيرة ذاتية -->
+  <!-- 3. مودال إضافة / تعديل سيرة ذاتية محسن بالكامل -->
   <div id="cvEditorModal" class="admin-modal">
     <div class="admin-modal-backdrop" onclick="closeEditorModal()"></div>
-    <div class="admin-modal-container">
+    <div class="admin-modal-container" style="max-width: 860px;">
       <div class="admin-modal-header">
-        <h3 id="modalFormTitle">إضافة سيرة ذاتية جديدة</h3>
-        <button type="button" class="admin-modal-close" onclick="closeEditorModal()">&times;</button>
+        <div>
+          <h3 id="modalFormTitle" style="display: flex; align-items: center; gap: 8px;">
+            <span>✏️</span>
+            <span>تعديل السيرة الذاتية</span>
+          </h3>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin: 3px 0 0 0; font-weight: 600;">
+            قم بتحديث بيانات المرشحة/المرشح والصورة والمهارات وحالة الحجز، وسيتم التحديث فوراً في الموقع.
+          </p>
+        </div>
+        <button type="button" class="admin-modal-close" onclick="closeEditorModal()" aria-label="إغلاق">&times;</button>
       </div>
+      
       <form id="cvForm" onsubmit="saveCvForm(event)">
         <input type="hidden" id="editIndex" value="" />
         <div class="admin-modal-body">
-          <div class="form-grid">
-            <div class="form-group">
-              <label class="form-label" for="fullname">الاسم الكامل (أو الرمز)</label>
-              <input type="text" id="fullname" class="form-input" required placeholder="مثال: سارة م." />
+          
+          <!-- القسم 1: البيانات الشخصية والمهنة -->
+          <div class="modal-section">
+            <div class="modal-section-title">
+              <span>👤</span>
+              <span>البيانات الأساسية والمهنية</span>
             </div>
-            <div class="form-group">
-              <label class="form-label" for="job">المهنة</label>
-              <select id="job" class="form-select" required>
-                <option value="maid">استقدام عاملة منزلية</option>
-                <option value="houseboy">استقدام عامل منزلي</option>
-                <option value="driver">استقدام سائق خاص</option>
-                <option value="chef">استقدام طباخ أو طباخة منزلية</option>
-                <option value="nurse">استقدام ممرض أو ممرضة منزلية</option>
-                <option value="babysitter">استقدام مربية أطفال</option>
-                <option value="elderly">استقدام مقدم رعاية لكبار السن</option>
-                <option value="guard">استقدام حارس منزلي</option>
-                <option value="gardener">استقدام مزارع منزلي أو بستاني</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="nationality">الجنسية</label>
-              <select id="nationality" class="form-select" required>
-                <option value="ethiopia">إثيوبيا</option>
-                <option value="kenya">كينيا</option>
-                <option value="uganda">أوغندا</option>
-                <option value="philippines">الفلبين</option>
-                <option value="tanzania">تنزانيا</option>
-                <option value="bangladesh">بنجلاديش</option>
-                <option value="srilanka">سريلانكا</option>
-                <option value="india">الهند</option>
-                <option value="sudan">السودان</option>
-                <option value="burundi">بوروندي</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="age">العمر (بالسنوات)</label>
-              <input type="number" id="age" class="form-input" min="18" max="60" required placeholder="مثال: 28" />
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="experience">سنوات الخبرة</label>
-              <input type="number" id="experience" class="form-input" min="0" max="30" required placeholder="مثال: 5 (أدخل 0 للجديدة)" />
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="salary">الراتب الشهري (ر.س)</label>
-              <input type="number" id="salary" class="form-input" min="500" max="10000" required placeholder="مثال: 1200" />
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="religion">الديانة</label>
-              <input type="text" id="religion" class="form-input" required placeholder="مثال: مسيحية / مسلمة / هندوسي" />
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="education">مستوى التعليم</label>
-              <input type="text" id="education" class="form-input" required placeholder="مثال: ثانوي / دبلوم / متوسط" />
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="marital">الحالة الاجتماعية</label>
-              <input type="text" id="marital" class="form-input" required placeholder="مثال: عزباء / متزوجة / متزوج" />
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="height">الطول</label>
-              <input type="text" id="height" class="form-input" required placeholder="مثال: 160 سم" />
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="weight">الوزن</label>
-              <input type="text" id="weight" class="form-input" required placeholder="مثال: 58 كجم" />
-            </div>
-            <div class="form-group full-width photo-manager-card">
-              <label class="form-label" style="margin-bottom: 8px;">الصورة الشخصية للمرشح/ة</label>
-              <div class="photo-manager-layout">
-                <div class="photo-preview-wrap">
-                  <img id="photoPreviewImg" src="images/cv_sara.jpg" alt="معاينة الصورة" onerror="this.src='images/logo.jpg'" />
-                  <span class="photo-preview-badge">معاينة حية</span>
-                </div>
-                <div class="photo-manager-controls">
-                  <div class="photo-upload-actions">
-                    <button type="button" class="btn-action btn-upload-photo" onclick="triggerPhotoUpload()">
-                      📁 رفع صورة جديدة من جهازك
-                    </button>
-                    <input type="file" id="photoFileInput" accept="image/*" style="display: none;" onchange="handleModalPhotoUpload(event)" />
-                    <span class="photo-upload-hint">يدعم JPG, PNG, WEBP — يتم ضغط الصورة وتحسينها تلقائياً للحفظ السريع</span>
-                  </div>
-                  <div class="photo-select-row" style="margin-top: 10px;">
-                    <label class="form-sublabel" style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted); display: block; margin-bottom: 4px;">أو اختيار صورة جاهزة من المكتبة:</label>
-                    <select id="photoSelect" class="form-select" onchange="syncPhotoInput(this.value)">
-                      <option value="images/cv_sara.jpg">سارة (إثيوبيا - عاملة منزلية)</option>
-                      <option value="images/cv_mary.jpg">ماري (كينيا - عاملة منزلية)</option>
-                      <option value="images/cv_john.jpg">جون (أوغندا - سائق خاص)</option>
-                      <option value="images/cv_grace.jpg">جريس (الفلبين - مربية أطفال)</option>
-                      <option value="images/cv_kumar.jpg">كومار (الهند - سائق خاص)</option>
-                      <option value="images/cv_fatima.jpg">فاطمة (إثيوبيا - طباخة)</option>
-                      <option value="images/logo.jpg">شعار المكتب (صورة افتراضية)</option>
-                      <option value="custom">مسار أو رابط خارجي مخصص...</option>
-                    </select>
-                  </div>
-                  <div id="customPathWrapper" style="display: none; margin-top: 8px;">
-                    <label class="form-sublabel" style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted); display: block; margin-bottom: 4px;">رابط أو مسار الصورة المخصص:</label>
-                    <input type="text" id="photoPath" class="form-input" placeholder="images/... أو https://..." oninput="updatePreviewFromInput(this.value)" />
-                  </div>
-                  <input type="hidden" id="photoActualValue" value="images/cv_sara.jpg" />
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label" for="fullname">الاسم الكامل أو الرمز المعتمد *</label>
+                <input type="text" id="fullname" class="form-input" required placeholder="مثال: سارة م. أو NJ-101" oninput="updateLivePreview()" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="job">المهنة المصرحة *</label>
+                <select id="job" class="form-select" required onchange="updateLivePreview()">
+                  <option value="maid">عاملة منزلية</option>
+                  <option value="houseboy">عامل منزلي</option>
+                  <option value="driver">سائق خاص</option>
+                  <option value="chef">طباخ أو طباخة منزلية</option>
+                  <option value="nurse">ممرض أو ممرضة منزلية</option>
+                  <option value="babysitter">مربية أطفال</option>
+                  <option value="elderly">رعاية كبار السن</option>
+                  <option value="guard">حارس منزلي</option>
+                  <option value="gardener">مزارع منزلي أو بستاني</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="nationality">الجنسية المعتمدة *</label>
+                <select id="nationality" class="form-select" required onchange="updateLivePreview()">
+                  <option value="ethiopia">🇪🇹 إثيوبيا</option>
+                  <option value="kenya">🇰🇪 كينيا</option>
+                  <option value="uganda">🇺🇬 أوغندا</option>
+                  <option value="philippines">🇵🇭 الفلبين</option>
+                  <option value="tanzania">🇹🇿 تنزانيا</option>
+                  <option value="bangladesh">🇧🇩 بنجلاديش</option>
+                  <option value="srilanka">🇱🇰 سريلانكا</option>
+                  <option value="india">🇮🇳 الهند</option>
+                  <option value="sudan">🇸🇩 السودان</option>
+                  <option value="burundi">🇧🇮 بوروندي</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="age">العمر (بالسنوات) *</label>
+                <input type="number" id="age" class="form-input" min="18" max="60" required placeholder="مثال: 28" oninput="updateLivePreview()" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="experience">سنوات الخبرة *</label>
+                <input type="number" id="experience" class="form-input" min="0" max="30" required placeholder="مثال: 5 (أدخل 0 للجديدة)" oninput="updateLivePreview()" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="salary">الراتب الشهري (ر.س) *</label>
+                <input type="number" id="salary" class="form-input" min="500" max="15000" required placeholder="مثال: 1200" oninput="updateLivePreview()" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="religion">الديانة</label>
+                <input type="text" id="religion" class="form-input" required placeholder="مثال: مسلمة / مسيحية / هندوسي" oninput="updateLivePreview()" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="education">مستوى التعليم</label>
+                <input type="text" id="education" class="form-input" required placeholder="مثال: ثانوي / دبلوم / متوسط" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="marital">الحالة الاجتماعية</label>
+                <input type="text" id="marital" class="form-input" required placeholder="مثال: عزباء / متزوجة / متزوج" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="height">الطول والوزن</label>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                  <input type="text" id="height" class="form-input" required placeholder="الطول (160 سم)" />
+                  <input type="text" id="weight" class="form-input" required placeholder="الوزن (58 كجم)" />
                 </div>
               </div>
             </div>
-            <div class="form-group full-width">
-              <label class="form-label" for="languages">اللغات</label>
-              <input type="text" id="languages" class="form-input" required placeholder="مثال: العربية (ممتاز)، الأمهرية (اللغة الأم)" />
+          </div>
+
+          <!-- القسم 2: الصورة الشخصية ومعرض الصور المباشر -->
+          <div class="modal-section photo-manager-card">
+            <div class="modal-section-title">
+              <span>📸</span>
+              <span>الصورة الشخصية للمرشح/ة</span>
             </div>
-            <div class="form-group full-width">
-              <label class="form-label" for="skills">المهارات الوظيفية الأساسية (افصل بينها بفاصلة "،")</label>
-              <input type="text" id="skills" class="form-input" required placeholder="مثال: الطهي، التنظيف العالي، الكي، الغسيل" />
-            </div>
-            <div class="form-group full-width">
-              <label class="form-label" for="prevExp">الخبرات العملية السابقة بالتفصيل</label>
-              <input type="text" id="prevExp" class="form-input" required placeholder="مثال: 3 سنوات بالرياض، سنتين ببيروت" />
-            </div>
-            <div class="form-group full-width">
-              <label class="form-label" for="status">حالة السيرة الذاتية</label>
-              <select id="status" class="form-select" required>
-                <option value="available">متاحة للحجز (اللون الأخضر)</option>
-                <option value="reserved">محجوزة (اللون الأحمر)</option>
-              </select>
+            <div class="photo-manager-layout">
+              <div class="photo-preview-wrap">
+                <img id="photoPreviewImg" src="images/cv_sara.jpg" alt="معاينة الصورة" onerror="this.src='images/logo.jpg'" />
+                <span class="photo-preview-badge">معاينة حية</span>
+              </div>
+              <div class="photo-manager-controls" style="flex: 1;">
+                <div class="photo-upload-actions">
+                  <button type="button" class="btn-action btn-upload-photo" onclick="triggerPhotoUpload()">
+                    📁 رفع صورة جديدة من جهازك
+                  </button>
+                  <input type="file" id="photoFileInput" accept="image/*" style="display: none;" onchange="handleModalPhotoUpload(event)" />
+                  <span class="photo-upload-hint">يدعم JPG, PNG, WEBP — يتم ضغط الصورة وتحسينها تلقائياً</span>
+                </div>
+
+                <!-- معرض الصور الجاهزة للاختيار السريع بنقرة واحدة -->
+                <div class="avatar-gallery-box">
+                  <span class="avatar-gallery-title">⚡ اختيار سريع من مكتبة الصور الجاهزة (انقر لتطبيق الصورة فوراً):</span>
+                  <div class="avatar-gallery" id="avatarQuickGallery">
+                    <button type="button" class="avatar-choice" onclick="selectAvatarChoice('images/cv_sara.jpg', this)">
+                      <img src="images/cv_sara.jpg" alt="سارة" />
+                      <span>سارة</span>
+                    </button>
+                    <button type="button" class="avatar-choice" onclick="selectAvatarChoice('images/cv_mary.jpg', this)">
+                      <img src="images/cv_mary.jpg" alt="ماري" />
+                      <span>ماري</span>
+                    </button>
+                    <button type="button" class="avatar-choice" onclick="selectAvatarChoice('images/cv_john.jpg', this)">
+                      <img src="images/cv_john.jpg" alt="جون" />
+                      <span>جون</span>
+                    </button>
+                    <button type="button" class="avatar-choice" onclick="selectAvatarChoice('images/cv_grace.jpg', this)">
+                      <img src="images/cv_grace.jpg" alt="جريس" />
+                      <span>جريس</span>
+                    </button>
+                    <button type="button" class="avatar-choice" onclick="selectAvatarChoice('images/cv_kumar.jpg', this)">
+                      <img src="images/cv_kumar.jpg" alt="كومار" />
+                      <span>كومار</span>
+                    </button>
+                    <button type="button" class="avatar-choice" onclick="selectAvatarChoice('images/cv_fatima.jpg', this)">
+                      <img src="images/cv_fatima.jpg" alt="فاطمة" />
+                      <span>فاطمة</span>
+                    </button>
+                    <button type="button" class="avatar-choice" onclick="selectAvatarChoice('images/logo.jpg', this)">
+                      <img src="images/logo.jpg" alt="شعار النجاح" />
+                      <span>افتراضي</span>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="photo-select-row" style="margin-top: 10px;">
+                  <select id="photoSelect" class="form-select" onchange="syncPhotoInput(this.value)">
+                    <option value="images/cv_sara.jpg">سارة (إثيوبيا - عاملة منزلية)</option>
+                    <option value="images/cv_mary.jpg">ماري (كينيا - عاملة منزلية)</option>
+                    <option value="images/cv_john.jpg">جون (أوغندا - سائق خاص)</option>
+                    <option value="images/cv_grace.jpg">جريس (الفلبين - مربية أطفال)</option>
+                    <option value="images/cv_kumar.jpg">كومار (الهند - سائق خاص)</option>
+                    <option value="images/cv_fatima.jpg">فاطمة (إثيوبيا - طباخة)</option>
+                    <option value="images/logo.jpg">شعار المكتب (صورة افتراضية)</option>
+                    <option value="custom">مسار أو رابط خارجي مخصص...</option>
+                  </select>
+                </div>
+                <div id="customPathWrapper" style="display: none; margin-top: 8px;">
+                  <label class="form-sublabel" style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted); display: block; margin-bottom: 4px;">رابط أو مسار الصورة المخصص:</label>
+                  <input type="text" id="photoPath" class="form-input" placeholder="images/... أو https://..." oninput="updatePreviewFromInput(this.value)" />
+                </div>
+                <input type="hidden" id="photoActualValue" value="images/cv_sara.jpg" />
+              </div>
             </div>
           </div>
+
+          <!-- القسم 3: المهارات، اللغات، والخبرات -->
+          <div class="modal-section">
+            <div class="modal-section-title">
+              <span>💼</span>
+              <span>المهارات واللغات والخبرات السابقة</span>
+            </div>
+            <div class="form-group full-width" style="margin-bottom: 14px;">
+              <label class="form-label" for="languages">اللغات المتقنة *</label>
+              <input type="text" id="languages" class="form-input" required placeholder="مثال: العربية (ممتاز)، الإنجليزية (جيد جداً)" oninput="updateLivePreview()" />
+              <div class="quick-tags-container">
+                <span class="quick-tag-chip" onclick="addLanguageTag('العربية (ممتاز)')">+ العربية (ممتاز)</span>
+                <span class="quick-tag-chip" onclick="addLanguageTag('الإنجليزية (بطلاقة)')">+ الإنجليزية (بطلاقة)</span>
+                <span class="quick-tag-chip" onclick="addLanguageTag('العربية (متوسط)')">+ العربية (متوسط)</span>
+                <span class="quick-tag-chip" onclick="addLanguageTag('الإنجليزية (أساسي)')">+ الإنجليزية (أساسي)</span>
+              </div>
+            </div>
+            
+            <div class="form-group full-width" style="margin-bottom: 14px;">
+              <label class="form-label" for="skills">المهارات الوظيفية الأساسية (افصل بينها بفاصلة "،") *</label>
+              <input type="text" id="skills" class="form-input" required placeholder="مثال: الطهي، التنظيف العالي، الكي، الغسيل" oninput="updateLivePreview()" />
+              <div class="quick-tags-container">
+                <span class="quick-tag-chip" onclick="addSkillTag('الطهي الخليجي')">+ الطهي الخليجي</span>
+                <span class="quick-tag-chip" onclick="addSkillTag('رعاية الأطفال')">+ رعاية الأطفال</span>
+                <span class="quick-tag-chip" onclick="addSkillTag('رعاية كبار السن')">+ رعاية كبار السن</span>
+                <span class="quick-tag-chip" onclick="addSkillTag('النظافة الشاملة')">+ النظافة الشاملة</span>
+                <span class="quick-tag-chip" onclick="addSkillTag('الكي والغسيل')">+ الكي والغسيل</span>
+                <span class="quick-tag-chip" onclick="addSkillTag('رخصة قيادة سعودية')">+ رخصة قيادة سعودية</span>
+                <span class="quick-tag-chip" onclick="addSkillTag('معرفة شوارع الرياض')">+ معرفة شوارع الرياض</span>
+                <span class="quick-tag-chip" onclick="addSkillTag('استخدام GPS')">+ استخدام GPS</span>
+              </div>
+            </div>
+
+            <div class="form-group full-width">
+              <label class="form-label" for="prevExp">الخبرات العملية السابقة بالتفصيل *</label>
+              <input type="text" id="prevExp" class="form-input" required placeholder="مثال: 3 سنوات بالرياض لعائلة راقية، سنتين بدبي" oninput="updateLivePreview()" />
+            </div>
+          </div>
+
+          <!-- القسم 4: حالة السيرة وحجزها -->
+          <div class="modal-section">
+            <div class="modal-section-title">
+              <span>🏷️</span>
+              <span>حالة السيرة الذاتية للحجز بالموقع</span>
+            </div>
+            <div class="status-cards-row">
+              <div class="status-radio-card active-available" id="statusCardAvailable" onclick="setStatusChoice('available')">
+                <input type="radio" name="statusOption" id="optAvailable" value="available" checked style="accent-color: #10b981;" />
+                <div>
+                  <div style="font-weight: 800; color: #047857; font-size: 0.95rem;">🟢 متاحة للاستقدام الفوري</div>
+                  <div style="font-size: 0.8rem; color: var(--text-muted);">تظهر بزر حجز واتساب مباشر للعملاء بالموقع</div>
+                </div>
+              </div>
+              <div class="status-radio-card" id="statusCardReserved" onclick="setStatusChoice('reserved')">
+                <input type="radio" name="statusOption" id="optReserved" value="reserved" style="accent-color: #ef4444;" />
+                <div>
+                  <div style="font-weight: 800; color: #b91c1c; font-size: 0.95rem;">🔴 محجوزة لعميل آخر</div>
+                  <div style="font-size: 0.8rem; color: var(--text-muted);">تظهر بشارة "محجوزة" لتفادي تكرار طلبها</div>
+                </div>
+              </div>
+            </div>
+            <input type="hidden" id="status" value="available" />
+          </div>
+
+          <!-- القسم 5: المعاينة الحية للبطاقة كما ستظهر للعملاء في الموقع -->
+          <div class="modal-section" style="background: #ffffff; border: 2px dashed var(--gold-color);">
+            <div class="modal-section-title" style="color: var(--gold-700, #a17d1e);">
+              <span>👁️</span>
+              <span>المعاينة الحية للبطاقة (كما ستظهر تماماً للعميل في صفحة السير الذاتية):</span>
+            </div>
+            <div class="cv-live-preview-box">
+              <img id="livePreviewImg" src="images/cv_sara.jpg" class="cv-live-preview-photo" alt="معاينة حية" onerror="this.src='images/logo.jpg'" />
+              <div class="cv-live-preview-details">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                  <h4 id="livePreviewName">سارة م.</h4>
+                  <span id="livePreviewStatusBadge" style="font-size: 0.75rem; font-weight: 800; padding: 3px 10px; border-radius: 99px; background: rgba(16,185,129,0.1); color: #059669;">🟢 متاحة للحجز</span>
+                </div>
+                <div class="cv-live-preview-meta">
+                  <span id="livePreviewJob" style="color: var(--primary-color);">عاملة منزلية</span> •
+                  <span id="livePreviewNat">🇪🇹 إثيوبيا</span> •
+                  <span id="livePreviewAge">26 سنة</span> •
+                  <span id="livePreviewExp">3 سنوات خبرة</span> •
+                  <span id="livePreviewSalary" style="color: var(--gold-600); font-weight: 800;">1,000 ر.س</span>
+                </div>
+                <div id="livePreviewSkills" style="font-size: 0.78rem; color: var(--text-muted); margin-top: 6px; font-weight: 600;">
+                  المهارات: النظافة الشاملة، الكي، الغسيل
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
         <div class="admin-modal-footer">
-          <button type="button" class="btn-action btn-secondary" onclick="closeEditorModal()">إلغاء</button>
-          <button type="submit" class="btn-action">حفظ التغييرات</button>
+          <button type="button" class="btn-action btn-secondary" onclick="closeEditorModal()">إلغاء ✕</button>
+          <button type="submit" class="btn-action" style="background: linear-gradient(135deg, var(--gold-500), var(--gold-400)); color: var(--navy-950); font-weight: 800; padding: 12px 28px; box-shadow: 0 4px 14px rgba(201,162,39,0.4);">
+            حفظ التغييرات ومزامنة الموقع 💾
+          </button>
         </div>
       </form>
     </div>

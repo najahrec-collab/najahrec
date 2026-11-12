@@ -1,5 +1,5 @@
 /**
- * resumes.js - نظام إدارة وتصفية السير الذاتية التفاعلي
+ * resumes.js - نظام إدارة وتصفية السير الذاتية التفاعلي (مبني على اختيار الجنسية أولاً)
  * مكتب النجاح للاستقدام
  */
 
@@ -31,10 +31,26 @@
     tanzania: { name: "تنزانيا", flag: "🇹🇿" },
     bangladesh: { name: "بنجلاديش", flag: "🇧🇩" },
     srilanka: { name: "سريلانكا", flag: "🇱🇰" },
+    "sri-lanka": { name: "سريلانكا", flag: "🇱🇰" },
     india: { name: "الهند", flag: "🇮🇳" },
     sudan: { name: "السودان", flag: "🇸🇩" },
     burundi: { name: "بوروندي", flag: "🇧🇮" }
   };
+
+  // بطاقات الجنسيات المعتمدة للخطوة الأولى
+  const NATIONS_CATALOG = [
+    { key: "ethiopia", name: "إثيوبيا", flag: "🇪🇹", roles: "عاملة منزلية، طاهية" },
+    { key: "kenya", name: "كينيا", flag: "🇰🇪", roles: "عاملة منزلية، رعاية" },
+    { key: "uganda", name: "أوغندا", flag: "🇺🇬", roles: "سائق خاص، عاملة منزلية" },
+    { key: "philippines", name: "الفلبين", flag: "🇵🇭", roles: "مربية أطفال، تمريض" },
+    { key: "india", name: "الهند", flag: "🇮🇳", roles: "سائق خاص" },
+    { key: "srilanka", name: "سريلانكا", flag: "🇱🇰", roles: "عاملة منزلية، مربية" },
+    { key: "bangladesh", name: "بنجلاديش", flag: "🇧🇩", roles: "عمالة منزلية وسائقون" },
+    { key: "tanzania", name: "تنزانيا", flag: "🇹🇿", roles: "عمالة منزلية" },
+    { key: "sudan", name: "السودان", flag: "🇸🇩", roles: "سائقون وعمالة" },
+    { key: "burundi", name: "بوروندي", flag: "🇧🇮", roles: "عمالة منزلية" },
+    { key: "all", name: "جميع الجنسيات", flag: "🌐", roles: "استعراض كافة السير المتاحة" }
+  ];
 
   // قاعدة بيانات السير الذاتية الافتراضية المعتمدة
   const DEFAULT_RESUMES = [
@@ -100,18 +116,18 @@
       fullname: "جريس ب.",
       job: "babysitter",
       nationality: "philippines",
-      age: 28,
+      age: 31,
       experience: 5,
       salary: 1500,
-      religion: "مسيحية كاثوليكية",
-      education: "دبلوم تربية وتعليم أطفال",
+      religion: "مسيحية",
+      education: "بكالوريوس تمريض",
       marital: "عزباء",
       height: "158 سم",
-      weight: "54 كجم",
+      weight: "52 كجم",
       photo: "images/cv_grace.jpg",
-      languages: "الإنجليزية (طلاقة تامة)، العربية (جيد)",
-      skills: "رعاية حديثي الولادة، التعليم التفاعلي، الإسعافات الأولية، تحضير وجبات الأطفال",
-      prevExp: "3 سنوات في دبي، سنتان بالفلبين بحضانات معتمدة",
+      languages: "الإنجليزية (بطلاقة فائقة)، العربية (متوسط)",
+      skills: "رعاية حديثي الولادة والأطفال، الإسعافات الأولية، مساعدة بالدراسة",
+      prevExp: "3 سنوات في دبي مع عائلة دبلوماسية، سنتان بمانيلا",
       status: "available"
     },
     {
@@ -121,16 +137,16 @@
       nationality: "india",
       age: 35,
       experience: 8,
-      salary: 1500,
+      salary: 1600,
       religion: "هندوسي",
-      education: "متوسط + رخصة قيادة سعودية سارية",
-      marital: "متزوج",
+      education: "ثانوي + رخصة قيادة سعودية سارية",
+      marital: "متزوج ولديه 3 أبناء",
       height: "170 سم",
       weight: "68 كجم",
       photo: "images/cv_kumar.jpg",
-      languages: "العربية (ممتاز)، الهندية، الإنجليزية",
-      skills: "التوصيل للمدارس، قيادة سيارات فاخرة، الالتزام بالمواعيد، هدوء تام",
-      prevExp: "6 سنوات سائق خاص لعائلة بالدمام والرياض",
+      languages: "العربية (بطلاقة)، الهندية، الإنجليزية (أساسي)",
+      skills: "القيادة الهادئة والآمنة، الالتزام بالمواعيد، العناية بنظافة السيارة",
+      prevExp: "6 سنوات في الرياض والدمام مع نفس العائلة",
       status: "available"
     },
     {
@@ -138,45 +154,45 @@
       fullname: "فاطمة ع.",
       job: "chef",
       nationality: "ethiopia",
-      age: 31,
-      experience: 5,
+      age: 33,
+      experience: 7,
       salary: 1200,
       religion: "مسلمة",
-      education: "ثانوي عام",
-      marital: "متزوجة",
+      education: "متوسط + دورات طهي منزلي",
+      marital: "أرملة",
       height: "160 سم",
-      weight: "60 كجم",
+      weight: "65 كجم",
       photo: "images/cv_fatima.jpg",
       languages: "العربية (ممتاز)، الأمهرية",
-      skills: "إعداد الأطباق الخليجية (الكبسة، المندي، الشوربات، المعجنات، السلطات)",
-      prevExp: "3 سنوات طباخة لعائلة بجدة، سنتان بأديس أبابا",
+      skills: "الكبسات السعودية، المرقوق، المعجنات، الإيدامات، الحلويات الشرقية",
+      prevExp: "5 سنوات طاهية رئيسية في قصر بالرياض، سنتان بجدة",
       status: "available"
     },
     {
       id: "NJ-107",
-      fullname: "كلودين ن.",
+      fullname: "عائشة م.",
       job: "maid",
-      nationality: "burundi",
+      nationality: "uganda",
       age: 24,
       experience: 0,
       salary: 900,
-      religion: "مسيحية",
-      education: "متوسط",
+      religion: "مسلمة",
+      education: "ثانوي عام",
       marital: "عزباء",
       height: "163 سم",
-      weight: "55 كجم",
+      weight: "56 كجم",
       photo: "images/logo.jpg",
-      languages: "الفرنسية، السواحلية، العربية (أساسيات مقبولة)",
-      skills: "التنظيف، الغسيل، ترتيب الغرف، رغبة سريعة بالتعلم",
-      prevExp: "جديدة كلياً بدون خبرة سابقة، مدربة بالمركز المعتمد",
+      languages: "الإنجليزية (جيد)، العربية (مبتدئ)",
+      skills: "نشيطة وسريعة التعلم، تنظيف عام، غسيل ملابس، مساعدة بالمطبخ",
+      prevExp: "جديدة كلياً بدون خبرة سابقة (تدريب مهني بمركز كمبالا)",
       status: "available"
     },
     {
       id: "NJ-108",
-      fullname: "شانيكا ر.",
+      fullname: "سودارما ك.",
       job: "maid",
       nationality: "srilanka",
-      age: 33,
+      age: 36,
       experience: 6,
       salary: 1200,
       religion: "بوذية",
@@ -205,60 +221,149 @@
     } catch (e) {
       console.warn("Could not read resumes from localStorage:", e);
     }
-    // حفظ الافتراضي إذا لم يكن موجوداً
     localStorage.setItem(STORAGE_KEY, JSON.stringify(DEFAULT_RESUMES));
     return DEFAULT_RESUMES;
   }
 
-  // عناصر واجهة المستخدم
-  const resumesGrid = document.getElementById("resumesGrid");
-  const searchInput = document.getElementById("searchInput");
-  const nationalityFilter = document.getElementById("nationalityFilter");
-  const jobFilter = document.getElementById("jobFilter");
-  const experienceFilter = document.getElementById("experienceFilter");
-  const sortSelector = document.getElementById("sortSelector");
-
   let allResumes = [];
   let filteredResumes = [];
+  let selectedNationality = ""; // تبدأ فارغة ليتم تحديد الجنسية أولاً
 
-  // إنشاء شريط الإحصائيات قبل الشبكة
-  let statsBar = document.getElementById("resumesStatsBar");
-  if (!statsBar && resumesGrid) {
-    statsBar = document.createElement("div");
-    statsBar.id = "resumesStatsBar";
-    statsBar.className = "resumes-stats-bar";
-    resumesGrid.parentNode.insertBefore(statsBar, resumesGrid);
+  // حساب عدد السير المتاحة لكل جنسية
+  function getAvailCount(natKey) {
+    if (natKey === "all") {
+      return allResumes.filter((r) => r.status === "available").length;
+    }
+    return allResumes.filter((r) => r.nationality === natKey && r.status === "available").length;
   }
 
-  // إنشاء نافذة تفاصيل السيرة الذاتية (Modal)
-  let cvModal = document.getElementById("cvDetailsModal");
-  if (!cvModal) {
-    cvModal = document.createElement("div");
-    cvModal.id = "cvDetailsModal";
-    cvModal.className = "cv-modal";
-    cvModal.innerHTML = `
-      <div class="cv-modal-backdrop" id="cvModalCloseBackdrop"></div>
-      <div class="cv-modal-container">
-        <div class="cv-modal-header">
-          <h3 id="cvModalTitle">تفاصيل السيرة الذاتية الكاملة</h3>
-          <button type="button" class="cv-modal-close" id="cvModalCloseBtn">&times;</button>
-        </div>
-        <div class="cv-modal-body" id="cvModalBody"></div>
-        <div class="cv-modal-footer">
-          <button type="button" class="btn-cv-details" id="cvModalDismiss">إغلاق</button>
-          <a href="#" target="_blank" rel="noopener noreferrer" class="btn-cv-book" id="cvModalBookBtn" style="padding: 10px 24px;">حجز هذه السيرة عبر واتساب 📲</a>
-        </div>
-      </div>
-    `;
-    document.body.appendChild(cvModal);
+  // بناء وعرض بطاقات الجنسيات في الخطوة الأولى
+  function renderNationalityCards() {
+    const grid = document.getElementById("natCardsGrid");
+    if (!grid) return;
 
-    const closeMod = () => {
-      cvModal.classList.remove("open");
-      document.body.style.overflow = "";
-    };
-    document.getElementById("cvModalCloseBackdrop").addEventListener("click", closeMod);
-    document.getElementById("cvModalCloseBtn").addEventListener("click", closeMod);
-    document.getElementById("cvModalDismiss").addEventListener("click", closeMod);
+    grid.innerHTML = NATIONS_CATALOG.map((item) => {
+      const count = getAvailCount(item.key);
+      const isActive = selectedNationality === item.key;
+      const countBadge = count > 0 
+        ? `<span class="nat-card-badge has-cvs">${count} سيرة متاحة</span>`
+        : `<span class="nat-card-badge empty-cvs">استقدام عند الطلب</span>`;
+
+      return `
+        <button type="button" class="nat-card-btn ${isActive ? 'active' : ''}" onclick="selectNationality('${item.key}')">
+          <span class="nat-card-flag">${item.flag}</span>
+          <h3 class="nat-card-name">${item.name}</h3>
+          <span class="nat-card-role">${item.roles}</span>
+          ${countBadge}
+        </button>
+      `;
+    }).join("");
+  }
+
+  // اختيار جنسية وعرض سيرها الذاتية
+  window.selectNationality = function (natKey) {
+    if (natKey === "sri-lanka") natKey = "srilanka";
+    selectedNationality = natKey;
+
+    const natStepSection = document.getElementById("natStepSection");
+    const activeBanner = document.getElementById("activeNatBanner");
+    const activeFlag = document.getElementById("activeNatFlag");
+    const activeName = document.getElementById("activeNatName");
+    const activeCount = document.getElementById("activeNatCount");
+    const cvFiltersBar = document.getElementById("cvFiltersBar");
+    const natFilter = document.getElementById("nationalityFilter");
+
+    // تحديث القائمة المنسدلة
+    if (natFilter) {
+      natFilter.value = natKey === "all" ? "all" : natKey;
+    }
+
+    // إخفاء قسم الخطوة الأولى وإظهار شريط الجنسية المحددة وشريط الفلاتر
+    if (natStepSection) natStepSection.style.display = "none";
+    if (cvFiltersBar) cvFiltersBar.style.display = "grid";
+
+    if (activeBanner) {
+      const natItem = NATIONS_CATALOG.find((n) => n.key === natKey) || { name: natKey, flag: "🏳️" };
+      const count = getAvailCount(natKey);
+      
+      if (activeFlag) activeFlag.textContent = natItem.flag;
+      if (activeName) activeName.textContent = natItem.name;
+      if (activeCount) {
+        activeCount.textContent = count > 0 ? `${count} سيرة متاحة للحجز` : "متاح الاستقدام الفوري عبر مساند";
+      }
+      activeBanner.style.display = "flex";
+    }
+
+    applyFilters();
+
+    // تمرير ناعم ومريح لعرض النتائج
+    const gridEl = document.getElementById("resumesGrid");
+    if (gridEl) {
+      const topOffset = gridEl.getBoundingClientRect().top + window.pageYOffset - 120;
+      window.scrollTo({ top: Math.max(0, topOffset), behavior: "smooth" });
+    }
+  };
+
+  // إعادة ضبط واختيار جنسية أخرى
+  window.resetNationalityChoice = function () {
+    selectedNationality = "";
+
+    const natStepSection = document.getElementById("natStepSection");
+    const activeBanner = document.getElementById("activeNatBanner");
+    const cvFiltersBar = document.getElementById("cvFiltersBar");
+    const natFilter = document.getElementById("nationalityFilter");
+
+    if (natFilter) natFilter.value = "";
+    if (natStepSection) natStepSection.style.display = "block";
+    if (activeBanner) activeBanner.style.display = "none";
+    if (cvFiltersBar) cvFiltersBar.style.display = "none";
+
+    renderNationalityCards();
+    applyFilters();
+  };
+
+  // التأكد من وجود نافذة التفاصيل
+  function ensureCvModalExists() {
+    let cvModal = document.getElementById("cvDetailsModal");
+    if (!cvModal) {
+      cvModal = document.createElement("div");
+      cvModal.id = "cvDetailsModal";
+      cvModal.className = "cv-modal";
+      cvModal.innerHTML = `
+        <div class="cv-modal-backdrop" id="cvModalCloseBackdrop"></div>
+        <div class="cv-modal-container">
+          <div class="cv-modal-header">
+            <h3 id="cvModalTitle">تفاصيل السيرة الذاتية الكاملة</h3>
+            <button type="button" class="cv-modal-close" id="cvModalCloseBtn" aria-label="إغلاق">&times;</button>
+          </div>
+          <div class="cv-modal-body" id="cvModalBody"></div>
+          <div class="cv-modal-footer">
+            <button type="button" class="btn-cv-details" id="cvModalDismiss">إغلاق</button>
+            <a href="#" target="_blank" rel="noopener noreferrer" class="btn-cv-book" id="cvModalBookBtn" style="padding: 10px 24px;">حجز هذه السيرة عبر واتساب 📲</a>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(cvModal);
+
+      const closeMod = () => {
+        cvModal.classList.remove("open");
+        document.body.style.overflow = "";
+      };
+
+      const bd = document.getElementById("cvModalCloseBackdrop");
+      const cb = document.getElementById("cvModalCloseBtn");
+      const dm = document.getElementById("cvModalDismiss");
+      if (bd) bd.addEventListener("click", closeMod);
+      if (cb) cb.addEventListener("click", closeMod);
+      if (dm) dm.addEventListener("click", closeMod);
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && cvModal.classList.contains("open")) {
+          closeMod();
+        }
+      });
+    }
+    return cvModal;
   }
 
   // عرض تفاصيل سيرة معينة
@@ -270,48 +375,53 @@
     const jobText = JOB_NAMES[cv.job] || cv.job;
     const isAvail = cv.status === "available";
 
+    const cvModal = ensureCvModalExists();
     const modalBody = document.getElementById("cvModalBody");
     const bookBtn = document.getElementById("cvModalBookBtn");
 
-    modalBody.innerHTML = `
-      <div class="cv-detail-hero">
-        <img src="${cv.photo || 'images/logo.jpg'}" alt="${cv.fullname}" class="cv-detail-photo" onerror="this.src='images/logo.jpg'" />
-        <div class="cv-detail-info">
-          <h4>${cv.fullname} (${cv.id})</h4>
-          <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px;">
-            <span class="cv-job-title">${jobText}</span>
-            <span class="cv-badge-status ${isAvail ? 'available' : 'reserved'}" style="position: static;">
-              ${isAvail ? '🟢 متاحة للاستقدام الفوري' : '🔴 محجوزة حالياً'}
-            </span>
+    if (modalBody) {
+      modalBody.innerHTML = `
+        <div class="cv-detail-hero">
+          <img src="${cv.photo || 'images/logo.jpg'}" alt="${cv.fullname}" class="cv-detail-photo" onerror="this.src='images/logo.jpg'" />
+          <div class="cv-detail-info">
+            <h4>${cv.fullname} (${cv.id})</h4>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px;">
+              <span class="cv-job-title">${jobText}</span>
+              <span class="cv-badge-status ${isAvail ? 'available' : 'reserved'}" style="position: static;">
+                ${isAvail ? '🟢 متاحة للاستقدام الفوري' : '🔴 محجوزة حالياً'}
+              </span>
+            </div>
           </div>
         </div>
-      </div>
 
-      <table class="cv-detail-table">
-        <tbody>
-          <tr><th>الجنسية</th><td>${nat.flag} ${nat.name}</td></tr>
-          <tr><th>العمر</th><td>${cv.age} سنة</td></tr>
-          <tr><th>سنوات الخبرة</th><td>${cv.experience > 0 ? cv.experience + ' سنوات' : 'جديدة كلياً بدون خبرة'}</td></tr>
-          <tr><th>الراتب الشهري</th><td>${Number(cv.salary).toLocaleString('en-US')} ريال سعودي</td></tr>
-          <tr><th>الديانة</th><td>${cv.religion || '—'}</td></tr>
-          <tr><th>الحالة الاجتماعية</th><td>${cv.marital || '—'}</td></tr>
-          <tr><th>المؤهل التعليمي</th><td>${cv.education || '—'}</td></tr>
-          <tr><th>الطول والوزن</th><td>${cv.height || '—'} / ${cv.weight || '—'}</td></tr>
-          <tr><th>إتقان اللغات</th><td>${cv.languages || '—'}</td></tr>
-          <tr><th>المهارات الأساسية</th><td>${cv.skills || '—'}</td></tr>
-          <tr><th>الخبرات العملية السابقة</th><td>${cv.prevExp || '—'}</td></tr>
-        </tbody>
-      </table>
-    `;
+        <table class="cv-detail-table">
+          <tbody>
+            <tr><th>الجنسية</th><td>${nat.flag} ${nat.name}</td></tr>
+            <tr><th>العمر</th><td>${cv.age} سنة</td></tr>
+            <tr><th>سنوات الخبرة</th><td>${cv.experience > 0 ? cv.experience + ' سنوات' : 'جديدة كلياً بدون خبرة'}</td></tr>
+            <tr><th>الراتب الشهري</th><td>${Number(cv.salary).toLocaleString('en-US')} ريال سعودي</td></tr>
+            <tr><th>الديانة</th><td>${cv.religion || '—'}</td></tr>
+            <tr><th>الحالة الاجتماعية</th><td>${cv.marital || '—'}</td></tr>
+            <tr><th>المؤهل التعليمي</th><td>${cv.education || '—'}</td></tr>
+            <tr><th>الطول والوزن</th><td>${cv.height || '—'} / ${cv.weight || '—'}</td></tr>
+            <tr><th>إتقان اللغات</th><td>${cv.languages || '—'}</td></tr>
+            <tr><th>المهارات الأساسية</th><td>${cv.skills || '—'}</td></tr>
+            <tr><th>الخبرات العملية السابقة</th><td>${cv.prevExp || '—'}</td></tr>
+          </tbody>
+        </table>
+      `;
+    }
 
-    const waMsg = `مرحباً مكتب النجاح، أرغب بحجز السيرة الذاتية التالية:\n- الرمز: ${cv.id}\n- الاسم: ${cv.fullname}\n- المهنة: ${jobText}\n- الجنسية: ${nat.name}\n- الراتب: ${cv.salary} ر.س\nيرجى إفادتي بإجراءات التعاقد وحجز السيرة عبر منصة مساند.`;
-    bookBtn.href = `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(waMsg)}`;
-    if (!isAvail) {
-      bookBtn.style.opacity = "0.6";
-      bookBtn.innerHTML = `السيرة محجوزة (استفسر عن البديل)`;
-    } else {
-      bookBtn.style.opacity = "1";
-      bookBtn.innerHTML = `حجز هذه السيرة عبر واتساب 📲`;
+    if (bookBtn) {
+      const waMsg = `مرحباً مكتب النجاح، أرغب بحجز السيرة الذاتية التالية:\n- الرمز: ${cv.id}\n- الاسم: ${cv.fullname}\n- المهنة: ${jobText}\n- الجنسية: ${nat.name}\n- الراتب: ${cv.salary} ر.س\nيرجى إفادتي بإجراءات التعاقد وحجز السيرة عبر منصة مساند.`;
+      bookBtn.href = `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(waMsg)}`;
+      if (!isAvail) {
+        bookBtn.style.opacity = "0.6";
+        bookBtn.innerHTML = `السيرة محجوزة (استفسر عن البديل)`;
+      } else {
+        bookBtn.style.opacity = "1";
+        bookBtn.innerHTML = `حجز هذه السيرة عبر واتساب 📲`;
+      }
     }
 
     cvModal.classList.add("open");
@@ -324,7 +434,6 @@
     const jobText = JOB_NAMES[cv.job] || cv.job;
     const isAvail = cv.status === "available";
 
-    // تحويل المهارات إلى شرائح
     const skillChips = (cv.skills || "")
       .split(/[،,]/)
       .map((s) => s.trim())
@@ -361,7 +470,7 @@
           <div class="cv-facts-grid">
             <div class="cv-fact-item">
               <span class="cv-fact-label">الراتب الشهري</span>
-              <span class="cv-fact-val" style="color: var(--primary-color);">${Number(cv.salary).toLocaleString('en-US')} ر.س</span>
+              <span class="cv-fact-val" style="color: var(--primary-color); font-weight:800;">${Number(cv.salary).toLocaleString('en-US')} ر.س</span>
             </div>
             <div class="cv-fact-item">
               <span class="cv-fact-label">سنوات الخبرة</span>
@@ -394,24 +503,40 @@
     `;
   }
 
-  // تصفية وعرض السير الذاتية
+  // تصفية وعرض السير الذاتية طبقاً للجنسية المحددة
   function applyFilters() {
+    const resumesGrid = document.getElementById("resumesGrid");
     if (!resumesGrid) return;
 
+    // إذا لم يتم تحديد الجنسية بعد، اعرض بطاقة الحث على اختيار الدولة
+    if (!selectedNationality) {
+      let statsBar = document.getElementById("resumesStatsBar");
+      if (statsBar) statsBar.innerHTML = "";
+
+      resumesGrid.innerHTML = `
+        <div class="cv-prompt-card">
+          <span class="cv-prompt-emoji">🌍</span>
+          <h3>اختر الجنسية أولاً لاستعراض السير الذاتية المتاحة</h3>
+          <p>يرجى النقر على إحدى الدول في الأعلى لعرض الكفاءات المنزلية والمهنية الجاهزة للحجز الفوري.</p>
+        </div>
+      `;
+      return;
+    }
+
+    const searchInput = document.getElementById("searchInput");
+    const nationalityFilter = document.getElementById("nationalityFilter");
+    const jobFilter = document.getElementById("jobFilter");
+    const experienceFilter = document.getElementById("experienceFilter");
+    const sortSelector = document.getElementById("sortSelector");
+
     const search = (searchInput ? searchInput.value : "").trim().toLowerCase();
-    const nat = nationalityFilter ? nationalityFilter.value : "";
+    const nat = selectedNationality === "all" ? "" : selectedNationality;
     const job = jobFilter ? jobFilter.value : "";
     const exp = experienceFilter ? experienceFilter.value : "";
     const sort = sortSelector ? sortSelector.value : "";
 
     filteredResumes = allResumes.filter((cv) => {
-      // بحث نصي
-      if (search) {
-        const fullContent = `${cv.fullname} ${cv.skills} ${cv.religion} ${cv.languages} ${cv.id} ${cv.prevExp}`.toLowerCase();
-        if (!fullContent.includes(search)) return false;
-      }
-
-      // تصفية الجنسية
+      // تصفية الجنسية المحددة أولاً
       if (nat && cv.nationality !== nat) return false;
 
       // تصفية المهنة
@@ -423,6 +548,12 @@
         if (exp === "fresh" && years !== 0) return false;
         if (exp === "1-5" && (years < 1 || years > 5)) return false;
         if (exp === "5+" && years <= 5) return false;
+      }
+
+      // بحث نصي
+      if (search) {
+        const fullContent = `${cv.fullname} ${cv.skills} ${cv.religion} ${cv.languages} ${cv.id} ${cv.prevExp}`.toLowerCase();
+        if (!fullContent.includes(search)) return false;
       }
 
       return true;
@@ -438,16 +569,26 @@
     }
 
     // تحديث شريط الإحصائيات
+    let statsBar = document.getElementById("resumesStatsBar");
+    if (!statsBar && resumesGrid.parentNode) {
+      statsBar = document.createElement("div");
+      statsBar.id = "resumesStatsBar";
+      statsBar.className = "resumes-stats-bar";
+      resumesGrid.parentNode.insertBefore(statsBar, resumesGrid);
+    }
+
     if (statsBar) {
-      const isFiltered = search || nat || job || exp || sort;
+      const isFiltered = search || job || exp || sort;
+      const currentNatName = NATIONS_CATALOG.find(n => n.key === selectedNationality)?.name || "الجنسية المحددة";
+
       statsBar.innerHTML = `
         <div>
-          <span>عرض السير الذاتية: </span>
-          <span class="resumes-count-badge">${filteredResumes.length} من أصل ${allResumes.length} سيرة</span>
+          <span>السير الذاتية المعروضة (${currentNatName}): </span>
+          <span class="resumes-count-badge">${filteredResumes.length} سيرة متاحة</span>
         </div>
         ${
           isFiltered
-            ? `<button type="button" class="btn-reset-filters" id="btnResetAllFilters">🔄 إعادة ضبط وتصفير الفلاتر</button>`
+            ? `<button type="button" class="btn-reset-filters" id="btnResetAllFilters">🔄 إعادة تصفير الفلاتر الفرعية</button>`
             : `<span style="font-size: 0.82rem; color: var(--text-muted);">جميع السير مفحوصة ومطابقة لمعايير منصة مساند</span>`
         }
       `;
@@ -456,7 +597,6 @@
       if (resetBtn) {
         resetBtn.addEventListener("click", () => {
           if (searchInput) searchInput.value = "";
-          if (nationalityFilter) nationalityFilter.value = "";
           if (jobFilter) jobFilter.value = "";
           if (experienceFilter) experienceFilter.value = "";
           if (sortSelector) sortSelector.value = "";
@@ -468,18 +608,22 @@
     // عرض البطاقات
     if (filteredResumes.length === 0) {
       resumesGrid.innerHTML = `
-        <div class="cv-empty-state">
-          <div class="cv-empty-icon">🔍</div>
-          <h3>لم يتم العثور على سير ذاتية مطابقة</h3>
-          <p>جرب تغيير معايير البحث أو تصفير الفلاتر لعرض كافة السير المتاحة.</p>
-          <button type="button" class="btn-action" style="margin: 0 auto;" onclick="
-            document.getElementById('searchInput').value = '';
-            document.getElementById('nationalityFilter').value = '';
-            document.getElementById('jobFilter').value = '';
-            document.getElementById('experienceFilter').value = '';
-            document.getElementById('sortSelector').value = '';
-            window.refreshCvList();
-          ">تصفير الفلاتر وعرض الجميع</button>
+        <div class="cv-empty-state" style="grid-column: 1 / -1; padding: 50px 20px; text-align: center; background: #f8fafc; border-radius: 16px; border: 2px dashed #cbd5e1;">
+          <div class="cv-empty-icon" style="font-size: 3rem; margin-bottom: 12px;">🔍</div>
+          <h3 style="color: var(--primary-color); font-weight: 800; font-size: 1.3rem; margin-bottom: 8px;">لا توجد سير ذاتية مطابقة حالياً لهذه المعايير</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px;">يمكنك اختيار جنسية أخرى أو تصفير معايير البحث.</p>
+          <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
+            <button type="button" class="btn-gold" style="padding: 10px 20px;" onclick="window.resetNationalityChoice()">
+              🔄 اختيار جنسية أخرى
+            </button>
+            <button type="button" class="btn-action" style="padding: 10px 20px;" onclick="
+              const s = document.getElementById('searchInput'); if(s) s.value = '';
+              const j = document.getElementById('jobFilter'); if(j) j.value = '';
+              const e = document.getElementById('experienceFilter'); if(e) e.value = '';
+              const o = document.getElementById('sortSelector'); if(o) o.value = '';
+              applyFilters();
+            ">تصفير الفلاتر</button>
+          </div>
         </div>
       `;
     } else {
@@ -490,26 +634,72 @@
   // تحديث القائمة العامة
   window.refreshCvList = function () {
     allResumes = getStoredResumes();
+    renderNationalityCards();
     applyFilters();
   };
 
-  // الاستماع للأحداث
-  document.addEventListener("DOMContentLoaded", () => {
+  // تهيئة النظام
+  function initResumesApp() {
     allResumes = getStoredResumes();
+    renderNationalityCards();
 
-    if (searchInput) searchInput.addEventListener("input", applyFilters);
-    if (nationalityFilter) nationalityFilter.addEventListener("change", applyFilters);
-    if (jobFilter) jobFilter.addEventListener("change", applyFilters);
-    if (experienceFilter) experienceFilter.addEventListener("change", applyFilters);
-    if (sortSelector) sortSelector.addEventListener("change", applyFilters);
+    const searchInput = document.getElementById("searchInput");
+    const nationalityFilter = document.getElementById("nationalityFilter");
+    const jobFilter = document.getElementById("jobFilter");
+    const experienceFilter = document.getElementById("experienceFilter");
+    const sortSelector = document.getElementById("sortSelector");
 
-    applyFilters();
-  });
+    if (searchInput && !searchInput.dataset.bound) {
+      searchInput.addEventListener("input", applyFilters);
+      searchInput.dataset.bound = "true";
+    }
+    if (nationalityFilter && !nationalityFilter.dataset.bound) {
+      nationalityFilter.addEventListener("change", (e) => {
+        const val = e.target.value;
+        if (val) {
+          selectNationality(val);
+        } else {
+          resetNationalityChoice();
+        }
+      });
+      nationalityFilter.dataset.bound = "true";
+    }
+    if (jobFilter && !jobFilter.dataset.bound) {
+      jobFilter.addEventListener("change", applyFilters);
+      jobFilter.dataset.bound = "true";
+    }
+    if (experienceFilter && !experienceFilter.dataset.bound) {
+      experienceFilter.addEventListener("change", applyFilters);
+      experienceFilter.dataset.bound = "true";
+    }
+    if (sortSelector && !sortSelector.dataset.bound) {
+      sortSelector.addEventListener("change", applyFilters);
+      sortSelector.dataset.bound = "true";
+    }
 
-  // مزامنة التغييرات الحية عبر التبويبات
+    ensureCvModalExists();
+
+    // فحص إذا كان هناك جنسية محددة في الرابط URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const paramNat = urlParams.get("nat") || urlParams.get("nationality");
+    if (paramNat) {
+      selectNationality(paramNat);
+    } else {
+      applyFilters();
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initResumesApp);
+  } else {
+    initResumesApp();
+  }
+
+  // مزامنة التغييرات الحية عبر التبويبات عند التعديل من لوحة التحكم
   window.addEventListener("storage", (e) => {
     if (e.key === STORAGE_KEY) {
       allResumes = getStoredResumes();
+      renderNationalityCards();
       applyFilters();
     }
   });

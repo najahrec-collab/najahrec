@@ -531,3 +531,236 @@
     text-align: center;
   }
 }
+
+/* ========================================================
+   تنسيقات خطوة اختيار الجنسية أولاً قبل عرض السير
+   ======================================================== */
+.nat-step-section {
+  background: #ffffff;
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 32px 24px;
+  margin-top: -30px;
+  margin-bottom: 25px;
+  box-shadow: 0 10px 25px -5px rgba(7, 24, 48, 0.08);
+  position: relative;
+  z-index: 20;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.nat-step-header {
+  max-width: 680px;
+  margin: 0 auto 20px;
+}
+
+.nat-step-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--gold-500), var(--gold-400));
+  color: var(--navy-950);
+  font-size: 0.85rem;
+  font-weight: 800;
+  padding: 5px 16px;
+  border-radius: var(--radius-full);
+  margin-bottom: 10px;
+  box-shadow: 0 2px 8px rgba(201, 162, 39, 0.3);
+}
+
+.nat-step-title {
+  font-size: 1.55rem;
+  font-weight: 900;
+  color: var(--primary-color);
+  margin-bottom: 8px;
+}
+
+.nat-step-sub {
+  font-size: 0.98rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0;
+  font-weight: 600;
+}
+
+.nat-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 14px;
+  margin-top: 24px;
+}
+
+.nat-card-btn {
+  background: var(--bg-light);
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 18px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  text-align: center;
+  position: relative;
+  outline: none;
+  font-family: inherit;
+}
+
+.nat-card-btn:hover {
+  border-color: var(--gold-color);
+  background: #ffffff;
+  transform: translateY(-4px);
+  box-shadow: 0 10px 22px rgba(201, 162, 39, 0.18);
+}
+
+.nat-card-btn.active {
+  border-color: var(--gold-color);
+  background: rgba(201, 162, 39, 0.08);
+  box-shadow: 0 0 0 2px var(--gold-color);
+}
+
+.nat-card-flag {
+  font-size: 2.4rem;
+  line-height: 1;
+}
+
+.nat-card-name {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--primary-color);
+  margin: 0;
+}
+
+.nat-card-role {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.nat-card-badge {
+  font-size: 0.78rem;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  margin-top: 4px;
+}
+
+.nat-card-badge.has-cvs {
+  background: rgba(16, 185, 129, 0.12);
+  color: #047857;
+}
+
+.nat-card-badge.empty-cvs {
+  background: rgba(100, 116, 139, 0.1);
+  color: var(--text-muted);
+}
+
+/* شريط الجنسية النشطة بعد الاختيار */
+.active-nat-banner {
+  background: linear-gradient(135deg, var(--navy-900), var(--navy-950));
+  border: 1.5px solid rgba(201, 162, 39, 0.45);
+  border-radius: var(--radius-lg);
+  padding: 16px 24px;
+  margin-top: -30px;
+  margin-bottom: 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  box-shadow: 0 10px 25px rgba(7, 24, 48, 0.15);
+  position: relative;
+  z-index: 20;
+}
+
+.active-nat-info {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.active-nat-flag {
+  font-size: 2.6rem;
+  line-height: 1;
+}
+
+.active-nat-texts {
+  text-align: right;
+}
+
+.active-nat-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--gold-300);
+  display: block;
+}
+
+.active-nat-name {
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: #ffffff;
+  margin: 0;
+}
+
+.active-nat-count {
+  background: rgba(201, 162, 39, 0.2);
+  border: 1px solid rgba(201, 162, 39, 0.4);
+  color: var(--gold-300);
+  font-size: 0.85rem;
+  font-weight: 800;
+  padding: 5px 14px;
+  border-radius: var(--radius-full);
+}
+
+.btn-change-nat {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: #ffffff;
+  font-family: inherit;
+  font-weight: 800;
+  font-size: 0.9rem;
+  padding: 9px 18px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-change-nat:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: var(--gold-color);
+  color: var(--gold-300);
+  transform: translateY(-1px);
+}
+
+/* بطاقة الحث على اختيار الجنسية */
+.cv-prompt-card {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 60px 20px;
+  background: #f8fafc;
+  border: 2px dashed #cbd5e1;
+  border-radius: var(--radius-lg);
+  margin-block: 10px;
+}
+
+.cv-prompt-emoji {
+  font-size: 3.5rem;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.cv-prompt-card h3 {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--primary-color);
+  margin-bottom: 8px;
+}
+
+.cv-prompt-card p {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  max-width: 520px;
+  margin: 0 auto;
+  line-height: 1.6;
+  font-weight: 600;
+}

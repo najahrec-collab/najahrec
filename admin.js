@@ -553,6 +553,148 @@
     if (previewImg) previewImg.src = cleaned || "images/logo.jpg";
   };
 
+  // اختيار صورة من المعرض السريع بنقرة واحدة
+  window.selectAvatarChoice = function (path, btnEl) {
+    const photoActual = document.getElementById("photoActualValue");
+    const photoPreview = document.getElementById("photoPreviewImg");
+    const photoPath = document.getElementById("photoPath");
+    const photoSelect = document.getElementById("photoSelect");
+    const customWrap = document.getElementById("customPathWrapper");
+
+    if (photoActual) photoActual.value = path;
+    if (photoPreview) photoPreview.src = path;
+    if (photoPath) photoPath.value = path;
+
+    if (photoSelect) {
+      const optionExists = Array.from(photoSelect.options).some((o) => o.value === path);
+      if (optionExists) {
+        photoSelect.value = path;
+        if (customWrap) customWrap.style.display = "none";
+      } else {
+        photoSelect.value = "custom";
+        if (customWrap) customWrap.style.display = "block";
+      }
+    }
+
+    // تحديث التحديد النشط في المعرض
+    document.querySelectorAll("#avatarQuickGallery .avatar-choice").forEach((b) => b.classList.remove("active"));
+    if (btnEl) btnEl.classList.add("active");
+
+    window.updateLivePreview();
+  };
+
+  // إضافة لغة سريعة بنقرة واحدة
+  window.addLanguageTag = function (lang) {
+    const input = document.getElementById("languages");
+    if (!input) return;
+    const current = input.value.trim();
+    if (!current) {
+      input.value = lang;
+    } else if (!current.includes(lang)) {
+      input.value = current + "، " + lang;
+    }
+    window.updateLivePreview();
+  };
+
+  // إضافة مهارة سريعة بنقرة واحدة
+  window.addSkillTag = function (skill) {
+    const input = document.getElementById("skills");
+    if (!input) return;
+    const current = input.value.trim();
+    if (!current) {
+      input.value = skill;
+    } else if (!current.includes(skill)) {
+      input.value = current + "، " + skill;
+    }
+    window.updateLivePreview();
+  };
+
+  // تعيين حالة السيرة (متاحة أو محجوزة)
+  window.setStatusChoice = function (status) {
+    const statusInput = document.getElementById("status");
+    const cardAvail = document.getElementById("statusCardAvailable");
+    const cardRes = document.getElementById("statusCardReserved");
+    const optAvail = document.getElementById("optAvailable");
+    const optRes = document.getElementById("optReserved");
+
+    if (statusInput) statusInput.value = status;
+
+    if (status === "available") {
+      if (cardAvail) cardAvail.classList.add("active-available");
+      if (cardRes) cardRes.classList.remove("active-reserved");
+      if (optAvail) optAvail.checked = true;
+    } else {
+      if (cardRes) cardRes.classList.add("active-reserved");
+      if (cardAvail) cardAvail.classList.remove("active-available");
+      if (optRes) optRes.checked = true;
+    }
+
+    window.updateLivePreview();
+  };
+
+  // تحديث المعاينة الحية للبطاقة
+  window.updateLivePreview = function () {
+    const fullname = (document.getElementById("fullname")?.value || "سارة م.").trim();
+    const jobVal = document.getElementById("job")?.value || "maid";
+    const natVal = document.getElementById("nationality")?.value || "ethiopia";
+    const ageVal = document.getElementById("age")?.value || "26";
+    const expVal = document.getElementById("experience")?.value || "3";
+    const salVal = document.getElementById("salary")?.value || "1000";
+    const photoActual = document.getElementById("photoActualValue")?.value || "images/cv_sara.jpg";
+    const skillsVal = document.getElementById("skills")?.value || "النظافة الشاملة، الكي، الغسيل";
+    const statusVal = document.getElementById("status")?.value || "available";
+
+    const jobName = JOB_NAMES[jobVal] || "عاملة منزلية";
+    const natObj = NATION_MAP[natVal] || { name: "إثيوبيا", flag: "🇪🇹" };
+
+    const liveImg = document.getElementById("livePreviewImg");
+    const liveName = document.getElementById("livePreviewName");
+    const liveJob = document.getElementById("livePreviewJob");
+    const liveNat = document.getElementById("livePreviewNat");
+    const liveAge = document.getElementById("livePreviewAge");
+    const liveExp = document.getElementById("livePreviewExp");
+    const liveSalary = document.getElementById("livePreviewSalary");
+    const liveSkills = document.getElementById("livePreviewSkills");
+    const liveBadge = document.getElementById("livePreviewStatusBadge");
+
+    if (liveImg) liveImg.src = photoActual;
+    if (liveName) liveName.textContent = fullname;
+    if (liveJob) liveJob.textContent = jobName;
+    if (liveNat) liveNat.textContent = `${natObj.flag} ${natObj.name}`;
+    if (liveAge) liveAge.textContent = `${ageVal} سنة`;
+    if (liveExp) liveExp.textContent = `${expVal > 0 ? expVal + " سنوات خبرة" : "جديدة كلياً"}`;
+    if (liveSalary) liveSalary.textContent = `${Number(salVal).toLocaleString("en-US")} ر.س`;
+    if (liveSkills) liveSkills.textContent = `المهارات: ${skillsVal || "لم تحدد بعد"}`;
+
+    if (liveBadge) {
+      if (statusVal === "available") {
+        liveBadge.textContent = "🟢 متاحة للحجز";
+        liveBadge.style.background = "rgba(16, 185, 129, 0.1)";
+        liveBadge.style.color = "#059669";
+      } else {
+        liveBadge.textContent = "🔴 محجوزة";
+        liveBadge.style.background = "rgba(239, 68, 68, 0.1)";
+        liveBadge.style.color = "#dc2626";
+      }
+    }
+  };
+
+  // إشعار عائم Toast احترافي
+  window.showAdminToast = function (msg) {
+    let toast = document.getElementById("adminToast");
+    if (!toast) {
+      toast = document.createElement("div");
+      toast.id = "adminToast";
+      toast.className = "admin-toast";
+      document.body.appendChild(toast);
+    }
+    toast.innerHTML = `<span>✅</span> <span>${msg}</span>`;
+    toast.classList.add("show");
+    setTimeout(() => {
+      toast.classList.remove("show");
+    }, 3500);
+  };
+
   // فتح نافذة الإضافة
   window.openAddModal = function () {
     const modal = document.getElementById("cvEditorModal");
@@ -561,7 +703,7 @@
     const editIndex = document.getElementById("editIndex");
 
     if (form) form.reset();
-    if (title) title.textContent = "إضافة سيرة ذاتية جديدة";
+    if (title) title.innerHTML = `<span>➕</span> <span>إضافة سيرة ذاتية جديدة</span>`;
     if (editIndex) editIndex.value = "";
 
     const photoSelect = document.getElementById("photoSelect");
@@ -578,6 +720,19 @@
     if (customWrap) customWrap.style.display = "none";
     if (fileInput) fileInput.value = "";
 
+    // تعيين الصورة النشطة في المعرض
+    document.querySelectorAll("#avatarQuickGallery .avatar-choice").forEach((b) => {
+      const img = b.querySelector("img");
+      if (img && img.getAttribute("src") === "images/cv_sara.jpg") {
+        b.classList.add("active");
+      } else {
+        b.classList.remove("active");
+      }
+    });
+
+    window.setStatusChoice("available");
+    window.updateLivePreview();
+
     if (modal) modal.classList.add("open");
   };
 
@@ -590,7 +745,7 @@
     const title = document.getElementById("modalFormTitle");
     const editIndex = document.getElementById("editIndex");
 
-    if (title) title.textContent = `تعديل السيرة الذاتية (${cv.fullname})`;
+    if (title) title.innerHTML = `<span>✏️</span> <span>تعديل السيرة الذاتية (${cv.fullname} - #${cv.id})</span>`;
     if (editIndex) editIndex.value = cv.id;
 
     document.getElementById("fullname").value = cv.fullname || "";
@@ -607,7 +762,6 @@
     document.getElementById("languages").value = cv.languages || "";
     document.getElementById("skills").value = cv.skills || "";
     document.getElementById("prevExp").value = cv.prevExp || "";
-    document.getElementById("status").value = cv.status || "available";
 
     const photoSelect = document.getElementById("photoSelect");
     const photoPath = document.getElementById("photoPath");
@@ -632,6 +786,19 @@
         if (customWrap) customWrap.style.display = "block";
       }
     }
+
+    // تنشيط الصورة في المعرض السريع إذا كانت موجودة
+    document.querySelectorAll("#avatarQuickGallery .avatar-choice").forEach((b) => {
+      const img = b.querySelector("img");
+      if (img && img.getAttribute("src") === currentPhoto) {
+        b.classList.add("active");
+      } else {
+        b.classList.remove("active");
+      }
+    });
+
+    window.setStatusChoice(cv.status || "available");
+    window.updateLivePreview();
 
     if (modal) modal.classList.add("open");
   };
@@ -717,7 +884,7 @@
 
     saveResumes(resumesList);
     closeEditorModal();
-    alert("تم حفظ السيرة الذاتية بنجاح! تم تحديث الصفحة والموقع فورياً.");
+    window.showAdminToast("تم حفظ السيرة الذاتية بنجاح! تم تحديث الصفحة والموقع فورياً.");
   };
 
   // ================= 4. إدارة أسعار وتكاليف الاستقدام للحاسبة =================
