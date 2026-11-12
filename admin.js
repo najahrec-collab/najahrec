@@ -208,9 +208,9 @@
     philippines_driver: { total: 12000, base: 10435, vat: 1565, salary: 1500, time: 89, label: "الفلبين", jobLabel: "سائق خاص" },
     philippines_server: { total: 11119, base: 9669, vat: 1450, salary: 1500, time: 89, label: "الفلبين", jobLabel: "سفرجي منزلي" },
 
-    burundi_maid: { total: 5000, base: 4348, vat: 652, salary: 900, time: 85, label: "بوروندي", jobLabel: "عاملة منزلية" },
-    burundi_nanny: { total: 5000, base: 4348, vat: 652, salary: 900, time: 85, label: "بوروندي", jobLabel: "مربية أطفال" },
-    burundi_cook: { total: 5000, base: 4348, vat: 652, salary: 900, time: 85, label: "بوروندي", jobLabel: "طباخ / طباخة" },
+    burundi_maid: { total: 5000, base: 4348, vat: 652, salary: 800, time: 85, label: "بوروندي", jobLabel: "عاملة منزلية" },
+    burundi_nanny: { total: 5000, base: 4348, vat: 652, salary: 800, time: 85, label: "بوروندي", jobLabel: "مربية أطفال" },
+    burundi_cook: { total: 5000, base: 4348, vat: 652, salary: 800, time: 85, label: "بوروندي", jobLabel: "طباخ / طباخة" },
 
     ethiopia_maid: { total: 4500, base: 3913, vat: 587, salary: 900, time: 89, label: "إثيوبيا", jobLabel: "عاملة منزلية" },
     ethiopia_nanny: { total: 4500, base: 3913, vat: 587, salary: 900, time: 89, label: "إثيوبيا", jobLabel: "مربية أطفال" },
@@ -235,9 +235,9 @@
     sierraleone_nanny: { total: 6000, base: 5217, vat: 783, salary: 900, time: 85, label: "سيراليون", jobLabel: "مربية أطفال" },
     sierraleone_cook: { total: 6000, base: 5217, vat: 783, salary: 900, time: 85, label: "سيراليون", jobLabel: "طباخ / طباخة" },
 
-    bangladesh_maid: { total: 7070, base: 6148, vat: 922, salary: 1000, time: 89, label: "بنجلاديش", jobLabel: "عاملة منزلية" },
-    bangladesh_nanny: { total: 7070, base: 6148, vat: 922, salary: 1000, time: 89, label: "بنجلاديش", jobLabel: "مربية أطفال" },
-    bangladesh_cook: { total: 7070, base: 6148, vat: 922, salary: 1000, time: 89, label: "بنجلاديش", jobLabel: "طباخ / طباخة" },
+    bangladesh_maid: { total: 7500, base: 6522, vat: 978, salary: 1200, time: 89, label: "بنجلاديش", jobLabel: "عاملة منزلية" },
+    bangladesh_nanny: { total: 7500, base: 6522, vat: 978, salary: 1200, time: 89, label: "بنجلاديش", jobLabel: "مربية أطفال" },
+    bangladesh_cook: { total: 7500, base: 6522, vat: 978, salary: 1200, time: 89, label: "بنجلاديش", jobLabel: "طباخ / طباخة" },
     bangladesh_houseboy: { total: 3402, base: 2958, vat: 444, salary: 1000, time: 89, label: "بنجلاديش", jobLabel: "عامل منزلي" },
     bangladesh_driver: { total: 3450, base: 3000, vat: 450, salary: 1000, time: 89, label: "بنجلاديش", jobLabel: "سائق خاص" },
 
