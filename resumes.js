@@ -6,7 +6,8 @@
 (function () {
   "use strict";
 
-  const STORAGE_KEY = "alnajah_resumes_v1";
+  const STORAGE_KEY = "alnajah_resumes_v2";
+  const OLD_STORAGE_KEY = "alnajah_resumes_v1";
   const WHATSAPP_PHONE = "966555021298";
 
   // خريطة أسماء المهن
@@ -304,19 +305,41 @@
       prevExp: "3 سنوات في مانيلا، سنتان في الرياض",
       status: "available"
     }
-  ];;
+  ];
 
-  // جلب السير الذاتية من التخزين المحلي
+  // جلب السير الذاتية من التخزين المحلي مع الترقية التلقائية وحفظ أي سير يدوية
   function getStoredResumes() {
     try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) {
+      let raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) {
+        // فحص وجود نسخة سابقة (v1) لدمج أي سير ذاتية أضافها المستخدم
+        const oldRaw = localStorage.getItem(OLD_STORAGE_KEY);
+        if (oldRaw) {
+          try {
+            const oldList = JSON.parse(oldRaw);
+            if (Array.isArray(oldList) && oldList.length > 0) {
+              const merged = JSON.parse(JSON.stringify(DEFAULT_RESUMES));
+              oldList.forEach(item => {
+                if (!merged.some(m => m.id === item.id)) {
+                  merged.push(item);
+                }
+              });
+              localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
+              return merged;
+            }
+          } catch(e) {}
+        }
+      } else {
         let parsed = JSON.parse(raw);
         if (Array.isArray(parsed) && parsed.length > 0) {
           let updated = false;
           DEFAULT_RESUMES.forEach(dr => {
-            if (!parsed.some(p => p.id === dr.id)) {
+            const existingIdx = parsed.findIndex(p => p.id === dr.id);
+            if (existingIdx === -1) {
               parsed.push(dr);
+              updated = true;
+            } else if (parsed[existingIdx].salary !== dr.salary) {
+              parsed[existingIdx].salary = dr.salary;
               updated = true;
             }
           });

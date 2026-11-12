@@ -6,7 +6,8 @@
 (function () {
   "use strict";
 
-  const STORAGE_KEY = "alnajah_resumes_v1";
+  const STORAGE_KEY = "alnajah_resumes_v2";
+  const OLD_STORAGE_KEY = "alnajah_resumes_v1";
   const PRICING_KEY = "alnajah_pricing_data";
   const AUTH_KEY = "alnajah_admin_auth";
 
@@ -413,10 +414,43 @@
   // جلب السير الذاتية
   function loadResumes() {
     try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) {
+      let raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) {
+        const oldRaw = localStorage.getItem(OLD_STORAGE_KEY);
+        if (oldRaw) {
+          try {
+            const oldList = JSON.parse(oldRaw);
+            if (Array.isArray(oldList) && oldList.length > 0) {
+              const merged = JSON.parse(JSON.stringify(DEFAULT_RESUMES));
+              oldList.forEach(item => {
+                if (!merged.some(m => m.id === item.id)) {
+                  merged.push(item);
+                }
+              });
+              localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
+              return merged;
+            }
+          } catch(e) {}
+        }
+      } else {
         const parsed = JSON.parse(raw);
-        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          let updated = false;
+          DEFAULT_RESUMES.forEach(dr => {
+            const existingIdx = parsed.findIndex(p => p.id === dr.id);
+            if (existingIdx === -1) {
+              parsed.push(dr);
+              updated = true;
+            } else if (parsed[existingIdx].salary !== dr.salary) {
+              parsed[existingIdx].salary = dr.salary;
+              updated = true;
+            }
+          });
+          if (updated) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(parsed));
+          }
+          return parsed;
+        }
       }
     } catch (e) {
       console.warn("Error reading resumes:", e);
@@ -1273,6 +1307,19 @@
     alert(`تم تحديث الصورة الشخصية للمرشح/ة (${cv.fullname}) بنجاح! تم تطبيق التغيير فوراً في لوحة التحكم وموقع السير الذاتية.`);
   };
 
+
+    window.copyResumesJson = function () {
+    const jsonStr = JSON.stringify(resumesList, null, 2);
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(jsonStr).then(() => {
+        alert("تم نسخ بيانات كافة السير الذاتية (JSON) بنجاح!\n\nيمكنك الآن لصقها في المحادثة ليتم دمجها ورفعها للموقع بشكل دائم للجميع.");
+      }).catch(() => {
+        prompt("انسخ كود السير الذاتية من المربع التالي:", jsonStr);
+      });
+    } else {
+      prompt("انسخ كود السير الذاتية من المربع التالي:", jsonStr);
+    }
+  };
 
   window.exportData = function () {
     const backupData = {

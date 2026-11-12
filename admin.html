@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css?v=2.2" />
   <link rel="stylesheet" href="admin.css" />
   <!-- Anti-flicker language check -->
   <script>
@@ -111,6 +111,7 @@
         </button>
         <div class="action-buttons">
           <button type="button" class="btn-action btn-secondary" onclick="exportData()">تصدير نسخة احتياطية (JSON)</button>
+          <button type="button" class="btn-action btn-primary" onclick="copyResumesJson()" style="background: var(--gold-color, #c59b27); color: #071830; font-weight: 700;">📋 نسخ بيانات السير (للموقع)</button>
           <button type="button" class="btn-action btn-secondary" onclick="triggerImport()">استيراد بيانات</button>
           <button type="button" class="btn-action btn-danger" onclick="resetToDefaults()">إعادة تعيين الافتراضي</button>
           <input type="file" id="importFileInput" accept=".json" style="display: none;" onchange="importData(event)" />
@@ -576,7 +577,7 @@
     </div>
   </div>
 
-  <script src="admin.js"></script>
-  <script src="i18n.js"></script>
+  <script src="admin.js?v=2.2"></script>
+  <script src="i18n.js?v=2.2"></script>
 </body>
 </html>
