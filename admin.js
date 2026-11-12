@@ -259,6 +259,51 @@
     pakistan_gardener: { total: 3615, base: 3143, vat: 472, salary: 1500, time: 89, label: "باكستان", jobLabel: "مزارع منزلي" }
   };
 
+  // خرائط ترجمة أسماء الدول والمهن للحاسبة وجدول التسعير
+  const PRICING_COUNTRIES = {
+    philippines: "الفلبين",
+    burundi: "بوروندي",
+    ethiopia: "إثيوبيا",
+    kenya: "كينيا",
+    uganda: "أوغندا",
+    bangladesh: "بنجلاديش",
+    srilanka: "سريلانكا",
+    india: "الهند",
+    sudan: "السودان",
+    egypt: "مصر",
+    yemen: "اليمن",
+    pakistan: "باكستان",
+    tanzania: "تنزانيا"
+  };
+
+  const PRICING_JOBS = {
+    maid: "عاملة منزلية",
+    nanny: "مربية أطفال",
+    cook: "طباخ / طباخة",
+    houseboy: "عامل منزلي",
+    driver: "سائق خاص",
+    server: "سفرجي منزلي",
+    guard: "حارس منزلي",
+    gardener: "مزارع منزلي",
+    nurse: "ممرضة منزلية",
+    elderly: "رعاية كبار السن",
+    babysitter: "مربية أطفال",
+    chef: "طباخ / طباخة"
+  };
+
+  function getJobLabel(key, item) {
+    if (item && item.jobLabel && item.jobLabel !== key) return item.jobLabel;
+    const parts = key.split("_");
+    const jobKey = parts.slice(1).join("_");
+    return PRICING_JOBS[jobKey] || (DEFAULT_PRICING[key] && DEFAULT_PRICING[key].jobLabel) || jobKey;
+  }
+
+  function getCountryLabel(key, item) {
+    if (item && item.label && item.label !== key) return item.label;
+    const countryKey = key.split("_")[0];
+    return PRICING_COUNTRIES[countryKey] || (DEFAULT_PRICING[key] && DEFAULT_PRICING[key].label) || countryKey;
+  }
+
   let resumesList = [];
   let pricingData = {};
 
@@ -285,19 +330,45 @@
     renderResumesTable();
   }
 
-  // جلب الأسعار للحاسبة
+  // جلب الأسعار للحاسبة مع ترقية وتأكيد التعريب لجميع المهن والدول
   function loadPricing() {
+    let data = null;
     try {
       const raw = localStorage.getItem(PRICING_KEY);
       if (raw) {
         const parsed = JSON.parse(raw);
-        if (typeof parsed === "object" && Object.keys(parsed).length > 0) return parsed;
+        if (typeof parsed === "object" && Object.keys(parsed).length > 0) {
+          data = parsed;
+        }
       }
     } catch (e) {
       console.warn("Error reading pricing:", e);
     }
-    localStorage.setItem(PRICING_KEY, JSON.stringify(DEFAULT_PRICING));
-    return JSON.parse(JSON.stringify(DEFAULT_PRICING));
+
+    if (!data) {
+      data = JSON.parse(JSON.stringify(DEFAULT_PRICING));
+    }
+
+    // ترقية أي بيانات تسعير سابقة في التخزين المحلي لتظهر المهن والدول بالعربية فوراً
+    let updated = false;
+    Object.keys(data).forEach((k) => {
+      const countryName = getCountryLabel(k, data[k]);
+      const jobName = getJobLabel(k, data[k]);
+      if (!data[k].jobLabel || data[k].jobLabel === k || data[k].jobLabel !== jobName) {
+        data[k].jobLabel = jobName;
+        updated = true;
+      }
+      if (!data[k].label || data[k].label === k || data[k].label !== countryName) {
+        data[k].label = countryName;
+        updated = true;
+      }
+    });
+
+    if (updated) {
+      localStorage.setItem(PRICING_KEY, JSON.stringify(data));
+    }
+
+    return data;
   }
 
   // حفظ الأسعار
@@ -896,27 +967,33 @@
 
     const keys = Object.keys(pricingData);
     if (keys.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 20px;">لا توجد بيانات تسعير.</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="8" style="text-align: center; padding: 25px; color: var(--text-muted);">لا توجد بيانات تسعير حالياً.</td></tr>`;
       return;
     }
 
     tbody.innerHTML = keys
       .map((k) => {
         const item = pricingData[k];
+        const countryLabel = getCountryLabel(k, item);
+        const jobLabel = getJobLabel(k, item);
         const base = item.base || Math.round(item.total / 1.15);
         const vat = item.vat || item.total - base;
 
         return `
           <tr>
-            <td><b>${item.label || k}</b></td>
-            <td>${item.jobLabel || k}</td>
+            <td><b style="color: var(--navy-950, #071830); font-weight: 800; font-size: 0.95rem;">${countryLabel}</b></td>
+            <td>
+              <span style="display: inline-block; background: rgba(197, 155, 39, 0.12); color: #8a6a14; padding: 4px 12px; border-radius: 99px; font-weight: 700; font-size: 0.85rem; border: 1px solid rgba(197, 155, 39, 0.25);">
+                ${jobLabel}
+              </span>
+            </td>
             <td>${base.toLocaleString('en-US')} ر.س</td>
             <td>${vat.toLocaleString('en-US')} ر.س</td>
-            <td><b style="color: var(--primary-color);">${item.total.toLocaleString('en-US')} ر.س</b></td>
+            <td><b style="color: var(--primary-color); font-weight: 800;">${item.total.toLocaleString('en-US')} ر.س</b></td>
             <td>${item.time} يوم</td>
             <td>${item.salary ? item.salary.toLocaleString('en-US') + ' ر.س' : '—'}</td>
             <td>
-              <button type="button" class="btn-table-icon edit" onclick="openPricingModal('${k}')">
+              <button type="button" class="btn-table-icon edit" onclick="openPricingModal('${k}')" style="font-weight: 700;">
                 تعديل التكلفة ✏️
               </button>
             </td>
@@ -930,9 +1007,12 @@
     const item = pricingData[key];
     if (!item) return;
 
+    const countryLabel = getCountryLabel(key, item);
+    const jobLabel = getJobLabel(key, item);
+
     const modal = document.getElementById("pricingEditorModal");
     document.getElementById("pricingKey").value = key;
-    document.getElementById("pricingLabel").value = `${item.label || ''} — ${item.jobLabel || ''}`;
+    document.getElementById("pricingLabel").value = `${countryLabel} — ${jobLabel}`;
     document.getElementById("pricingTotal").value = item.total;
     document.getElementById("pricingTime").value = item.time;
     document.getElementById("pricingSalary").value = item.salary || 1200;

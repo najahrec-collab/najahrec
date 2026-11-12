@@ -3160,3 +3160,120 @@ a.btn-outline,
     font-size: 2.25rem;
   }
 }
+
+/* =========================================================
+   7. زر تبديل اللغة وتنسيقات دعم اللغة الإنجليزية (i18n & LTR)
+   ========================================================= */
+
+/* زر تبديل اللغة الفاخر */
+.lang-switch-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.5rem 1rem;
+  background: rgba(7, 24, 48, 0.05);
+  border: 1.5px solid rgba(201, 162, 39, 0.5);
+  border-radius: 9999px;
+  color: var(--navy-900, #071830);
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.lang-switch-btn:hover {
+  background: var(--navy-950, #071830);
+  color: var(--gold-400, #e0be53);
+  border-color: var(--gold-500, #c59b27);
+  box-shadow: 0 4px 14px rgba(201, 162, 39, 0.3);
+  transform: translateY(-1px);
+}
+
+.lang-switch-icon {
+  font-size: 1.05rem;
+  line-height: 1;
+}
+
+.topbar-lang-wrap {
+  margin-inline-start: 1rem;
+}
+
+.topbar-lang-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(201, 162, 39, 0.4);
+  color: #ffffff;
+  padding: 0.35rem 0.85rem;
+  font-size: 0.78rem;
+}
+
+.topbar-lang-btn:hover {
+  background: var(--gold-500, #c59b27);
+  color: var(--navy-950, #071830);
+}
+
+.mm-lang-btn {
+  margin-inline-start: auto;
+  padding: 0.4rem 0.85rem;
+  font-size: 0.82rem;
+  background: #ffffff;
+}
+
+/* تنسيقات اتجاه اللغة الإنجليزية (LTR Styling) */
+html[dir="ltr"],
+html.lang-en,
+body.lang-en {
+  direction: ltr;
+  text-align: left;
+}
+
+html[dir="ltr"] .topbar-inner {
+  flex-direction: row;
+}
+
+html[dir="ltr"] .nav-inner {
+  flex-direction: row;
+}
+
+html[dir="ltr"] .footer-grid,
+html[dir="ltr"] .footer-bottom,
+html[dir="ltr"] .about-grid,
+html[dir="ltr"] .contact-grid,
+html[dir="ltr"] .calc-grid,
+html[dir="ltr"] .tracker-container {
+  text-align: left;
+}
+
+html[dir="ltr"] .tracker-stages-list {
+  padding-right: 0 !important;
+  padding-left: 15px !important;
+  text-align: left !important;
+}
+
+html[dir="ltr"] .tracker-stages-list > div:first-child {
+  right: auto !important;
+  left: 26px !important;
+}
+
+html[dir="ltr"] .tracker-stage .tracker-text h4,
+html[dir="ltr"] .tracker-stage .tracker-text p {
+  text-align: left !important;
+}
+
+html[dir="ltr"] .form-group {
+  text-align: left;
+}
+
+html[dir="ltr"] .input-with-unit .form-input {
+  padding-left: 14px;
+  padding-right: 60px;
+}
+
+html[dir="ltr"] .input-unit-badge {
+  left: auto;
+  right: 10px;
+}
+

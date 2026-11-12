@@ -12,6 +12,19 @@
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="resumes.css" />
+  <!-- Anti-flicker language check -->
+  <script>
+    (function(){
+      try {
+        var l = localStorage.getItem('alnajah_lang');
+        if (l === 'en') {
+          document.documentElement.lang = 'en';
+          document.documentElement.dir = 'ltr';
+          document.documentElement.classList.add('lang-en');
+        }
+      } catch(e){}
+    })();
+  </script>
 </head>
 <body>
   <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
@@ -836,5 +849,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
   <script src="resumes.js"></script>
+  <script src="i18n.js"></script>
 </body>
 </html>

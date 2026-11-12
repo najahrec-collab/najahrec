@@ -430,8 +430,9 @@
 
   // توليد بطاقة HTML لكل سيرة
   function renderCard(cv) {
+    const isEn = typeof window.getCurrentLanguage === "function" && window.getCurrentLanguage() === "en";
     const nat = NATION_MAP[cv.nationality] || { name: cv.nationality, flag: "🏳️" };
-    const jobText = JOB_NAMES[cv.job] || cv.job;
+    const jobText = (isEn && JOB_NAMES[cv.job]?.en) || JOB_NAMES[cv.job] || cv.job;
     const isAvail = cv.status === "available";
 
     const skillChips = (cv.skills || "")
@@ -442,7 +443,9 @@
       .map((s) => `<span class="cv-skill-chip">${s}</span>`)
       .join("");
 
-    const waMsg = `مرحباً مكتب النجاح للاستقدام، أود الاستفسار وحجز السيرة الذاتية (${cv.fullname} - رمز #${cv.id} - مهنة ${jobText} من ${nat.name}).`;
+    const waMsg = isEn
+      ? `Hello Al-Najah Recruitment, I would like to inquire about booking candidate (${cv.fullname} - Code #${cv.id} - ${jobText} from ${nat.name}).`
+      : `مرحباً مكتب النجاح للاستقدام، أود الاستفسار وحجز السيرة الذاتية (${cv.fullname} - رمز #${cv.id} - مهنة ${jobText} من ${nat.name}).`;
     const waUrl = `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(waMsg)}`;
 
     return `
@@ -450,7 +453,7 @@
         <div class="cv-card-media">
           <img src="${cv.photo || 'images/logo.jpg'}" alt="${cv.fullname}" onerror="this.src='images/logo.jpg'" />
           <span class="cv-badge-status ${isAvail ? 'available' : 'reserved'}">
-            ${isAvail ? '🟢 متاحة للحجز' : '🔴 محجوزة'}
+            ${isAvail ? (isEn ? '🟢 Available' : '🟢 متاحة للحجز') : (isEn ? '🔴 Reserved' : '🔴 محجوزة')}
           </span>
           <span class="cv-badge-nat">
             ${nat.flag} ${nat.name}
@@ -462,26 +465,26 @@
         <div class="cv-card-body">
           <div class="cv-name-row">
             <h3>${cv.fullname}</h3>
-            <span class="cv-age-tag">${cv.age} سنة</span>
+            <span class="cv-age-tag">${cv.age} ${isEn ? 'yrs' : 'سنة'}</span>
           </div>
 
           <span class="cv-job-title">${jobText}</span>
 
           <div class="cv-facts-grid">
             <div class="cv-fact-item">
-              <span class="cv-fact-label">الراتب الشهري</span>
-              <span class="cv-fact-val" style="color: var(--primary-color); font-weight:800;">${Number(cv.salary).toLocaleString('en-US')} ر.س</span>
+              <span class="cv-fact-label">${isEn ? 'Monthly Salary' : 'الراتب الشهري'}</span>
+              <span class="cv-fact-val" style="color: var(--primary-color); font-weight:800;">${Number(cv.salary).toLocaleString('en-US')} ${isEn ? 'SAR' : 'ر.س'}</span>
             </div>
             <div class="cv-fact-item">
-              <span class="cv-fact-label">سنوات الخبرة</span>
-              <span class="cv-fact-val">${cv.experience > 0 ? cv.experience + ' سنوات' : 'جديدة'}</span>
+              <span class="cv-fact-label">${isEn ? 'Experience' : 'سنوات الخبرة'}</span>
+              <span class="cv-fact-val">${cv.experience > 0 ? cv.experience + (isEn ? ' yrs' : ' سنوات') : (isEn ? 'Fresh' : 'جديدة')}</span>
             </div>
             <div class="cv-fact-item">
-              <span class="cv-fact-label">الديانة</span>
+              <span class="cv-fact-label">${isEn ? 'Religion' : 'الديانة'}</span>
               <span class="cv-fact-val">${cv.religion || '—'}</span>
             </div>
             <div class="cv-fact-item">
-              <span class="cv-fact-label">اللغات</span>
+              <span class="cv-fact-label">${isEn ? 'Languages' : 'اللغات'}</span>
               <span class="cv-fact-val" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${cv.languages || '—'}</span>
             </div>
           </div>
@@ -492,10 +495,10 @@
 
           <div class="cv-card-actions">
             <a href="${waUrl}" target="_blank" rel="noopener noreferrer" class="btn-cv-book" ${!isAvail ? 'style="opacity: 0.7;"' : ''}>
-              ${isAvail ? 'حجز عبر واتساب 📲' : 'استفسر عن الحجز 💬'}
+              ${isAvail ? (isEn ? 'Book via WhatsApp 📲' : 'حجز عبر واتساب 📲') : (isEn ? 'Inquire via WhatsApp 💬' : 'استفسر عن الحجز 💬')}
             </a>
             <button type="button" class="btn-cv-details" onclick="showCvDetails('${cv.id}')">
-              التفاصيل 👁️
+              ${isEn ? 'Details 👁️' : 'التفاصيل 👁️'}
             </button>
           </div>
         </div>
@@ -702,5 +705,11 @@
       renderNationalityCards();
       applyFilters();
     }
+  });
+
+  // إعادة العرض فوراً عند تبديل لغة الموقع
+  window.addEventListener("languageChanged", () => {
+    renderNationalityCards();
+    applyFilters();
   });
 })();
