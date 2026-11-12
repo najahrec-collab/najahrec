@@ -125,69 +125,80 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (calcNat && calcJob && resBase && resVat && resTotal && resSalary && resTime) {
     const defaultPricingData = {
-      philippines_maid: { total: 14500, base: 12609, vat: 1891, salary: 1500, time: 89, label: "الفلبين" },
-      philippines_nanny: { total: 14500, base: 12609, vat: 1891, salary: 1500, time: 89, label: "الفلبين" },
-      philippines_cook: { total: 14500, base: 12609, vat: 1891, salary: 1500, time: 89, label: "الفلبين" },
-      philippines_houseboy: { total: 12000, base: 10435, vat: 1565, salary: 1500, time: 89, label: "الفلبين" },
-      philippines_driver: { total: 12000, base: 10435, vat: 1565, salary: 1500, time: 89, label: "الفلبين" },
-      philippines_server: { total: 11119, base: 9669, vat: 1450, salary: 1500, time: 89, label: "الفلبين" },
+    philippines_maid: { total: 14500, base: 12609, vat: 1891, salary: 1500, time: 89, label: "الفلبين", jobLabel: "عاملة منزلية" },
+    philippines_nanny: { total: 14500, base: 12609, vat: 1891, salary: 1500, time: 89, label: "الفلبين", jobLabel: "مربية أطفال" },
+    philippines_cook: { total: 14500, base: 12609, vat: 1891, salary: 1500, time: 89, label: "الفلبين", jobLabel: "طباخ / طباخة" },
+    philippines_houseboy: { total: 12000, base: 10435, vat: 1565, salary: 1500, time: 89, label: "الفلبين", jobLabel: "عامل منزلي" },
+    philippines_driver: { total: 12000, base: 10435, vat: 1565, salary: 1500, time: 89, label: "الفلبين", jobLabel: "سائق خاص" },
+    philippines_server: { total: 11119, base: 9669, vat: 1450, salary: 1500, time: 89, label: "الفلبين", jobLabel: "سفرجي منزلي" },
 
-      burundi_maid: { total: 4530, base: 3939, vat: 591, salary: 900, time: 85, label: "بوروندي" },
-      burundi_nanny: { total: 4530, base: 3939, vat: 591, salary: 900, time: 85, label: "بوروندي" },
-      burundi_cook: { total: 4530, base: 3939, vat: 591, salary: 900, time: 85, label: "بوروندي" },
+    burundi_maid: { total: 4530, base: 3939, vat: 591, salary: 900, time: 85, label: "بوروندي", jobLabel: "عاملة منزلية" },
+    burundi_nanny: { total: 4530, base: 3939, vat: 591, salary: 900, time: 85, label: "بوروندي", jobLabel: "مربية أطفال" },
+    burundi_cook: { total: 4530, base: 3939, vat: 591, salary: 900, time: 85, label: "بوروندي", jobLabel: "طباخ / طباخة" },
 
-      ethiopia_maid: { total: 3530, base: 3070, vat: 460, salary: 900, time: 89, label: "إثيوبيا" },
-      ethiopia_nanny: { total: 3530, base: 3070, vat: 460, salary: 900, time: 89, label: "إثيوبيا" },
-      ethiopia_cook: { total: 3530, base: 3070, vat: 460, salary: 900, time: 89, label: "إثيوبيا" },
-      ethiopia_houseboy: { total: 4188, base: 3642, vat: 546, salary: 900, time: 85, label: "إثيوبيا" },
-      ethiopia_driver: { total: 4344, base: 3777, vat: 567, salary: 900, time: 85, label: "إثيوبيا" },
-      ethiopia_guard: { total: 3970, base: 3452, vat: 518, salary: 900, time: 85, label: "إثيوبيا" },
+    ethiopia_maid: { total: 3530, base: 3070, vat: 460, salary: 900, time: 89, label: "إثيوبيا", jobLabel: "عاملة منزلية" },
+    ethiopia_nanny: { total: 3530, base: 3070, vat: 460, salary: 900, time: 89, label: "إثيوبيا", jobLabel: "مربية أطفال" },
+    ethiopia_cook: { total: 3530, base: 3070, vat: 460, salary: 900, time: 89, label: "إثيوبيا", jobLabel: "طباخ / طباخة" },
+    ethiopia_houseboy: { total: 4188, base: 3642, vat: 546, salary: 900, time: 85, label: "إثيوبيا", jobLabel: "عامل منزلي" },
+    ethiopia_driver: { total: 4344, base: 3777, vat: 567, salary: 900, time: 85, label: "إثيوبيا", jobLabel: "سائق خاص" },
+    ethiopia_guard: { total: 3970, base: 3452, vat: 518, salary: 900, time: 85, label: "إثيوبيا", jobLabel: "حارس منزلي" },
 
-      kenya_maid: { total: 4530, base: 3939, vat: 591, salary: 900, time: 89, label: "كينيا" },
-      kenya_nanny: { total: 4530, base: 3939, vat: 591, salary: 900, time: 89, label: "كينيا" },
-      kenya_cook: { total: 4530, base: 3939, vat: 591, salary: 900, time: 89, label: "كينيا" },
+    kenya_maid: { total: 4530, base: 3939, vat: 591, salary: 900, time: 89, label: "كينيا", jobLabel: "عاملة منزلية" },
+    kenya_nanny: { total: 4530, base: 3939, vat: 591, salary: 900, time: 89, label: "كينيا", jobLabel: "مربية أطفال" },
+    kenya_cook: { total: 4530, base: 3939, vat: 591, salary: 900, time: 89, label: "كينيا", jobLabel: "طباخ / طباخة" },
 
-      uganda_maid: { total: 4990, base: 4339, vat: 651, salary: 900, time: 85, label: "أوغندا" },
-      uganda_nanny: { total: 4990, base: 4339, vat: 651, salary: 900, time: 85, label: "أوغندا" },
-      uganda_cook: { total: 4990, base: 4339, vat: 651, salary: 900, time: 85, label: "أوغندا" },
+    uganda_maid: { total: 4990, base: 4339, vat: 651, salary: 900, time: 85, label: "أوغندا", jobLabel: "عاملة منزلية" },
+    uganda_nanny: { total: 4990, base: 4339, vat: 651, salary: 900, time: 85, label: "أوغندا", jobLabel: "مربية أطفال" },
+    uganda_cook: { total: 4990, base: 4339, vat: 651, salary: 900, time: 85, label: "أوغندا", jobLabel: "طباخ / طباخة" },
 
-      bangladesh_maid: { total: 7070, base: 6148, vat: 922, salary: 1000, time: 89, label: "بنجلاديش" },
-      bangladesh_nanny: { total: 7070, base: 6148, vat: 922, salary: 1000, time: 89, label: "بنجلاديش" },
-      bangladesh_cook: { total: 7070, base: 6148, vat: 922, salary: 1000, time: 89, label: "بنجلاديش" },
-      bangladesh_houseboy: { total: 3402, base: 2958, vat: 444, salary: 1000, time: 89, label: "بنجلاديش" },
-      bangladesh_driver: { total: 3450, base: 3000, vat: 450, salary: 1000, time: 89, label: "بنجلاديش" },
+    bangladesh_maid: { total: 7070, base: 6148, vat: 922, salary: 1000, time: 89, label: "بنجلاديش", jobLabel: "عاملة منزلية" },
+    bangladesh_nanny: { total: 7070, base: 6148, vat: 922, salary: 1000, time: 89, label: "بنجلاديش", jobLabel: "مربية أطفال" },
+    bangladesh_cook: { total: 7070, base: 6148, vat: 922, salary: 1000, time: 89, label: "بنجلاديش", jobLabel: "طباخ / طباخة" },
+    bangladesh_houseboy: { total: 3402, base: 2958, vat: 444, salary: 1000, time: 89, label: "بنجلاديش", jobLabel: "عامل منزلي" },
+    bangladesh_driver: { total: 3450, base: 3000, vat: 450, salary: 1000, time: 89, label: "بنجلاديش", jobLabel: "سائق خاص" },
 
-      srilanka_maid: { total: 8000, base: 6957, vat: 1043, salary: 1200, time: 89, label: "سريلانكا" },
-      srilanka_nanny: { total: 8000, base: 6957, vat: 1043, salary: 1200, time: 89, label: "سريلانكا" },
-      srilanka_cook: { total: 8000, base: 6957, vat: 1043, salary: 1200, time: 89, label: "سريلانكا" },
-      srilanka_houseboy: { total: 4500, base: 3913, vat: 587, salary: 1200, time: 89, label: "سريلانكا" },
-      srilanka_driver: { total: 3000, base: 2609, vat: 391, salary: 1200, time: 89, label: "سريلانكا" },
+    srilanka_maid: { total: 8000, base: 6957, vat: 1043, salary: 1200, time: 89, label: "سريلانكا", jobLabel: "عاملة منزلية" },
+    srilanka_nanny: { total: 8000, base: 6957, vat: 1043, salary: 1200, time: 89, label: "سريلانكا", jobLabel: "مربية أطفال" },
+    srilanka_cook: { total: 8000, base: 6957, vat: 1043, salary: 1200, time: 89, label: "سريلانكا", jobLabel: "طباخ / طباخة" },
+    srilanka_houseboy: { total: 4500, base: 3913, vat: 587, salary: 1200, time: 89, label: "سريلانكا", jobLabel: "عامل منزلي" },
+    srilanka_driver: { total: 3000, base: 2609, vat: 391, salary: 1200, time: 89, label: "سريلانكا", jobLabel: "سائق خاص" },
 
-      india_maid: { total: 5665, base: 4926, vat: 739, salary: 1200, time: 55, label: "الهند" },
-      india_nanny: { total: 5665, base: 4926, vat: 739, salary: 1200, time: 55, label: "الهند" },
-      india_cook: { total: 5665, base: 4926, vat: 739, salary: 1200, time: 55, label: "الهند" },
-      india_houseboy: { total: 4059, base: 3530, vat: 529, salary: 1200, time: 89, label: "الهند" },
-      india_driver: { total: 4070, base: 3539, vat: 531, salary: 1500, time: 89, label: "الهند" },
+    india_maid: { total: 5665, base: 4926, vat: 739, salary: 1200, time: 55, label: "الهند", jobLabel: "عاملة منزلية" },
+    india_nanny: { total: 5665, base: 4926, vat: 739, salary: 1200, time: 55, label: "الهند", jobLabel: "مربية أطفال" },
+    india_cook: { total: 5665, base: 4926, vat: 739, salary: 1200, time: 55, label: "الهند", jobLabel: "طباخ / طباخة" },
+    india_houseboy: { total: 4059, base: 3530, vat: 529, salary: 1200, time: 89, label: "الهند", jobLabel: "عامل منزلي" },
+    india_driver: { total: 4070, base: 3539, vat: 531, salary: 1500, time: 89, label: "الهند", jobLabel: "سائق خاص" },
 
-      sudan_houseboy: { total: 4057, base: 3528, vat: 529, salary: 1500, time: 85, label: "السودان" },
-      sudan_driver: { total: 3672, base: 3193, vat: 479, salary: 1500, time: 85, label: "السودان" },
-      sudan_gardener: { total: 2228, base: 1937, vat: 291, salary: 1500, time: 85, label: "السودان" },
+    sudan_houseboy: { total: 4057, base: 3528, vat: 529, salary: 1500, time: 85, label: "السودان", jobLabel: "عامل منزلي" },
+    sudan_driver: { total: 3672, base: 3193, vat: 479, salary: 1500, time: 85, label: "السودان", jobLabel: "سائق خاص" },
+    sudan_gardener: { total: 2228, base: 1937, vat: 291, salary: 1500, time: 85, label: "السودان", jobLabel: "مزارع منزلي" },
 
-      egypt_houseboy: { total: 3940, base: 3426, vat: 514, salary: 1500, time: 89, label: "مصر" },
-      egypt_driver: { total: 3115, base: 2709, vat: 406, salary: 1500, time: 89, label: "مصر" },
+    egypt_houseboy: { total: 3940, base: 3426, vat: 514, salary: 1500, time: 89, label: "مصر", jobLabel: "عامل منزلي" },
+    egypt_driver: { total: 3115, base: 2709, vat: 406, salary: 1500, time: 89, label: "مصر", jobLabel: "سائق خاص" },
 
-      yemen_houseboy: { total: 3345, base: 2909, vat: 436, salary: 1500, time: 89, label: "اليمن" },
-      yemen_driver: { total: 4069, base: 3538, vat: 531, salary: 1500, time: 89, label: "اليمن" },
+    yemen_houseboy: { total: 3345, base: 2909, vat: 436, salary: 1500, time: 89, label: "اليمن", jobLabel: "عامل منزلي" },
+    yemen_driver: { total: 4069, base: 3538, vat: 531, salary: 1500, time: 89, label: "اليمن", jobLabel: "سائق خاص" },
 
-      pakistan_driver: { total: 2230, base: 1939, vat: 291, salary: 1500, time: 85, label: "باكستان" },
-      pakistan_gardener: { total: 3615, base: 3143, vat: 472, salary: 1500, time: 89, label: "باكستان" }
-    };
+    pakistan_driver: { total: 2230, base: 1939, vat: 291, salary: 1500, time: 85, label: "باكستان", jobLabel: "سائق خاص" },
+    pakistan_gardener: { total: 3615, base: 3143, vat: 472, salary: 1500, time: 89, label: "باكستان", jobLabel: "مزارع منزلي" }
+  };
 
-    let costData = {};
+let costData = {};
     const localPricing = localStorage.getItem("alnajah_pricing_data");
     if (localPricing) {
       try {
         costData = JSON.parse(localPricing);
+        // ترقية أي بيانات سابقة لضمان تعريب المهن
+        let upgraded = false;
+        Object.keys(costData).forEach(k => {
+          if (!costData[k].jobLabel && defaultPricingData[k]) {
+            costData[k].jobLabel = defaultPricingData[k].jobLabel;
+            upgraded = true;
+          }
+        });
+        if (upgraded) {
+          localStorage.setItem("alnajah_pricing_data", JSON.stringify(costData));
+        }
       } catch (e) {
         costData = defaultPricingData;
       }

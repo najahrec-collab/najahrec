@@ -162,7 +162,7 @@
           <!-- نموذج الاتصال -->
           <div class="contact-form-box">
             <h3 style="font-size: 1.5rem; font-weight: 800; color: var(--primary-color); margin-bottom: 20px; position: relative; padding-bottom: 10px;">أرسل استفسارك مباشرة</h3>
-            <form action="#" method="POST" onsubmit="event.preventDefault(); alert('تم إرسال رسالتك بنجاح! سيتواصل معك فريق خدمة العملاء قريبًا.'); this.reset();">
+            <form action="#" method="POST" onsubmit="event.preventDefault(); const name = document.getElementById('fullName').value.trim(); const phone = document.getElementById('phoneNumber').value.trim(); const svc = document.getElementById('serviceType').options[document.getElementById('serviceType').selectedIndex].text; const msg = document.getElementById('messageText').value.trim(); const text = encodeURIComponent(`السلام عليكم، الاسم: ${name}، الجوال: ${phone}، الخدمة: ${svc}، التفاصيل: ${msg}`); window.open(`https://wa.me/966555021298?text=${text}`, '_blank'); this.reset();">
               <div class="form-grid">
                 <div class="form-group">
                   <label for="fullName">الاسم بالكامل *</label>
@@ -174,7 +174,7 @@
                 </div>
                 <div class="form-group">
                   <label for="emailAddress">البريد الإلكتروني</label>
-                  <input type="email" id="emailAddress" class="form-input" placeholder="example@domain.com" />
+                  <input type="email" id="emailAddress" class="form-input" placeholder="your-email@domain.com" />
                 </div>
                 <div class="form-group">
                   <label for="serviceType">الخدمة المطلوبة</label>

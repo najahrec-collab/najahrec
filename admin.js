@@ -1042,6 +1042,8 @@
       pricingData[key].vat = vat;
       pricingData[key].time = time;
       pricingData[key].salary = salary;
+      pricingData[key].label = getCountryLabel(key, pricingData[key]);
+      pricingData[key].jobLabel = getJobLabel(key, pricingData[key]);
 
       savePricing(pricingData);
       closePricingModal();
