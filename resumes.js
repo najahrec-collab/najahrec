@@ -64,7 +64,7 @@
       nationality: "ethiopia",
       age: 26,
       experience: 3,
-      salary: 1000,
+      salary: 900,
       religion: "مسيحية",
       education: "ثانوي عام",
       marital: "عزباء",
@@ -83,7 +83,7 @@
       nationality: "kenya",
       age: 29,
       experience: 4,
-      salary: 1000,
+      salary: 900,
       religion: "مسيحية",
       education: "دبلوم مهني",
       marital: "متزوجة ولدها طفلان",
@@ -208,16 +208,121 @@
       skills: "طهي خليجي منوع، إدارة أعمال البيت بكفاءة، العناية بالأطفال",
       prevExp: "5 سنوات بالسعودية والقصيم",
       status: "reserved"
+    },
+    {
+      id: "NJ-109",
+      fullname: "نادية ج.",
+      job: "maid",
+      nationality: "burundi",
+      age: 25,
+      experience: 2,
+      salary: 800,
+      religion: "مسيحية",
+      education: "ثانوي عام",
+      marital: "عزباء",
+      height: "160 سم",
+      weight: "56 كجم",
+      photo: "images/cv_mary.jpg",
+      languages: "الفرنسية، السواحيلية، الإنجليزية (أساسي)",
+      skills: "النظافة الشاملة، الغسيل والكي، ترتيب المنزل، مساعدة المطبخ",
+      prevExp: "سنتان في بوجومبورا",
+      status: "available"
+    },
+    {
+      id: "NJ-110",
+      fullname: "ريحانة ب.",
+      job: "maid",
+      nationality: "bangladesh",
+      age: 28,
+      experience: 4,
+      salary: 1200,
+      religion: "مسلمة",
+      education: "ثانوي",
+      marital: "متزوجة",
+      height: "155 سم",
+      weight: "54 كجم",
+      photo: "images/cv_sara.jpg",
+      languages: "العربية (متوسط)، البنغالية",
+      skills: "الطهي الخليجي البسيط، النظافة، رعاية كبار السن، الكي السريع",
+      prevExp: "سنتان في الدمام، سنتان في دكا",
+      status: "available"
+    },
+    {
+      id: "NJ-111",
+      fullname: "أسماء ز.",
+      job: "maid",
+      nationality: "tanzania",
+      age: 27,
+      experience: 3,
+      salary: 900,
+      religion: "مسلمة",
+      education: "ثانوي عام",
+      marital: "عزباء",
+      height: "164 سم",
+      weight: "60 كجم",
+      photo: "images/cv_mary.jpg",
+      languages: "السواحيلية، الإنجليزية (جيد جداً)، العربية (مبتدئ)",
+      skills: "إدارة شؤون المنزل، العناية بالأطفال، التنظيف المتكامل، الهدوء والأمانة",
+      prevExp: "3 سنوات في دار السلام",
+      status: "available"
+    },
+    {
+      id: "NJ-112",
+      fullname: "فاطماتا ك.",
+      job: "maid",
+      nationality: "sierraleone",
+      age: 26,
+      experience: 2,
+      salary: 900,
+      religion: "مسلمة",
+      education: "ثانوي عام",
+      marital: "عزباء",
+      height: "162 سم",
+      weight: "57 كجم",
+      photo: "images/cv_mary.jpg",
+      languages: "الإنجليزية (ممتاز)، العربية (أساسي)",
+      skills: "النشاط العالي، سرعة التعلم، غسيل وكي الملابس، التنظيف العام",
+      prevExp: "سنتان في فريتاون في منازل عائلية",
+      status: "available"
+    },
+    {
+      id: "NJ-113",
+      fullname: "جوي ر.",
+      job: "maid",
+      nationality: "philippines",
+      age: 30,
+      experience: 5,
+      salary: 1500,
+      religion: "مسيحية",
+      education: "دبلوم مهني",
+      marital: "متزوجة",
+      height: "157 سم",
+      weight: "51 كجم",
+      photo: "images/cv_grace.jpg",
+      languages: "الإنجليزية (بطلاقة)، التاغالوغ، العربية (متوسط)",
+      skills: "التدبير المنزلي الحديث، استخدام الأجهزة الكهربائية، الطهي، التنظيم والترتيب",
+      prevExp: "3 سنوات في مانيلا، سنتان في الرياض",
+      status: "available"
     }
-  ];
+  ];;
 
   // جلب السير الذاتية من التخزين المحلي
   function getStoredResumes() {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) {
-        const parsed = JSON.parse(raw);
+        let parsed = JSON.parse(raw);
         if (Array.isArray(parsed) && parsed.length > 0) {
+          let updated = false;
+          DEFAULT_RESUMES.forEach(dr => {
+            if (!parsed.some(p => p.id === dr.id)) {
+              parsed.push(dr);
+              updated = true;
+            }
+          });
+          if (updated) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(parsed));
+          }
           return parsed;
         }
       }
