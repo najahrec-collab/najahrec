@@ -316,8 +316,14 @@
 
   // حفظ النص الأصلي العربي قبل استبداله بالإنجليزية
   function storeOriginalText(el) {
-    if (!el.dataset.origHtml) {
-      el.dataset.origHtml = el.innerHTML;
+    if (!el.dataset.origText) {
+      el.dataset.origText = el.textContent.trim();
+    }
+  }
+
+  function storeOriginalHtml(el) {
+    if (!el.dataset.origText) {
+      el.dataset.origText = el.innerHTML;
     }
   }
 
@@ -343,51 +349,51 @@
       const href = a.getAttribute("href");
       if (href && navMap[href]) {
         storeOriginalText(a);
-        a.textContent = isEn ? navMap[href] : a.dataset.origHtml;
+        a.textContent = isEn ? navMap[href] : a.dataset.origText;
       }
     });
 
     // شعار الموقع
     document.querySelectorAll(".brand-title").forEach((el) => {
       storeOriginalText(el);
-      el.textContent = isEn ? dict.brandName : el.dataset.origHtml;
+      el.textContent = isEn ? dict.brandName : el.dataset.origText;
     });
     document.querySelectorAll(".brand-sub").forEach((el) => {
       storeOriginalText(el);
-      el.textContent = isEn ? dict.brandSub : el.dataset.origHtml;
+      el.textContent = isEn ? dict.brandSub : el.dataset.origText;
     });
 
     // زر اطلب استقدامك بالهيدر
     document.querySelectorAll(".header-cta").forEach((el) => {
       storeOriginalText(el);
-      el.textContent = isEn ? dict.ctaRequest : el.dataset.origHtml;
+      el.textContent = isEn ? dict.ctaRequest : el.dataset.origText;
     });
 
     // ترخيص الشريط العلوي
     document.querySelectorAll(".topbar-license").forEach((el) => {
-      storeOriginalText(el);
+      storeOriginalHtml(el);
       el.innerHTML = isEn
         ? `<svg class="icon-xs"><use href="#i-shield-check"/></svg> ${dict.topbarLicense}`
-        : el.dataset.origHtml;
+        : el.dataset.origText;
     });
 
     // ساعات العمل بالشريط العلوي
     document.querySelectorAll(".topbar-info .topbar-item").forEach((el) => {
       if (el.textContent.includes("الأحد") || el.textContent.includes("Sun")) {
-        storeOriginalText(el);
+        storeOriginalHtml(el);
         el.innerHTML = isEn
           ? `<svg class="icon-sm"><use href="#i-clock"/></svg> ${dict.topbarHours}`
-          : el.dataset.origHtml;
+          : el.dataset.origText;
       }
     });
 
     // التذييل (Footer)
     document.querySelectorAll(".footer-brand p").forEach((el) => {
       storeOriginalText(el);
-      el.textContent = isEn ? dict.footerAboutText : el.dataset.origHtml;
+      el.textContent = isEn ? dict.footerAboutText : el.dataset.origText;
     });
 
-    document.querySelectorAll(".footer-col h4").forEach((el) => {
+    document.querySelectorAll(".footer-col h3, .footer-col h4").forEach((el) => {
       storeOriginalText(el);
       const txt = el.textContent.trim();
       if (txt.includes("روابط") || txt.includes("Quick")) el.textContent = dict.footerQuickLinks;
@@ -395,17 +401,27 @@
       else if (txt.includes("تواصل") || txt.includes("Contact")) el.textContent = dict.footerContact;
     });
 
-    document.querySelectorAll(".footer-bottom p").forEach((el) => {
-      storeOriginalText(el);
-      el.textContent = isEn ? dict.footerRights : el.dataset.origHtml;
+    // ترجمة حقوق النشر وتنسيق روابط المصمم ولوحة التحكم
+    document.querySelectorAll(".footer-bottom").forEach((fb) => {
+      const copyP = fb.querySelector("p:not(.footer-credit)");
+      const creditP = fb.querySelector(".footer-credit");
+      if (copyP) {
+        storeOriginalText(copyP);
+        copyP.textContent = isEn ? dict.footerRights : copyP.dataset.origText;
+      }
+      if (creditP) {
+        creditP.innerHTML = isEn
+          ? 'Designed by <b>Ebtekar Tech Solutions</b> | <a href="admin.html" class="admin-footer-link" style="color: var(--text-muted); text-decoration: none; font-weight: 700; margin-left: 8px;">Admin Panel 🔒</a>'
+          : 'تم التصميم بواسطة <b>ابتكار للحلول التقنية</b> | <a href="admin.html" class="admin-footer-link" style="color: var(--text-muted); text-decoration: none; font-weight: 700; margin-right: 8px;">لوحة التحكم 🔒</a>';
+      }
     });
 
     // شريط الاعتمادات (Trust bar)
     const trustPills = document.querySelectorAll(".trust-pill");
     if (trustPills.length >= 3) {
-      storeOriginalText(trustPills[0]);
-      storeOriginalText(trustPills[1]);
-      storeOriginalText(trustPills[2]);
+      storeOriginalHtml(trustPills[0]);
+      storeOriginalHtml(trustPills[1]);
+      storeOriginalHtml(trustPills[2]);
 
       trustPills[0].innerHTML = isEn
         ? `<svg class="icon-sm"><use href="#i-badge-check"/></svg> ${dict.trustPill1}`
@@ -480,11 +496,11 @@
         const subEl = document.querySelector(".hero.subpage-bg .hero-sub");
         if (titleEl) {
           storeOriginalText(titleEl);
-          titleEl.textContent = isEn ? item.title.en : titleEl.dataset.origHtml;
+          titleEl.textContent = isEn ? item.title.en : titleEl.dataset.origText;
         }
         if (subEl) {
           storeOriginalText(subEl);
-          subEl.textContent = isEn ? item.sub.en : subEl.dataset.origHtml;
+          subEl.textContent = isEn ? item.sub.en : subEl.dataset.origText;
         }
       }
     });
@@ -507,13 +523,13 @@
         const txt = l.textContent.trim();
         if (enLabels[txt]) {
           storeOriginalText(l);
-          l.textContent = isEn ? enLabels[txt] : l.dataset.origHtml;
+          l.textContent = isEn ? enLabels[txt] : l.dataset.origText;
         }
       });
       const submitBtn = document.querySelector(".contact-form button[type='submit']");
       if (submitBtn) {
         storeOriginalText(submitBtn);
-        submitBtn.textContent = isEn ? "Send Message via WhatsApp" : submitBtn.dataset.origHtml;
+        submitBtn.textContent = isEn ? "Send Message via WhatsApp" : submitBtn.dataset.origText;
       }
     }
   }

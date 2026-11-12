@@ -2014,6 +2014,19 @@ svg {
 @media (min-width: 640px) { .footer-bottom { flex-direction: row; text-align: start; } }
 
 .footer-credit b { color: var(--gold-300); }
+.admin-footer-link {
+  color: var(--navy-300, #94a3b8);
+  text-decoration: none;
+  font-weight: 700;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.admin-footer-link:hover {
+  color: var(--gold-color, #c59b27);
+  text-decoration: underline;
+}
 
 /* ===== زر واتساب العائم ===== */
 .whatsapp-float {
