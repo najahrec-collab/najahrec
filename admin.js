@@ -8,6 +8,7 @@
 
   const STORAGE_KEY = "alnajah_resumes_v2";
   const OLD_STORAGE_KEY = "alnajah_resumes_v1";
+  const DELETED_IDS_KEY = "alnajah_deleted_cv_ids";
   const PRICING_KEY = "alnajah_pricing_data";
   const AUTH_KEY = "alnajah_admin_auth";
 
@@ -39,6 +40,7 @@
     india: { name: "الهند", flag: "🇮🇳" },
     sudan: { name: "السودان", flag: "🇸🇩" },
     burundi: { name: "بوروندي", flag: "🇧🇮" },
+    sierraleone: { name: "سيراليون", flag: "🇸🇱" },
     egypt: { name: "مصر", flag: "🇪🇬" },
     yemen: { name: "اليمن", flag: "🇾🇪" },
     pakistan: { name: "باكستان", flag: "🇵🇰" }
@@ -377,7 +379,8 @@
     egypt: "مصر",
     yemen: "اليمن",
     pakistan: "باكستان",
-    tanzania: "تنزانيا"
+    tanzania: "تنزانيا",
+    sierraleone: "سيراليون"
   };
 
   const PRICING_JOBS = {
@@ -413,56 +416,115 @@
 
   // جلب السير الذاتية
   function loadResumes() {
+    let deletedIds = [];
     try {
-      let raw = localStorage.getItem(STORAGE_KEY);
-      if (!raw) {
-        const oldRaw = localStorage.getItem(OLD_STORAGE_KEY);
-        if (oldRaw) {
-          try {
-            const oldList = JSON.parse(oldRaw);
-            if (Array.isArray(oldList) && oldList.length > 0) {
-              const merged = JSON.parse(JSON.stringify(DEFAULT_RESUMES));
-              oldList.forEach(item => {
-                if (!merged.some(m => m.id === item.id)) {
-                  merged.push(item);
-                }
-              });
-              localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
-              return merged;
-            }
-          } catch(e) {}
-        }
-      } else {
-        const parsed = JSON.parse(raw);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          let updated = false;
-          DEFAULT_RESUMES.forEach(dr => {
-            const existingIdx = parsed.findIndex(p => p.id === dr.id);
-            if (existingIdx === -1) {
-              parsed.push(dr);
-              updated = true;
-            } else if (parsed[existingIdx].salary !== dr.salary) {
-              parsed[existingIdx].salary = dr.salary;
-              updated = true;
-            }
-          });
-          if (updated) {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(parsed));
-          }
-          return parsed;
-        }
+      const delRaw = localStorage.getItem(DELETED_IDS_KEY);
+      if (delRaw) {
+        const parsedDel = JSON.parse(delRaw);
+        if (Array.isArray(parsedDel)) deletedIds = parsedDel;
+      }
+    } catch (e) {}
+
+    let parsed = null;
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        const p = JSON.parse(raw);
+        if (Array.isArray(p) && p.length > 0) parsed = p;
       }
     } catch (e) {
       console.warn("Error reading resumes:", e);
     }
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(DEFAULT_RESUMES));
-    return JSON.parse(JSON.stringify(DEFAULT_RESUMES));
+
+    // استرجاع أي بيانات محفوظة في window.name عند التنقل المحلي عبر file://
+    if (!parsed) {
+      try {
+        if (window.name && window.name.startsWith("ALNAJAH_SYNC:")) {
+          const wData = JSON.parse(window.name.slice("ALNAJAH_SYNC:".length));
+          if (Array.isArray(wData) && wData.length > 0) {
+            parsed = wData;
+          }
+        }
+      } catch (e) {}
+    }
+
+    // دمج أي سير من الإصدار القديم
+    try {
+      const oldRaw = localStorage.getItem(OLD_STORAGE_KEY);
+      if (oldRaw) {
+        const oldList = JSON.parse(oldRaw);
+        if (Array.isArray(oldList) && oldList.length > 0) {
+          if (!parsed) parsed = [];
+          oldList.forEach((item) => {
+            if (item && item.id && !parsed.some((m) => m.id === item.id) && !deletedIds.includes(item.id)) {
+              parsed.unshift(item);
+            }
+          });
+        }
+      }
+    } catch (e) {}
+
+    if (Array.isArray(parsed) && parsed.length > 0) {
+      let updated = false;
+      DEFAULT_RESUMES.forEach((dr) => {
+        if (deletedIds.includes(dr.id)) return;
+        const existingIdx = parsed.findIndex((p) => p && p.id === dr.id);
+        if (existingIdx === -1) {
+          parsed.push(dr);
+          updated = true;
+        }
+      });
+      try {
+        if (updated) {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(parsed));
+        }
+        window.name = "ALNAJAH_SYNC:" + JSON.stringify(parsed);
+      } catch (e) {}
+      return parsed;
+    }
+
+    const fallback = DEFAULT_RESUMES.filter((dr) => !deletedIds.includes(dr.id));
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(fallback));
+      window.name = "ALNAJAH_SYNC:" + JSON.stringify(fallback);
+    } catch (e) {}
+    return JSON.parse(JSON.stringify(fallback));
   }
 
-  // حفظ السير الذاتية
+  // حفظ السير الذاتية ومزامنتها
   function saveResumes(list) {
     resumesList = list;
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+    const jsonStr = JSON.stringify(list);
+    try {
+      localStorage.setItem(STORAGE_KEY, jsonStr);
+    } catch (err) {
+      console.warn("Storage quota warning, attempting to optimize stored images:", err);
+      try {
+        localStorage.removeItem(OLD_STORAGE_KEY);
+        localStorage.setItem(STORAGE_KEY, jsonStr);
+      } catch (err2) {
+        alert("تنبيه: مساحة تخزين المتصفح ممتلئة بسبب حجم الصور الكبير. يرجى استخدام زر (🚀 حفظ ونشر السير على الموقع العام) لحفظها بشكل دائم في ملفات الموقع.");
+      }
+    }
+    try {
+      window.name = "ALNAJAH_SYNC:" + jsonStr;
+    } catch (e) {}
+
+    // إذا كان الخادم المحلي (server.js) يعمل، يتم الحفظ في ملفات الموقع والرفع تلقائياً
+    if (window.location.protocol.startsWith("http")) {
+      fetch("/api/save-resumes", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ resumes: list })
+      })
+        .then((res) => {
+          if (res.ok && window.showAdminToast) {
+            window.showAdminToast("تم الحفظ والمزامنة التلقائية مع ملفات الموقع بنجاح! 🌐");
+          }
+        })
+        .catch(() => {});
+    }
+
     updateStats();
     renderResumesTable();
   }
@@ -515,13 +577,94 @@
     renderPricingTable();
   }
 
-  // ================= 1. تسجيل الدخول والخروج =================
-    // دالة مساعدة لضغط وتصغير حجم الصور المرفوعة لتفادي امتلاء التخزين المحلي
-  function compressImageFile(file, maxWidth, maxHeight, quality, callback) {
-    if (!file || !file.type.startsWith("image/")) {
-      alert("يرجى اختيار ملف صورة صالح (JPG, PNG, WEBP).");
+  // ================= 1. تسجيل الدخول والخروج + معالجة الصور وملفات PDF =================
+  function loadPdfJsLibrary(callback) {
+    if (window.pdfjsLib) {
+      callback(window.pdfjsLib);
       return;
     }
+    const script = document.createElement("script");
+    script.src = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js";
+    script.onload = function () {
+      if (window.pdfjsLib) {
+        window.pdfjsLib.GlobalWorkerOptions.workerSrc =
+          "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+        callback(window.pdfjsLib);
+      } else {
+        alert("تعذر تحميل محول ملفات PDF. يرجى رفع السيرة الذاتية كصورة (JPG أو PNG).");
+      }
+    };
+    script.onerror = function () {
+      alert("تعذر تحميل محول ملفات PDF لعدم توفر اتصال بالإنترنت. يرجى رفع السيرة الذاتية كصورة (JPG أو PNG).");
+    };
+    document.head.appendChild(script);
+  }
+
+  // دالة مساعدة لضغط وتصغير حجم الصور أو تحويل الصفحة الأولى من ملف PDF إلى صورة واضحة
+  function compressImageFile(file, maxWidth, maxHeight, quality, callback) {
+    if (!file) return;
+
+    const isPdf = file.type === "application/pdf" || (file.name && file.name.toLowerCase().endsWith(".pdf"));
+    if (isPdf) {
+      if (window.showAdminToast) {
+        window.showAdminToast("جاري معالجة وتحويل ملف السيرة الذاتية (PDF) إلى صورة واضحة...");
+      }
+      loadPdfJsLibrary(function (pdfjsLib) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const typedarray = new Uint8Array(e.target.result);
+          pdfjsLib
+            .getDocument(typedarray)
+            .promise.then(function (pdf) {
+              return pdf.getPage(1);
+            })
+            .then(function (page) {
+              const viewport = page.getViewport({ scale: 1.8 });
+              const canvas = document.createElement("canvas");
+              const ctx = canvas.getContext("2d");
+              canvas.width = viewport.width;
+              canvas.height = viewport.height;
+              ctx.fillStyle = "#ffffff";
+              ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+              return page.render({ canvasContext: ctx, viewport: viewport }).promise.then(function () {
+                // تحجيم وضغط المخرجات
+                let width = canvas.width;
+                let height = canvas.height;
+                if (width > maxWidth) {
+                  height = Math.round((height * maxWidth) / width);
+                  width = maxWidth;
+                }
+                if (height > maxHeight) {
+                  width = Math.round((width * maxHeight) / height);
+                  height = maxHeight;
+                }
+                const outCanvas = document.createElement("canvas");
+                outCanvas.width = width;
+                outCanvas.height = height;
+                const outCtx = outCanvas.getContext("2d");
+                outCtx.fillStyle = "#ffffff";
+                outCtx.fillRect(0, 0, width, height);
+                outCtx.drawImage(canvas, 0, 0, width, height);
+                const dataUrl = outCanvas.toDataURL("image/jpeg", quality);
+                callback(dataUrl);
+              });
+            })
+            .catch(function (err) {
+              console.error("PDF conversion error:", err);
+              alert("تعذر قراءة ملف PDF المحدد. يرجى التأكد من أن الملف غير محمي بكلمة مرور أو رفع صورة مباشرة.");
+            });
+        };
+        reader.readAsArrayBuffer(file);
+      });
+      return;
+    }
+
+    if (!file.type.startsWith("image/")) {
+      alert("يرجى اختيار ملف صورة صالح (JPG, PNG, WEBP) أو ملف (PDF).");
+      return;
+    }
+
     const reader = new FileReader();
     reader.onload = function (e) {
       const img = new Image();
@@ -529,22 +672,21 @@
         let width = img.width;
         let height = img.height;
 
-        if (width > height) {
-          if (width > maxWidth) {
-            height = Math.round((height * maxWidth) / width);
-            width = maxWidth;
-          }
-        } else {
-          if (height > maxHeight) {
-            width = Math.round((width * maxHeight) / height);
-            height = maxHeight;
-          }
+        if (width > maxWidth) {
+          height = Math.round((height * maxWidth) / width);
+          width = maxWidth;
+        }
+        if (height > maxHeight) {
+          width = Math.round((width * maxHeight) / height);
+          height = maxHeight;
         }
 
         const canvas = document.createElement("canvas");
         canvas.width = width;
         canvas.height = height;
         const ctx = canvas.getContext("2d");
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(0, 0, width, height);
         ctx.drawImage(img, 0, 0, width, height);
 
         const dataUrl = canvas.toDataURL("image/jpeg", quality);
@@ -700,8 +842,19 @@
     const cv = resumesList.find((r) => r.id === id);
     if (!cv) return;
     if (confirm(`هل أنت متأكد من حذف السيرة الذاتية للمرشح (${cv.fullname})؟`)) {
+      try {
+        const delRaw = localStorage.getItem(DELETED_IDS_KEY);
+        const delList = delRaw ? JSON.parse(delRaw) : [];
+        if (Array.isArray(delList) && !delList.includes(id)) {
+          delList.push(id);
+          localStorage.setItem(DELETED_IDS_KEY, JSON.stringify(delList));
+        }
+      } catch (e) {}
       const updated = resumesList.filter((r) => r.id !== id);
       saveResumes(updated);
+      if (window.showAdminToast) {
+        window.showAdminToast(`تم حذف السيرة الذاتية (${cv.fullname}) بنجاح.`);
+      }
     }
   };
 
@@ -715,7 +868,7 @@
     const file = e.target.files[0];
     if (!file) return;
 
-    compressImageFile(file, 450, 450, 0.85, function (dataUrl) {
+    compressImageFile(file, 850, 1150, 0.80, function (dataUrl) {
       const previewImg = document.getElementById("photoPreviewImg");
       const actualVal = document.getElementById("photoActualValue");
       const pathInput = document.getElementById("photoPath");
@@ -724,9 +877,17 @@
 
       if (previewImg) previewImg.src = dataUrl;
       if (actualVal) actualVal.value = dataUrl;
-      if (pathInput) pathInput.value = dataUrl;
+      if (pathInput) pathInput.value = "";
       if (photoSelect) photoSelect.value = "custom";
-      if (customWrap) customWrap.style.display = "block";
+      if (customWrap) customWrap.style.display = "none";
+
+      // إزالة التحديد من المعرض السريع لأن المستخدم رفع صورة خاصة
+      document.querySelectorAll("#avatarQuickGallery .avatar-choice").forEach((b) => b.classList.remove("active"));
+
+      window.updateLivePreview();
+      if (window.showAdminToast) {
+        window.showAdminToast("تم إرفاق وضغط ملف السيرة الذاتية بنجاح! اضغط (حفظ التغييرات) بالأسفل لاعتمادها.");
+      }
     });
   };
 
@@ -740,7 +901,7 @@
       if (customWrap) customWrap.style.display = "block";
       if (pathInput) {
         pathInput.focus();
-        if (actualVal && actualVal.value && !actualVal.value.startsWith("images/")) {
+        if (actualVal && actualVal.value && !actualVal.value.startsWith("images/") && !actualVal.value.startsWith("data:")) {
           pathInput.value = actualVal.value;
         }
       }
@@ -749,6 +910,7 @@
       if (actualVal) actualVal.value = val;
       if (pathInput) pathInput.value = val;
       if (previewImg) previewImg.src = val;
+      window.updateLivePreview();
     }
   };
 
@@ -984,12 +1146,17 @@
     if (fileInput) fileInput.value = "";
 
     if (photoSelect && photoPath) {
-      photoPath.value = currentPhoto;
       const optionExists = Array.from(photoSelect.options).some((o) => o.value === currentPhoto);
       if (optionExists) {
+        photoPath.value = currentPhoto;
         photoSelect.value = currentPhoto;
         if (customWrap) customWrap.style.display = "none";
+      } else if (currentPhoto.startsWith("data:")) {
+        photoPath.value = "";
+        photoSelect.value = "custom";
+        if (customWrap) customWrap.style.display = "none";
       } else {
+        photoPath.value = currentPhoto;
         photoSelect.value = "custom";
         if (customWrap) customWrap.style.display = "block";
       }
@@ -1022,28 +1189,55 @@
     e.preventDefault();
 
     const editId = document.getElementById("editIndex").value;
-    const fullname = document.getElementById("fullname").value.trim();
-    const job = document.getElementById("job").value;
-    const nationality = document.getElementById("nationality").value;
-    const age = Number(document.getElementById("age").value) || 25;
+    const job = document.getElementById("job").value || "maid";
+    const nationality = document.getElementById("nationality").value || "ethiopia";
+    const natObj = NATION_MAP[nationality] || { name: "إثيوبيا", flag: "🇪🇹" };
+    const jobLabel = JOB_NAMES[job] || "عاملة منزلية";
+
+    const rawFullname = document.getElementById("fullname").value.trim();
+    const fullname = rawFullname || `مرشحة مستقدمة (${natObj.name})`;
+    const age = Number(document.getElementById("age").value) || 26;
     const experience = Number(document.getElementById("experience").value) || 0;
-    const salary = Number(document.getElementById("salary").value) || 1200;
-    const religion = document.getElementById("religion").value.trim();
-    const education = document.getElementById("education").value.trim();
-    const marital = document.getElementById("marital").value.trim();
+
+    // راتب افتراضي ذكي حسب الجنسية في حال تركه فارغاً
+    const defaultSalaries = {
+      philippines: 1500,
+      srilanka: 1200,
+      bangladesh: 1200,
+      india: 1200,
+      burundi: 800,
+      ethiopia: 900,
+      kenya: 900,
+      uganda: 900,
+      tanzania: 900,
+      sierraleone: 900,
+      sudan: 1500,
+      egypt: 1500,
+      yemen: 1500,
+      pakistan: 1500
+    };
+    const salary = Number(document.getElementById("salary").value) || defaultSalaries[nationality] || 1000;
+    const religion = document.getElementById("religion").value.trim() || "غير محدد";
+    const education = document.getElementById("education").value.trim() || "ثانوي عام";
+    const marital = document.getElementById("marital").value.trim() || "عزباء";
     const rawHeight = document.getElementById("height").value.trim();
     const rawWeight = document.getElementById("weight").value.trim();
-    const height = rawHeight ? (rawHeight.includes("سم") ? rawHeight : `${rawHeight} سم`) : "";
-    const weight = rawWeight ? (rawWeight.includes("كجم") ? rawWeight : `${rawWeight} كجم`) : "";
+    const height = rawHeight ? (rawHeight.includes("سم") ? rawHeight : `${rawHeight} سم`) : "160 سم";
+    const weight = rawWeight ? (rawWeight.includes("كجم") ? rawWeight : `${rawWeight} كجم`) : "58 كجم";
     const actualPhotoInput = document.getElementById("photoActualValue");
     const fallbackPathInput = document.getElementById("photoPath");
-    const photoPath = (actualPhotoInput && actualPhotoInput.value.trim()) || 
-                      (fallbackPathInput && fallbackPathInput.value.trim()) || 
-                      "images/logo.jpg";
-    const languages = document.getElementById("languages").value.trim();
-    const skills = document.getElementById("skills").value.trim();
-    const prevExp = document.getElementById("prevExp").value.trim();
-    const status = document.getElementById("status").value;
+    const photoPath =
+      (actualPhotoInput && actualPhotoInput.value.trim()) ||
+      (fallbackPathInput && fallbackPathInput.value.trim()) ||
+      "images/logo.jpg";
+    const languages = document.getElementById("languages").value.trim() || "العربية (أساسي)، الإنجليزية";
+    const skills =
+      document.getElementById("skills").value.trim() ||
+      "النظافة الشاملة، الترتيب، الغسيل والكي، العناية بالمنزل";
+    const prevExp =
+      document.getElementById("prevExp").value.trim() ||
+      (experience > 0 ? `خبرة عملية سابقة (${experience} سنوات)` : "مدربة ومؤهلة للعمل الفوري");
+    const status = document.getElementById("status").value || "available";
 
     if (editId) {
       // تعديل
@@ -1069,8 +1263,11 @@
         });
       }
     } else {
-      // إضافة جديدة
-      const newId = "NJ-" + Math.floor(100 + Math.random() * 900);
+      // إضافة جديدة في مقدمة القائمة
+      let newId = "NJ-" + Math.floor(114 + Math.random() * 885);
+      while (resumesList.some((r) => r.id === newId)) {
+        newId = "NJ-" + Math.floor(100 + Math.random() * 900);
+      }
       resumesList.unshift({
         id: newId,
         fullname,
@@ -1094,7 +1291,7 @@
 
     saveResumes(resumesList);
     closeEditorModal();
-    window.showAdminToast("تم حفظ السيرة الذاتية بنجاح! تم تحديث الصفحة والموقع فورياً.");
+    window.showAdminToast(`تم حفظ السيرة الذاتية (${fullname} - ${jobLabel}) بنجاح! ظهرت الآن في الموقع.`);
   };
 
   // ================= 4. إدارة أسعار وتكاليف الاستقدام للحاسبة =================
@@ -1255,7 +1452,7 @@
     const file = e.target.files[0];
     if (!file) return;
 
-    compressImageFile(file, 450, 450, 0.85, function (dataUrl) {
+    compressImageFile(file, 850, 1150, 0.80, function (dataUrl) {
       currentQuickPhotoData = dataUrl;
       const previewEl = document.getElementById("quickPhotoPreview");
       const selectEl = document.getElementById("quickPhotoSelect");
@@ -1264,8 +1461,11 @@
 
       if (previewEl) previewEl.src = dataUrl;
       if (selectEl) selectEl.value = "custom";
-      if (customWrap) customWrap.style.display = "block";
-      if (customUrlInput) customUrlInput.value = "تم اختيار وضغط صورة من جهازك بنجاح";
+      if (customWrap) customWrap.style.display = "none";
+      if (customUrlInput) customUrlInput.value = "";
+      if (window.showAdminToast) {
+        window.showAdminToast("تم تجهيز الصورة الجديدة بنجاح! اضغط (حفظ وتطبيق الصورة) لاعتمادها.");
+      }
     });
   };
 
@@ -1308,7 +1508,70 @@
   };
 
 
-    window.copyResumesJson = function () {
+  // فتح صفحة السير الذاتية العامة مع ضمان مزامنة window.name و localStorage
+  window.openPublicResumesPage = function (e) {
+    if (e) e.preventDefault();
+    try {
+      const jsonStr = JSON.stringify(resumesList);
+      localStorage.setItem(STORAGE_KEY, jsonStr);
+      window.name = "ALNAJAH_SYNC:" + jsonStr;
+    } catch (err) {}
+    window.location.href = "resumes.html";
+  };
+
+  // حفظ ونشر السير الذاتية على الموقع العام (najahrec.sa) لجميع الزوار
+  window.publishResumesToSite = function () {
+    // 1. إذا كان الخادم المحلي يعمل، نحفظ ونرفع مباشرة بنقرة واحدة
+    if (window.location.protocol.startsWith("http")) {
+      fetch("/api/save-resumes", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ resumes: resumesList, push: true })
+      })
+        .then((res) => {
+          if (!res.ok) throw new Error("No local API");
+          return res.json();
+        })
+        .then((data) => {
+          alert(
+            "✅ تم حفظ السير الذاتية في ملفات الموقع (resumes.js و admin.js) ورفعها إلى موقعكم الرسمي (najahrec.sa) بنجاح!"
+          );
+        })
+        .catch(() => {
+          downloadSyncFileAndGuide();
+        });
+    } else {
+      downloadSyncFileAndGuide();
+    }
+  };
+
+  function downloadSyncFileAndGuide() {
+    const syncPayload = {
+      version: "2.3",
+      exportedAt: new Date().toISOString(),
+      resumes: resumesList,
+      pricing: pricingData
+    };
+    const jsonStr = JSON.stringify(syncPayload, null, 2);
+    const blob = new Blob([jsonStr], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "alnajah_resumes_sync.json";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+
+    alert(
+      "✅ تم حفظ السير الذاتية في متصفحك وتجهيز ملف النشر (alnajah_resumes_sync.json) في مجلد التنزيلات!\n\n" +
+        "📌 ملاحظات هامة:\n" +
+        "1. السير المضافة تظهر الآن فوراً في صفحة (السير الذاتية) على جهازك.\n" +
+        "2. لنشر السير الجديدة لجميع زوار الموقع على الإنترنت (najahrec.sa)، فقط قم بتشغيل ملف (push.bat) في مجلد الموقع، وسيقوم تلقائياً بقراءة ملف التنزيلات ودمج السير ورفعها للموقع!"
+    );
+  }
+
+  window.copyResumesJson = function () {
     const jsonStr = JSON.stringify(resumesList, null, 2);
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(jsonStr).then(() => {
@@ -1370,7 +1633,11 @@
 
   window.resetToDefaults = function () {
     if (confirm("تحذير: هل أنت متأكد من إعادة تعيين جميع السير الذاتية إلى القائمة الافتراضية؟ سيتم مسح أي تعديلات يدوية.")) {
-      saveResumes(DEFAULT_RESUMES);
+      try {
+        localStorage.removeItem(DELETED_IDS_KEY);
+        localStorage.removeItem(OLD_STORAGE_KEY);
+      } catch (e) {}
+      saveResumes(JSON.parse(JSON.stringify(DEFAULT_RESUMES)));
       alert("تمت استعادة السير الذاتية الافتراضية بنجاح.");
     }
   };

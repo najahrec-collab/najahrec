@@ -106,9 +106,17 @@
 
       <!-- شريط الإجراءات العامة -->
       <div class="actions-bar">
-        <button type="button" class="btn-action" onclick="openAddModal()">
-          إضافة سيرة ذاتية جديدة +
-        </button>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <button type="button" class="btn-action" onclick="openAddModal()">
+            إضافة سيرة ذاتية جديدة +
+          </button>
+          <button type="button" class="btn-action" onclick="publishResumesToSite()" style="background: linear-gradient(135deg, #10b981, #059669); color: #fff; font-weight: 800; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);">
+            🚀 حفظ ونشر السير على الموقع العام
+          </button>
+          <a href="resumes.html" onclick="openPublicResumesPage(event)" class="btn-action btn-secondary" style="text-decoration: none; font-weight: 800;">
+            👁️ عرض صفحة السير بالموقع ↗
+          </a>
+        </div>
         <div class="action-buttons">
           <button type="button" class="btn-action btn-secondary" onclick="exportData()">تصدير نسخة احتياطية (JSON)</button>
           <button type="button" class="btn-action btn-primary" onclick="copyResumesJson()" style="background: var(--gold-color, #c59b27); color: #071830; font-weight: 700;">📋 نسخ بيانات السير (للموقع)</button>
@@ -174,7 +182,7 @@
       </div>
 
       <div style="margin-top: 25px; text-align: center;">
-        <a href="resumes.html" target="_blank" class="btn-action btn-secondary" style="font-weight: 700; gap: 8px;">
+        <a href="resumes.html" onclick="openPublicResumesPage(event)" class="btn-action btn-secondary" style="font-weight: 700; gap: 8px;">
           فتح صفحة السير الذاتية العامة المعروضة للمستخدمين ↗
         </a>
       </div>
@@ -248,8 +256,8 @@
             </div>
             <div class="form-grid">
               <div class="form-group">
-                <label class="form-label" for="fullname">الاسم الكامل أو الرمز المعتمد *</label>
-                <input type="text" id="fullname" class="form-input" required placeholder="مثال: سارة م. أو NJ-101" oninput="updateLivePreview()" />
+                <label class="form-label" for="fullname">الاسم الكامل أو الرمز المعتمد</label>
+                <input type="text" id="fullname" class="form-input" placeholder="مثال: سارة م. أو يترك فارغاً للتوليد التلقائي" oninput="updateLivePreview()" />
               </div>
               <div class="form-group">
                 <label class="form-label" for="job">المهنة المصرحة *</label>
@@ -279,32 +287,35 @@
                   <option value="sudan">🇸🇩 السودان</option>
                   <option value="burundi">🇧🇮 بوروندي</option>
                   <option value="sierraleone">🇸🇱 سيراليون</option>
+                  <option value="egypt">🇪🇬 مصر</option>
+                  <option value="yemen">🇾🇪 اليمن</option>
+                  <option value="pakistan">🇵🇰 باكستان</option>
                 </select>
               </div>
               <div class="form-group">
-                <label class="form-label" for="age">العمر *</label>
+                <label class="form-label" for="age">العمر</label>
                 <div class="input-with-unit">
-                  <input type="number" id="age" class="form-input" min="18" max="60" required placeholder="28" oninput="updateLivePreview()" />
+                  <input type="number" id="age" class="form-input" min="18" max="65" placeholder="28" oninput="updateLivePreview()" />
                   <span class="input-unit-badge">سنة</span>
                 </div>
               </div>
               <div class="form-group">
-                <label class="form-label" for="experience">سنوات الخبرة *</label>
+                <label class="form-label" for="experience">سنوات الخبرة</label>
                 <div class="input-with-unit">
-                  <input type="number" id="experience" class="form-input" min="0" max="30" required placeholder="0" oninput="updateLivePreview()" />
+                  <input type="number" id="experience" class="form-input" min="0" max="35" placeholder="0" oninput="updateLivePreview()" />
                   <span class="input-unit-badge">سنوات</span>
                 </div>
               </div>
               <div class="form-group">
-                <label class="form-label" for="salary">الراتب الشهري *</label>
+                <label class="form-label" for="salary">الراتب الشهري</label>
                 <div class="input-with-unit">
-                  <input type="number" id="salary" class="form-input" min="500" max="15000" required placeholder="1200" oninput="updateLivePreview()" />
+                  <input type="number" id="salary" class="form-input" min="400" max="20000" placeholder="تلقائي حسب الجنسية" oninput="updateLivePreview()" />
                   <span class="input-unit-badge">ر.س</span>
                 </div>
               </div>
               <div class="form-group">
                 <label class="form-label" for="religion">الديانة</label>
-                <input type="text" id="religion" class="form-input" list="religionList" required placeholder="مثال: مسلمة / مسيحية" oninput="updateLivePreview()" />
+                <input type="text" id="religion" class="form-input" list="religionList" placeholder="مثال: مسلمة / مسيحية" oninput="updateLivePreview()" />
                 <datalist id="religionList">
                   <option value="مسلمة" />
                   <option value="مسلم" />
@@ -316,7 +327,7 @@
               </div>
               <div class="form-group">
                 <label class="form-label" for="education">مستوى التعليم</label>
-                <input type="text" id="education" class="form-input" list="educationList" required placeholder="مثال: ثانوي / متوسط / دبلوم" />
+                <input type="text" id="education" class="form-input" list="educationList" placeholder="مثال: ثانوي / متوسط / دبلوم" />
                 <datalist id="educationList">
                   <option value="ثانوي عام" />
                   <option value="متوسط" />
@@ -327,7 +338,7 @@
               </div>
               <div class="form-group">
                 <label class="form-label" for="marital">الحالة الاجتماعية</label>
-                <input type="text" id="marital" class="form-input" list="maritalList" required placeholder="مثال: عزباء / متزوجة" />
+                <input type="text" id="marital" class="form-input" list="maritalList" placeholder="مثال: عزباء / متزوجة" />
                 <datalist id="maritalList">
                   <option value="عزباء" />
                   <option value="متزوجة" />
@@ -337,14 +348,14 @@
                 </datalist>
               </div>
               <div class="form-group">
-                <label class="form-label">الطول والوزن</label>
+                <label class="form-label">الطول والوزن (اختياري)</label>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
                   <div class="input-with-unit">
-                    <input type="text" id="height" class="form-input" required placeholder="162" />
+                    <input type="text" id="height" class="form-input" placeholder="162" />
                     <span class="input-unit-badge">سم</span>
                   </div>
                   <div class="input-with-unit">
-                    <input type="text" id="weight" class="form-input" required placeholder="58" />
+                    <input type="text" id="weight" class="form-input" placeholder="58" />
                     <span class="input-unit-badge">كجم</span>
                   </div>
                 </div>
@@ -356,7 +367,7 @@
           <div class="modal-section photo-manager-card">
             <div class="modal-section-title">
               <span class="modal-sec-icon">📸</span>
-              <span>الصورة الشخصية ومعرض الصور المباشر</span>
+              <span>صورة السيرة الذاتية / الصورة الشخصية</span>
             </div>
             <div class="photo-manager-layout">
               <div class="photo-preview-wrap">
@@ -366,10 +377,10 @@
               <div class="photo-manager-controls" style="flex: 1;">
                 <div class="photo-upload-actions">
                   <button type="button" class="btn-action btn-upload-photo" onclick="triggerPhotoUpload()">
-                    📁 رفع صورة جديدة من جهازك
+                    📁 رفع صورة أو ملف سيرة ذاتية (صورة / PDF) من جهازك
                   </button>
-                  <input type="file" id="photoFileInput" accept="image/*" style="display: none;" onchange="handleModalPhotoUpload(event)" />
-                  <span class="photo-upload-hint">يدعم JPG, PNG, WEBP — يتم ضغط الصورة وتحسينها تلقائياً</span>
+                  <input type="file" id="photoFileInput" accept="image/*,.pdf,application/pdf" style="display: none;" onchange="handleModalPhotoUpload(event)" />
+                  <span class="photo-upload-hint">يدعم صور (JPG, PNG, WEBP) وملفات (PDF) — يتم تحسين وضغط الملف تلقائياً</span>
                 </div>
 
                 <!-- معرض الصور الجاهزة للاختيار السريع بنقرة واحدة -->
@@ -432,11 +443,11 @@
           <div class="modal-section">
             <div class="modal-section-title">
               <span class="modal-sec-icon">💼</span>
-              <span>المهارات واللغات والخبرات السابقة</span>
+              <span>المهارات واللغات والخبرات السابقة (اختياري)</span>
             </div>
             <div class="form-group full-width" style="margin-bottom: 14px;">
-              <label class="form-label" for="languages">اللغات المتقنة *</label>
-              <input type="text" id="languages" class="form-input" required placeholder="مثال: العربية (ممتاز)، الإنجليزية (جيد جداً)" oninput="updateLivePreview()" />
+              <label class="form-label" for="languages">اللغات المتقنة</label>
+              <input type="text" id="languages" class="form-input" placeholder="مثال: العربية (ممتاز)، الإنجليزية (جيد جداً)" oninput="updateLivePreview()" />
               <div class="quick-tags-container">
                 <span class="quick-tag-chip" onclick="addLanguageTag('العربية (ممتاز)')">+ العربية (ممتاز)</span>
                 <span class="quick-tag-chip" onclick="addLanguageTag('الإنجليزية (بطلاقة)')">+ الإنجليزية (بطلاقة)</span>
@@ -446,8 +457,8 @@
             </div>
             
             <div class="form-group full-width" style="margin-bottom: 14px;">
-              <label class="form-label" for="skills">المهارات الوظيفية الأساسية (افصل بينها بفاصلة "،") *</label>
-              <input type="text" id="skills" class="form-input" required placeholder="مثال: الطهي، التنظيف العالي، الكي، الغسيل" oninput="updateLivePreview()" />
+              <label class="form-label" for="skills">المهارات الوظيفية الأساسية (افصل بينها بفاصلة "،")</label>
+              <input type="text" id="skills" class="form-input" placeholder="مثال: الطهي، التنظيف العالي، الكي، الغسيل" oninput="updateLivePreview()" />
               <div class="quick-tags-container">
                 <span class="quick-tag-chip" onclick="addSkillTag('الطهي الخليجي')">+ الطهي الخليجي</span>
                 <span class="quick-tag-chip" onclick="addSkillTag('رعاية الأطفال')">+ رعاية الأطفال</span>
@@ -461,8 +472,8 @@
             </div>
 
             <div class="form-group full-width">
-              <label class="form-label" for="prevExp">الخبرات العملية السابقة بالتفصيل *</label>
-              <input type="text" id="prevExp" class="form-input" required placeholder="مثال: 3 سنوات بالرياض لعائلة راقية، سنتين بدبي" oninput="updateLivePreview()" />
+              <label class="form-label" for="prevExp">الخبرات العملية السابقة بالتفصيل</label>
+              <input type="text" id="prevExp" class="form-input" placeholder="مثال: 3 سنوات بالرياض لعائلة راقية، سنتين بدبي" oninput="updateLivePreview()" />
             </div>
           </div>
 
@@ -546,9 +557,9 @@
         </div>
         <div style="display: flex; flex-direction: column; gap: 14px; text-align: right;">
           <button type="button" class="btn-action" style="justify-content: center; width: 100%;" onclick="triggerQuickPhotoUpload()">
-            📁 اختيار ورفع صورة من جهازك
+            📁 اختيار ورفع صورة أو PDF من جهازك
           </button>
-          <input type="file" id="quickPhotoFileInput" accept="image/*" style="display: none;" onchange="handleQuickPhotoUpload(event)" />
+          <input type="file" id="quickPhotoFileInput" accept="image/*,.pdf,application/pdf" style="display: none;" onchange="handleQuickPhotoUpload(event)" />
           
           <div>
             <label class="form-label" style="margin-bottom: 5px; display: block;">أو اختيار صورة جاهزة من المكتبة:</label>
@@ -577,7 +588,7 @@
     </div>
   </div>
 
-  <script src="admin.js?v=2.2"></script>
-  <script src="i18n.js?v=2.2"></script>
+  <script src="admin.js?v=2.3"></script>
+  <script src="i18n.js?v=2.3"></script>
 </body>
 </html>

@@ -19,7 +19,13 @@ if %errorlevel% neq 0 (
     )
 )
 
-echo 1. جاري فحص الملفات المعدلة...
+echo 1. جاري مزامنة أي سير ذاتية مضافة حديثاً (sync_resumes.js)...
+where node >nul 2>nul
+if %errorlevel% equ 0 (
+    node "%~dp0sync_resumes.js"
+)
+echo.
+echo 2. جاري فحص الملفات المعدلة...
 "%GIT_CMD%" status --short
 echo.
 

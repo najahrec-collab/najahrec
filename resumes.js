@@ -37,11 +37,15 @@
     sudan: { name: "السودان", flag: "🇸🇩" },
     burundi: { name: "بوروندي", flag: "🇧🇮" },
     sierraleone: { name: "سيراليون", flag: "🇸🇱" },
-    "sierra-leone": { name: "سيراليون", flag: "🇸🇱" }
+    "sierra-leone": { name: "سيراليون", flag: "🇸🇱" },
+    egypt: { name: "مصر", flag: "🇪🇬" },
+    yemen: { name: "اليمن", flag: "🇾🇪" },
+    pakistan: { name: "باكستان", flag: "🇵🇰" }
   };
 
   // بطاقات الجنسيات المعتمدة للخطوة الأولى
   const NATIONS_CATALOG = [
+    { key: "all", name: "جميع الجنسيات", flag: "🌐", roles: "استعراض كافة السير المتاحة" },
     { key: "ethiopia", name: "إثيوبيا", flag: "🇪🇹", roles: "عاملة منزلية، طاهية" },
     { key: "kenya", name: "كينيا", flag: "🇰🇪", roles: "عاملة منزلية، رعاية" },
     { key: "uganda", name: "أوغندا", flag: "🇺🇬", roles: "سائق خاص، عاملة منزلية" },
@@ -52,8 +56,7 @@
     { key: "tanzania", name: "تنزانيا", flag: "🇹🇿", roles: "عمالة منزلية" },
     { key: "sudan", name: "السودان", flag: "🇸🇩", roles: "سائقون وعمالة" },
     { key: "burundi", name: "بوروندي", flag: "🇧🇮", roles: "عمالة منزلية" },
-    { key: "sierraleone", name: "سيراليون", flag: "🇸🇱", roles: "عمالة منزلية" },
-    { key: "all", name: "جميع الجنسيات", flag: "🌐", roles: "استعراض كافة السير المتاحة" }
+    { key: "sierraleone", name: "سيراليون", flag: "🇸🇱", roles: "عمالة منزلية" }
   ];
 
   // قاعدة بيانات السير الذاتية الافتراضية المعتمدة
@@ -307,62 +310,90 @@
     }
   ];
 
+  const DELETED_IDS_KEY = "alnajah_deleted_cv_ids";
+
   // جلب السير الذاتية من التخزين المحلي مع الترقية التلقائية وحفظ أي سير يدوية
   function getStoredResumes() {
+    let deletedIds = [];
+    try {
+      const delRaw = localStorage.getItem(DELETED_IDS_KEY);
+      if (delRaw) deletedIds = JSON.parse(delRaw) || [];
+    } catch (e) {}
+
+    // 1. فحص وجود مزامنة مباشرة عبر window.name (لضمان التزامن عند فتح الملفات محلياً عبر file://)
+    try {
+      if (window.name && window.name.indexOf("ALNAJAH_SYNC:") === 0) {
+        const syncedJson = window.name.substring("ALNAJAH_SYNC:".length);
+        const syncedData = JSON.parse(syncedJson);
+        if (Array.isArray(syncedData) && syncedData.length > 0) {
+          try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(syncedData));
+          } catch (err) {}
+          return syncedData;
+        }
+      }
+    } catch (e) {}
+
+    // 2. قراءة التخزين المحلي ودمج أي سير مضافة من لوحة التحكم في المقدمة
     try {
       let raw = localStorage.getItem(STORAGE_KEY);
-      if (!raw) {
-        // فحص وجود نسخة سابقة (v1) لدمج أي سير ذاتية أضافها المستخدم
-        const oldRaw = localStorage.getItem(OLD_STORAGE_KEY);
-        if (oldRaw) {
-          try {
-            const oldList = JSON.parse(oldRaw);
-            if (Array.isArray(oldList) && oldList.length > 0) {
-              const merged = JSON.parse(JSON.stringify(DEFAULT_RESUMES));
-              oldList.forEach(item => {
-                if (!merged.some(m => m.id === item.id)) {
-                  merged.push(item);
-                }
-              });
-              localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
-              return merged;
-            }
-          } catch(e) {}
-        }
-      } else {
-        let parsed = JSON.parse(raw);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          let updated = false;
-          DEFAULT_RESUMES.forEach(dr => {
-            const existingIdx = parsed.findIndex(p => p.id === dr.id);
-            if (existingIdx === -1) {
-              parsed.push(dr);
-              updated = true;
-            } else if (parsed[existingIdx].salary !== dr.salary) {
-              parsed[existingIdx].salary = dr.salary;
-              updated = true;
-            }
-          });
-          if (updated) {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(parsed));
+      let oldRaw = localStorage.getItem(OLD_STORAGE_KEY);
+      let list = [];
+
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed)) list = parsed;
+      }
+
+      // دمج أي سير ذاتية من النسخة القديمة v1 لم تكن موجودة
+      if (oldRaw) {
+        try {
+          const oldList = JSON.parse(oldRaw);
+          if (Array.isArray(oldList)) {
+            oldList.forEach((oldItem) => {
+              if (oldItem && oldItem.id && !list.some((x) => x.id === oldItem.id) && !deletedIds.includes(oldItem.id)) {
+                list.unshift(oldItem);
+              }
+            });
           }
-          return parsed;
+        } catch (e) {}
+      }
+
+      if (list.length > 0) {
+        let updated = false;
+        DEFAULT_RESUMES.forEach((dr) => {
+          if (deletedIds.includes(dr.id)) return;
+          const existingIdx = list.findIndex((p) => p.id === dr.id);
+          if (existingIdx === -1) {
+            list.push(dr);
+            updated = true;
+          }
+        });
+        if (updated) {
+          try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+          } catch (e) {}
         }
+        return list;
       }
     } catch (e) {
       console.warn("Could not read resumes from localStorage:", e);
     }
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(DEFAULT_RESUMES));
-    return DEFAULT_RESUMES;
+
+    const initialList = DEFAULT_RESUMES.filter((dr) => !deletedIds.includes(dr.id));
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(initialList));
+    } catch (e) {}
+    return initialList;
   }
 
   let allResumes = [];
   let filteredResumes = [];
-  let selectedNationality = ""; // تبدأ فارغة ليتم تحديد الجنسية أولاً
+  let selectedNationality = "all"; // عرض جميع السير الذاتية المتاحة فوراً عند فتح الصفحة
 
   // حساب عدد السير المتاحة لكل جنسية
   function getAvailCount(natKey) {
-    if (natKey === "all") {
+    if (!natKey || natKey === "all") {
       return allResumes.filter((r) => r.status === "available").length;
     }
     return allResumes.filter((r) => r.nationality === natKey && r.status === "available").length;
@@ -373,12 +404,29 @@
     const grid = document.getElementById("natCardsGrid");
     if (!grid) return;
 
-    grid.innerHTML = NATIONS_CATALOG.map((item) => {
+    // إضافة أي جنسية جديدة مضافة في السير الذاتية غير موجودة في القائمة الأساسية
+    const catalog = NATIONS_CATALOG.slice();
+    allResumes.forEach((cv) => {
+      if (cv.nationality && !catalog.some((c) => c.key === cv.nationality)) {
+        const natInfo = NATION_MAP[cv.nationality] || { name: cv.nationality, flag: "🏳️" };
+        catalog.push({
+          key: cv.nationality,
+          name: natInfo.name,
+          flag: natInfo.flag,
+          roles: "عمالة منزلية ومهنية"
+        });
+      }
+    });
+
+    grid.innerHTML = catalog.map((item) => {
       const count = getAvailCount(item.key);
-      const isActive = selectedNationality === item.key;
-      const countBadge = count > 0 
+      const isActive = (selectedNationality || "all") === item.key;
+      const totalForNat = item.key === "all" ? allResumes.length : allResumes.filter((r) => r.nationality === item.key).length;
+      const countBadge = count > 0
         ? `<span class="nat-card-badge has-cvs">${count} سيرة متاحة</span>`
-        : `<span class="nat-card-badge empty-cvs">استقدام عند الطلب</span>`;
+        : totalForNat > 0
+          ? `<span class="nat-card-badge has-cvs">${totalForNat} سيرة مسجلة</span>`
+          : `<span class="nat-card-badge empty-cvs">استقدام عند الطلب</span>`;
 
       return `
         <button type="button" class="nat-card-btn ${isActive ? 'active' : ''}" onclick="selectNationality('${item.key}')">
@@ -392,8 +440,10 @@
   }
 
   // اختيار جنسية وعرض سيرها الذاتية
-  window.selectNationality = function (natKey) {
+  window.selectNationality = function (natKey, shouldScroll = true) {
+    if (!natKey) natKey = "all";
     if (natKey === "sri-lanka") natKey = "srilanka";
+    if (natKey === "sierra-leone") natKey = "sierraleone";
     selectedNationality = natKey;
 
     const natStepSection = document.getElementById("natStepSection");
@@ -406,51 +456,89 @@
 
     // تحديث القائمة المنسدلة
     if (natFilter) {
-      natFilter.value = natKey === "all" ? "all" : natKey;
+      natFilter.value = natKey;
     }
 
-    // إخفاء قسم الخطوة الأولى وإظهار شريط الجنسية المحددة وشريط الفلاتر
-    if (natStepSection) natStepSection.style.display = "none";
+    // إبقاء بطاقات الجنسيات وشريط الفلاتر ظاهرين دائماً لسهولة التنقل الفوري
+    if (natStepSection) natStepSection.style.display = "block";
     if (cvFiltersBar) cvFiltersBar.style.display = "grid";
 
     if (activeBanner) {
-      const natItem = NATIONS_CATALOG.find((n) => n.key === natKey) || { name: natKey, flag: "🏳️" };
-      const count = getAvailCount(natKey);
-      
-      if (activeFlag) activeFlag.textContent = natItem.flag;
-      if (activeName) activeName.textContent = natItem.name;
-      if (activeCount) {
-        activeCount.textContent = count > 0 ? `${count} سيرة متاحة للحجز` : "متاح الاستقدام الفوري عبر مساند";
+      if (natKey === "all") {
+        activeBanner.style.display = "none";
+      } else {
+        const natItem = NATIONS_CATALOG.find((n) => n.key === natKey) || NATION_MAP[natKey] || { name: natKey, flag: "🏳️" };
+        const count = getAvailCount(natKey);
+
+        if (activeFlag) activeFlag.textContent = natItem.flag || "🏳️";
+        if (activeName) activeName.textContent = natItem.name || natKey;
+        if (activeCount) {
+          activeCount.textContent = count > 0 ? `${count} سيرة متاحة للحجز` : "متاح الاستقدام الفوري عبر مساند";
+        }
+        activeBanner.style.display = "flex";
       }
-      activeBanner.style.display = "flex";
     }
 
+    renderNationalityCards();
     applyFilters();
 
-    // تمرير ناعم ومريح لعرض النتائج
-    const gridEl = document.getElementById("resumesGrid");
-    if (gridEl) {
-      const topOffset = gridEl.getBoundingClientRect().top + window.pageYOffset - 120;
-      window.scrollTo({ top: Math.max(0, topOffset), behavior: "smooth" });
+    if (shouldScroll) {
+      const gridEl = document.getElementById("cvFiltersBar") || document.getElementById("resumesGrid");
+      if (gridEl) {
+        const topOffset = gridEl.getBoundingClientRect().top + window.pageYOffset - 100;
+        window.scrollTo({ top: Math.max(0, topOffset), behavior: "smooth" });
+      }
     }
   };
 
-  // إعادة ضبط واختيار جنسية أخرى
+  // إعادة ضبط واختيار جنسية أخرى (عرض الجميع)
   window.resetNationalityChoice = function () {
-    selectedNationality = "";
+    selectedNationality = "all";
 
     const natStepSection = document.getElementById("natStepSection");
     const activeBanner = document.getElementById("activeNatBanner");
     const cvFiltersBar = document.getElementById("cvFiltersBar");
     const natFilter = document.getElementById("nationalityFilter");
 
-    if (natFilter) natFilter.value = "";
+    if (natFilter) natFilter.value = "all";
     if (natStepSection) natStepSection.style.display = "block";
     if (activeBanner) activeBanner.style.display = "none";
-    if (cvFiltersBar) cvFiltersBar.style.display = "none";
+    if (cvFiltersBar) cvFiltersBar.style.display = "grid";
 
     renderNationalityCards();
     applyFilters();
+  };
+
+  // عارض صورة السيرة الذاتية بالحجم الكامل (Lightbox)
+  window.openCvImageLightbox = function (imgSrc, titleText) {
+    let lb = document.getElementById("cvImageLightbox");
+    if (!lb) {
+      lb = document.createElement("div");
+      lb.id = "cvImageLightbox";
+      lb.style.cssText = "position:fixed;inset:0;z-index:99999;background:rgba(7,24,48,0.92);display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(6px);";
+      lb.innerHTML = `
+        <div style="position:relative;max-width:95vw;max-height:92vh;display:flex;flex-direction:column;align-items:center;background:#fff;border-radius:16px;padding:14px;box-shadow:0 25px 50px rgba(0,0,0,0.5);">
+          <div style="width:100%;display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;padding:0 6px;gap:16px;">
+            <strong id="cvLightboxTitle" style="color:#0b2545;font-size:1rem;">صورة السيرة الذاتية</strong>
+            <button type="button" id="cvLightboxClose" style="background:#ef4444;color:#fff;border:none;border-radius:8px;padding:6px 14px;font-family:inherit;font-weight:800;cursor:pointer;">إغلاق ✕</button>
+          </div>
+          <div style="overflow:auto;max-height:80vh;max-width:90vw;text-align:center;">
+            <img id="cvLightboxImg" src="" alt="صورة السيرة الذاتية" style="max-width:100%;height:auto;border-radius:10px;display:block;margin:0 auto;" />
+          </div>
+        </div>
+      `;
+      document.body.appendChild(lb);
+      lb.addEventListener("click", (e) => {
+        if (e.target === lb || e.target.id === "cvLightboxClose") {
+          lb.style.display = "none";
+        }
+      });
+    }
+    const imgEl = document.getElementById("cvLightboxImg");
+    const titleEl = document.getElementById("cvLightboxTitle");
+    if (imgEl) imgEl.src = imgSrc || "images/logo.jpg";
+    if (titleEl) titleEl.textContent = titleText || "صورة السيرة الذاتية الكاملة";
+    lb.style.display = "flex";
   };
 
   // التأكد من وجود نافذة التفاصيل
@@ -505,6 +593,7 @@
     const nat = NATION_MAP[cv.nationality] || { name: cv.nationality, flag: "🏳️" };
     const jobText = JOB_NAMES[cv.job] || cv.job;
     const isAvail = cv.status === "available";
+    const photoSrc = cv.photo || "images/logo.jpg";
 
     const cvModal = ensureCvModalExists();
     const modalBody = document.getElementById("cvModalBody");
@@ -513,14 +602,17 @@
     if (modalBody) {
       modalBody.innerHTML = `
         <div class="cv-detail-hero">
-          <img src="${cv.photo || 'images/logo.jpg'}" alt="${cv.fullname}" class="cv-detail-photo" onerror="this.src='images/logo.jpg'" />
+          <img src="${photoSrc}" alt="${cv.fullname}" class="cv-detail-photo" style="cursor: zoom-in;" onclick="window.openCvImageLightbox('${photoSrc}', '${cv.fullname} - #${cv.id}')" title="انقر لتكبير الصورة" onerror="this.src='images/logo.jpg'" />
           <div class="cv-detail-info">
             <h4>${cv.fullname} (${cv.id})</h4>
-            <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px;">
+            <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; align-items: center;">
               <span class="cv-job-title">${jobText}</span>
               <span class="cv-badge-status ${isAvail ? 'available' : 'reserved'}" style="position: static;">
                 ${isAvail ? '🟢 متاحة للاستقدام الفوري' : '🔴 محجوزة حالياً'}
               </span>
+              <button type="button" onclick="window.openCvImageLightbox('${photoSrc}', '${cv.fullname} - #${cv.id}')" style="background: #eef4fb; color: #0b2545; border: 1px solid #cbd5e1; border-radius: 8px; padding: 4px 10px; font-family: inherit; font-size: 0.8rem; font-weight: 700; cursor: pointer;">
+                🔍 تكبير صورة السيرة
+              </button>
             </div>
           </div>
         </div>
@@ -565,6 +657,7 @@
     const nat = NATION_MAP[cv.nationality] || { name: cv.nationality, flag: "🏳️" };
     const jobText = (isEn && JOB_NAMES[cv.job]?.en) || JOB_NAMES[cv.job] || cv.job;
     const isAvail = cv.status === "available";
+    const photoSrc = cv.photo || "images/logo.jpg";
 
     const skillChips = (cv.skills || "")
       .split(/[،,]/)
@@ -581,8 +674,8 @@
 
     return `
       <div class="cv-card" data-id="${cv.id}">
-        <div class="cv-card-media">
-          <img src="${cv.photo || 'images/logo.jpg'}" alt="${cv.fullname}" onerror="this.src='images/logo.jpg'" />
+        <div class="cv-card-media" style="cursor: pointer;" onclick="showCvDetails('${cv.id}')" title="انقر لعرض تفاصيل وصورة السيرة الكاملة">
+          <img src="${photoSrc}" alt="${cv.fullname}" onerror="this.src='images/logo.jpg'" />
           <span class="cv-badge-status ${isAvail ? 'available' : 'reserved'}">
             ${isAvail ? (isEn ? '🟢 Available' : '🟢 متاحة للحجز') : (isEn ? '🔴 Reserved' : '🔴 محجوزة')}
           </span>
@@ -642,19 +735,8 @@
     const resumesGrid = document.getElementById("resumesGrid");
     if (!resumesGrid) return;
 
-    // إذا لم يتم تحديد الجنسية بعد، اعرض بطاقة الحث على اختيار الدولة
     if (!selectedNationality) {
-      let statsBar = document.getElementById("resumesStatsBar");
-      if (statsBar) statsBar.innerHTML = "";
-
-      resumesGrid.innerHTML = `
-        <div class="cv-prompt-card">
-          <span class="cv-prompt-emoji">🌍</span>
-          <h3>اختر الجنسية أولاً لاستعراض السير الذاتية المتاحة</h3>
-          <p>يرجى النقر على إحدى الدول في الأعلى لعرض الكفاءات المنزلية والمهنية الجاهزة للحجز الفوري.</p>
-        </div>
-      `;
-      return;
+      selectedNationality = "all";
     }
 
     const searchInput = document.getElementById("searchInput");
@@ -711,17 +793,22 @@
     }
 
     if (statsBar) {
-      const isFiltered = search || job || exp || sort;
-      const currentNatName = NATIONS_CATALOG.find(n => n.key === selectedNationality)?.name || "الجنسية المحددة";
+      const isFiltered = search || job || exp || sort || (selectedNationality && selectedNationality !== "all");
+      const currentNatName =
+        selectedNationality === "all"
+          ? "جميع الجنسيات"
+          : NATIONS_CATALOG.find((n) => n.key === selectedNationality)?.name ||
+            NATION_MAP[selectedNationality]?.name ||
+            "الجنسية المحددة";
 
       statsBar.innerHTML = `
         <div>
           <span>السير الذاتية المعروضة (${currentNatName}): </span>
-          <span class="resumes-count-badge">${filteredResumes.length} سيرة متاحة</span>
+          <span class="resumes-count-badge">${filteredResumes.length} سيرة</span>
         </div>
         ${
           isFiltered
-            ? `<button type="button" class="btn-reset-filters" id="btnResetAllFilters">🔄 إعادة تصفير الفلاتر الفرعية</button>`
+            ? `<button type="button" class="btn-reset-filters" id="btnResetAllFilters">🔄 عرض جميع السير وتصفير الفلاتر</button>`
             : `<span style="font-size: 0.82rem; color: var(--text-muted);">جميع السير مفحوصة ومطابقة لمعايير منصة مساند</span>`
         }
       `;
@@ -733,7 +820,7 @@
           if (jobFilter) jobFilter.value = "";
           if (experienceFilter) experienceFilter.value = "";
           if (sortSelector) sortSelector.value = "";
-          applyFilters();
+          window.resetNationalityChoice();
         });
       }
     }
@@ -744,10 +831,10 @@
         <div class="cv-empty-state" style="grid-column: 1 / -1; padding: 50px 20px; text-align: center; background: #f8fafc; border-radius: 16px; border: 2px dashed #cbd5e1;">
           <div class="cv-empty-icon" style="font-size: 3rem; margin-bottom: 12px;">🔍</div>
           <h3 style="color: var(--primary-color); font-weight: 800; font-size: 1.3rem; margin-bottom: 8px;">لا توجد سير ذاتية مطابقة حالياً لهذه المعايير</h3>
-          <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px;">يمكنك اختيار جنسية أخرى أو تصفير معايير البحث.</p>
+          <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px;">يمكنك عرض جميع الجنسيات أو تصفير معايير البحث.</p>
           <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
             <button type="button" class="btn-gold" style="padding: 10px 20px;" onclick="window.resetNationalityChoice()">
-              🔄 اختيار جنسية أخرى
+              🌐 عرض جميع الجنسيات
             </button>
             <button type="button" class="btn-action" style="padding: 10px 20px;" onclick="
               const s = document.getElementById('searchInput'); if(s) s.value = '';
@@ -790,7 +877,7 @@
       nationalityFilter.addEventListener("change", (e) => {
         const val = e.target.value;
         if (val) {
-          selectNationality(val);
+          selectNationality(val, false);
         } else {
           resetNationalityChoice();
         }
@@ -816,9 +903,9 @@
     const urlParams = new URLSearchParams(window.location.search);
     const paramNat = urlParams.get("nat") || urlParams.get("nationality");
     if (paramNat) {
-      selectNationality(paramNat);
+      selectNationality(paramNat, false);
     } else {
-      applyFilters();
+      selectNationality("all", false);
     }
   }
 
@@ -828,12 +915,20 @@
     initResumesApp();
   }
 
-  // مزامنة التغييرات الحية عبر التبويبات عند التعديل من لوحة التحكم
+  // مزامنة التغييرات الحية عبر التبويبات وعند العودة للتبويب
   window.addEventListener("storage", (e) => {
-    if (e.key === STORAGE_KEY) {
-      allResumes = getStoredResumes();
-      renderNationalityCards();
-      applyFilters();
+    if (!e.key || e.key === STORAGE_KEY || e.key === DELETED_IDS_KEY) {
+      window.refreshCvList();
+    }
+  });
+
+  window.addEventListener("focus", () => {
+    window.refreshCvList();
+  });
+
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) {
+      window.refreshCvList();
     }
   });
 

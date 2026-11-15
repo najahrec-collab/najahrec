@@ -188,7 +188,7 @@
         </div>
 
         <!-- شريط البحث والتصفية الزجاجي -->
-        <div class="filter-bar" id="cvFiltersBar" style="display: none;">
+        <div class="filter-bar" id="cvFiltersBar" style="display: grid;">
           <div class="filter-group">
             <label class="filter-label" for="searchInput">البحث بالاسم والمهارات</label>
             <input type="text" id="searchInput" class="form-input" placeholder="اكتب اسم أو مهارة أو ديانة..." />
@@ -196,7 +196,7 @@
           <div class="filter-group">
             <label class="filter-label" for="nationalityFilter">الجنسية</label>
             <select id="nationalityFilter" class="form-select">
-              <option value="">-- اختر الجنسية أولاً --</option>
+              <option value="all" selected>عرض جميع الجنسيات 🌐</option>
               <option value="ethiopia">إثيوبيا 🇪🇹</option>
               <option value="kenya">كينيا 🇰🇪</option>
               <option value="uganda">أوغندا 🇺🇬</option>
@@ -208,7 +208,9 @@
               <option value="sudan">السودان 🇸🇩</option>
               <option value="burundi">بوروندي 🇧🇮</option>
               <option value="sierraleone">سيراليون 🇸🇱</option>
-              <option value="all">عرض جميع الجنسيات 🌐</option>
+              <option value="egypt">مصر 🇪🇬</option>
+              <option value="yemen">اليمن 🇾🇪</option>
+              <option value="pakistan">باكستان 🇵🇰</option>
             </select>
           </div>
           <div class="filter-group">
@@ -881,7 +883,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 </script>
-  <script src="resumes.js?v=2.2"></script>
-  <script src="i18n.js?v=2.2"></script>
+  <script src="resumes.js?v=2.3"></script>
+  <script src="i18n.js?v=2.3"></script>
 </body>
 </html>
