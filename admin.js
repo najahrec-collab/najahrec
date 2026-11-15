@@ -49,6 +49,63 @@
   // قاعدة البيانات الافتراضية للسير الذاتية
   const DEFAULT_RESUMES = [
     {
+      id: "NJ-114",
+      fullname: "إراكازا إيفانجلين (IRAKAZA EVANGELINE)",
+      job: "maid",
+      nationality: "burundi",
+      age: 27,
+      experience: 0,
+      salary: 800,
+      religion: "مسيحية",
+      education: "ثانوي (Secondary)",
+      marital: "عزباء (عدد الأطفال: 0)",
+      height: "155 سم",
+      weight: "55 كجم",
+      photo: "images/cv_irakaza.jpg",
+      languages: "الكيروندية، الفرنسية، الإنجليزية (مبتدئ)",
+      skills: "التنظيف الشامل، الكوي، عناية الرضيع والأطفال، الغسيل",
+      prevExp: "جديدة — لم يسبق لها العمل بالخارج (رقم الجواز: P00143982)",
+      status: "available"
+    },
+    {
+      id: "NJ-115",
+      fullname: "هابونيمانا فرانسين (HABONIMANA FRANCINE)",
+      job: "maid",
+      nationality: "burundi",
+      age: 37,
+      experience: 0,
+      salary: 800,
+      religion: "مسيحية",
+      education: "ابتدائي (Primary)",
+      marital: "متزوجة (عدد الأطفال: 1)",
+      height: "170 سم",
+      weight: "56 كجم",
+      photo: "images/cv_habonimana.jpg",
+      languages: "الكيروندية، الفرنسية، الإنجليزية (مبتدئ)",
+      skills: "التنظيف الشامل، الكوي، عناية الرضيع والأطفال، الغسيل",
+      prevExp: "جديدة — لم يسبق لها العمل بالخارج (رقم الجواز: OP02060124)",
+      status: "available"
+    },
+    {
+      id: "NJ-116",
+      fullname: "أكيمانا دانسيل (AKIMANA DANCILE)",
+      job: "maid",
+      nationality: "burundi",
+      age: 26,
+      experience: 0,
+      salary: 800,
+      religion: "مسيحية",
+      education: "ثانوي (Secondary)",
+      marital: "متزوجة (عدد الأطفال: 2)",
+      height: "168 سم",
+      weight: "57 كجم",
+      photo: "images/cv_akimana.jpg",
+      languages: "الكيروندية، الفرنسية، الإنجليزية (مبتدئ)",
+      skills: "التنظيف الشامل، الكوي، عناية الرضيع والأطفال، الغسيل",
+      prevExp: "جديدة — لم يسبق لها العمل بالخارج (رقم الجواز: P00338382)",
+      status: "available"
+    },
+    {
       id: "NJ-101",
       fullname: "سارة م.",
       job: "maid",
@@ -466,14 +523,15 @@
 
     if (Array.isArray(parsed) && parsed.length > 0) {
       let updated = false;
-      DEFAULT_RESUMES.forEach((dr) => {
-        if (deletedIds.includes(dr.id)) return;
+      for (let i = DEFAULT_RESUMES.length - 1; i >= 0; i--) {
+        const dr = DEFAULT_RESUMES[i];
+        if (deletedIds.includes(dr.id)) continue;
         const existingIdx = parsed.findIndex((p) => p && p.id === dr.id);
         if (existingIdx === -1) {
-          parsed.push(dr);
+          parsed.unshift(dr);
           updated = true;
         }
-      });
+      }
       try {
         if (updated) {
           localStorage.setItem(STORAGE_KEY, JSON.stringify(parsed));

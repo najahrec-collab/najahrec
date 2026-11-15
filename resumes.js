@@ -62,6 +62,63 @@
   // قاعدة بيانات السير الذاتية الافتراضية المعتمدة
   const DEFAULT_RESUMES = [
     {
+      id: "NJ-114",
+      fullname: "إراكازا إيفانجلين (IRAKAZA EVANGELINE)",
+      job: "maid",
+      nationality: "burundi",
+      age: 27,
+      experience: 0,
+      salary: 800,
+      religion: "مسيحية",
+      education: "ثانوي (Secondary)",
+      marital: "عزباء (عدد الأطفال: 0)",
+      height: "155 سم",
+      weight: "55 كجم",
+      photo: "images/cv_irakaza.jpg",
+      languages: "الكيروندية، الفرنسية، الإنجليزية (مبتدئ)",
+      skills: "التنظيف الشامل، الكوي، عناية الرضيع والأطفال، الغسيل",
+      prevExp: "جديدة — لم يسبق لها العمل بالخارج (رقم الجواز: P00143982)",
+      status: "available"
+    },
+    {
+      id: "NJ-115",
+      fullname: "هابونيمانا فرانسين (HABONIMANA FRANCINE)",
+      job: "maid",
+      nationality: "burundi",
+      age: 37,
+      experience: 0,
+      salary: 800,
+      religion: "مسيحية",
+      education: "ابتدائي (Primary)",
+      marital: "متزوجة (عدد الأطفال: 1)",
+      height: "170 سم",
+      weight: "56 كجم",
+      photo: "images/cv_habonimana.jpg",
+      languages: "الكيروندية، الفرنسية، الإنجليزية (مبتدئ)",
+      skills: "التنظيف الشامل، الكوي، عناية الرضيع والأطفال، الغسيل",
+      prevExp: "جديدة — لم يسبق لها العمل بالخارج (رقم الجواز: OP02060124)",
+      status: "available"
+    },
+    {
+      id: "NJ-116",
+      fullname: "أكيمانا دانسيل (AKIMANA DANCILE)",
+      job: "maid",
+      nationality: "burundi",
+      age: 26,
+      experience: 0,
+      salary: 800,
+      religion: "مسيحية",
+      education: "ثانوي (Secondary)",
+      marital: "متزوجة (عدد الأطفال: 2)",
+      height: "168 سم",
+      weight: "57 كجم",
+      photo: "images/cv_akimana.jpg",
+      languages: "الكيروندية، الفرنسية، الإنجليزية (مبتدئ)",
+      skills: "التنظيف الشامل، الكوي، عناية الرضيع والأطفال، الغسيل",
+      prevExp: "جديدة — لم يسبق لها العمل بالخارج (رقم الجواز: P00338382)",
+      status: "available"
+    },
+    {
       id: "NJ-101",
       fullname: "سارة م.",
       job: "maid",
@@ -361,14 +418,16 @@
 
       if (list.length > 0) {
         let updated = false;
-        DEFAULT_RESUMES.forEach((dr) => {
-          if (deletedIds.includes(dr.id)) return;
-          const existingIdx = list.findIndex((p) => p.id === dr.id);
+        // إدراج أي سير افتراضية جديدة في مقدمة القائمة حتى تظهر للزوار فوراً
+        for (let i = DEFAULT_RESUMES.length - 1; i >= 0; i--) {
+          const dr = DEFAULT_RESUMES[i];
+          if (deletedIds.includes(dr.id)) continue;
+          const existingIdx = list.findIndex((p) => p && p.id === dr.id);
           if (existingIdx === -1) {
-            list.push(dr);
+            list.unshift(dr);
             updated = true;
           }
-        });
+        }
         if (updated) {
           try {
             localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
@@ -632,6 +691,10 @@
             <tr><th>الخبرات العملية السابقة</th><td>${cv.prevExp || '—'}</td></tr>
           </tbody>
         </table>
+        <div style="margin-top: 18px; text-align: center;">
+          <div style="font-weight: 800; color: #0b2545; margin-bottom: 8px; font-size: 0.92rem;">📄 صورة نموذج السيرة الذاتية الرسمية (انقر للتكبير):</div>
+          <img src="${photoSrc}" alt="${cv.fullname}" style="width: 100%; max-height: 680px; object-fit: contain; border-radius: 12px; border: 2px solid #e2e8f0; cursor: zoom-in; background: #fff;" onclick="window.openCvImageLightbox('${photoSrc}', '${cv.fullname} - #${cv.id}')" onerror="this.style.display='none'" />
+        </div>
       `;
     }
 
