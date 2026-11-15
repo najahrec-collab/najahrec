@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+if ! grep -q "enable-bracketed-paste off" ~/.inputrc 2>/dev/null; then
+  echo "set enable-bracketed-paste off" >> ~/.inputrc
+  bind 'set enable-bracketed-paste off' 2>/dev/null
+fi
+node sync_resumes.js
+git add .
+git diff-index --quiet HEAD || git commit -m "Update site and CVs"
+git push origin main
+echo "=========================================="
+echo "  DONE! تم فحص ورفع جميع التحديثات للموقع بنجاح"
+echo "=========================================="
