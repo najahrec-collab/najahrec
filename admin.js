@@ -49,6 +49,25 @@
   // قاعدة البيانات الافتراضية للسير الذاتية
   const DEFAULT_RESUMES = [
     {
+      id: "NJ-119",
+      fullname: "موسمات نسيمة بيبي (MOSAMMAT NASIMA BIBI)",
+      job: "maid",
+      nationality: "bangladesh",
+      age: 37,
+      experience: 6,
+      salary: 1200,
+      religion: "مسلمة",
+      education: "ثانوي (High School)",
+      marital: "متزوجة (عدد الأطفال: 2)",
+      height: "162 سم",
+      weight: "57 كجم",
+      photo: "images/cv_nasima.jpg",
+      languages: "العربية (متوسط)، البنغالية",
+      skills: "الطبخ، التنظيف الشامل، الغسيل، كوي الملابس، مجالسة الأطفال",
+      prevExp: "خبرة سابقة بالخليج (6 سنوات في السعودية + قطر + عُمان — رقم الجواز: EN0425125)",
+      status: "available"
+    },
+    {
       id: "NJ-117",
       fullname: "نشيميريمانا كارين (NSHIMIRIMANA CARINE)",
       job: "maid",
