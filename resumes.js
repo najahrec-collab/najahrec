@@ -1278,7 +1278,9 @@
 
     // فحص إذا كان هناك جنسية محددة في الرابط URL
     const urlParams = new URLSearchParams(window.location.search);
-    const paramNat = urlParams.get("nat") || urlParams.get("nationality");
+    let paramNat = (urlParams.get("nat") || urlParams.get("nationality") || "").trim().toLowerCase();
+    if (paramNat === "sri-lanka") paramNat = "srilanka";
+    if (paramNat === "sierra-leone") paramNat = "sierraleone";
     if (paramNat) {
       selectNationality(paramNat, false);
     } else {

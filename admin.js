@@ -1082,7 +1082,7 @@
       showDashboard();
     } else {
       if (errorMsg) {
-        errorMsg.textContent = "كلمة المرور غير صحيحة! جرب كلمة المرور: admin123 أو najah2026";
+        errorMsg.textContent = "كلمة المرور غير صحيحة! يرجى التأكد من إدخال كلمة مرور الإدارة المعتمدة.";
         errorMsg.style.display = "block";
       }
       if (input) {

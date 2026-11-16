@@ -123,17 +123,19 @@
 /* صورة السيرة الذاتية والشارات */
 .cv-card-media {
   position: relative;
-  height: 250px;
-  background: linear-gradient(135deg, var(--navy-900), var(--navy-800));
+  height: 360px;
+  background: #f8fafc;
+  border-bottom: 1px solid var(--border-color);
   overflow: hidden;
 }
 
 .cv-card-media img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   object-position: top center;
-  transition: transform 0.5s ease;
+  background: #ffffff;
+  transition: transform 0.4s ease;
 }
 
 .cv-card:hover .cv-card-media img {
