@@ -40,13 +40,37 @@ function saveBase64ImagesToDisk(resumes) {
   });
 }
 
+function getCurrentDefaultResumesFromFile() {
+  try {
+    const resumesJsPath = path.join(ROOT_DIR, "resumes.js");
+    if (!fs.existsSync(resumesJsPath)) return [];
+    const content = fs.readFileSync(resumesJsPath, "utf8");
+    const match = content.match(/const DEFAULT_RESUMES = (\[[\s\S]*?\n  \]);+/);
+    if (match && match[1]) {
+      const fn = new Function(`return ${match[1]};`);
+      const arr = fn();
+      if (Array.isArray(arr)) return arr;
+    }
+  } catch (e) {}
+  return [];
+}
+
 function updateJsFilesWithResumes(resumesArray) {
   if (!Array.isArray(resumesArray) || resumesArray.length === 0) {
     console.log("[!] قائمة السير الذاتية فارغة، لم يتم التعديل.");
     return false;
   }
 
-  const processedResumes = saveBase64ImagesToDisk(resumesArray);
+  // دمج السير الجديدة مع السير الموجودة حالياً في resumes.js لعدم فقدان أي سيرة رسمية
+  const currentDefaults = getCurrentDefaultResumesFromFile();
+  const merged = [...resumesArray];
+  currentDefaults.forEach((existingCv) => {
+    if (existingCv && existingCv.id && !merged.some((m) => m && m.id === existingCv.id)) {
+      merged.push(existingCv);
+    }
+  });
+
+  const processedResumes = saveBase64ImagesToDisk(merged);
   const formattedJson = JSON.stringify(processedResumes, null, 4)
     .split("\n")
     .map((line, i) => (i === 0 ? line : "  " + line))
@@ -78,19 +102,20 @@ function updateJsFilesWithResumes(resumesArray) {
 function findLatestSyncFile() {
   const candidates = [];
   const searchDirs = [ROOT_DIR, path.join(os.homedir(), "Downloads")];
+  const resumesJsPath = path.join(ROOT_DIR, "resumes.js");
+  const resumesJsMtime = fs.existsSync(resumesJsPath) ? fs.statSync(resumesJsPath).mtimeMs : 0;
 
   searchDirs.forEach((dir) => {
     try {
       if (!fs.existsSync(dir)) return;
       const files = fs.readdirSync(dir);
       files.forEach((f) => {
-        if (
-          (f.startsWith("alnajah_resumes_sync") || f.startsWith("alnajah_recruitment_backup")) &&
-          f.endsWith(".json")
-        ) {
+        if (f.startsWith("alnajah_resumes_sync") && f.endsWith(".json")) {
           const full = path.join(dir, f);
           const stat = fs.statSync(full);
-          candidates.push({ path: full, mtime: stat.mtimeMs, name: f });
+          if (stat.mtimeMs > resumesJsMtime) {
+            candidates.push({ path: full, mtime: stat.mtimeMs, name: f });
+          }
         }
       });
     } catch (e) {}
@@ -104,12 +129,12 @@ function findLatestSyncFile() {
 if (require.main === module) {
   const latest = findLatestSyncFile();
   if (!latest) {
-    console.log("[i] لا يوجد ملف مزامنة جديد (alnajah_resumes_sync.json) في مجلد التنزيلات أو مجلد الموقع.");
+    console.log("[i] جميع السير الذاتية في ملفات الموقع محدثة (لا يوجد ملف مزامنة أحدث).");
     process.exit(0);
   }
 
   try {
-    console.log(`[*] تم العثور على ملف مزامنة السير الذاتية: ${latest.path}`);
+    console.log(`[*] تم العثور على ملف مزامنة جديد للسير الذاتية: ${latest.path}`);
     const raw = fs.readFileSync(latest.path, "utf8");
     const data = JSON.parse(raw);
     const list = Array.isArray(data) ? data : data.resumes;
