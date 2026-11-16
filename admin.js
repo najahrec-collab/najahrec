@@ -6,7 +6,7 @@
 (function () {
   "use strict";
 
-  const STORAGE_KEY = "alnajah_resumes_v4";
+  const STORAGE_KEY = "alnajah_resumes_v5";
   const OLD_STORAGE_KEY_V2 = "alnajah_resumes_v2";
   const OLD_STORAGE_KEY = "alnajah_resumes_v1";
   const DELETED_IDS_KEY = "alnajah_deleted_cv_ids";
@@ -49,6 +49,25 @@
 
   // قاعدة البيانات الافتراضية للسير الذاتية
   const DEFAULT_RESUMES = [
+    {
+      id: "NJ-133",
+      fullname: "محمد عمران خان (MUHAMMAD IMRAN KHAN)",
+      job: "driver",
+      nationality: "pakistan",
+      age: 34,
+      experience: 5,
+      salary: 1500,
+      religion: "مسلم",
+      education: "ثانوي + رخصة قيادة سارية",
+      marital: "متزوج",
+      height: "172 سم",
+      weight: "74 كجم",
+      photo: "images/logo.jpg",
+      languages: "العربية (جيد جداً)، الأردية، الإنجليزية (أساسي)",
+      skills: "القيادة الآمنة، معرفة الطرق داخل المدن، الالتزام بالمواعيد، العناية بالمركبة",
+      prevExp: "خبرة 5 سنوات سائق خاص في المملكة العربية السعودية",
+      status: "available"
+    },
     {
       id: "NJ-130",
       fullname: "ماريا إيلينا جيباغا (MA. ELENA JAMELARIN GIBAGA)",
