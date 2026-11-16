@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=2.2" />
+  <link rel="stylesheet" href="styles.css?v=3.5" />
   <!-- Anti-flicker language check -->
   <script>
     (function(){
@@ -215,9 +215,162 @@
             <p class="stat-label">عميلًا يثق بنا</p>
           </div>
           <div class="stat-item">
-            <p class="stat-value">10</p>
+            <p class="stat-value">13</p>
             <p class="stat-label">جنسيات نغطيها</p>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 1. ميزة حديثة: مستشار الاستقدام الذكي ===== -->
+    <section class="section bg-white" id="smart-advisor-section">
+      <div class="container">
+        <div class="section-head center">
+          <span class="eyebrow">✨ تقنية الترشيح الذكي</span>
+          <h2 class="section-title">مستشار الاستقدام الذكي لأسرتك</h2>
+          <p class="section-desc">حدّد أولويات أسرتك وميزانيتك في خطوتين فقط، وسيقوم المستشار الذكي بترشيح الجنسية والمهنة والسير الذاتية الأنسب لك فوراً.</p>
+        </div>
+
+        <div class="smart-advisor-card">
+          <div class="advisor-grid">
+            <div>
+              <span class="advisor-step-label">1️⃣ ما هي الأولوية الأساسية لأسرتك؟</span>
+              <div class="advisor-pills" id="advisorPriorityPills">
+                <button type="button" class="advisor-pill active" data-priority="cleaning" onclick="window.setAdvisorChoice('priority', 'cleaning', this)">🏠 التدبير والنظافة الشاملة</button>
+                <button type="button" class="advisor-pill" data-priority="kids" onclick="window.setAdvisorChoice('priority', 'kids', this)">👶 رعاية الأطفال والرضع</button>
+                <button type="button" class="advisor-pill" data-priority="elderly" onclick="window.setAdvisorChoice('priority', 'elderly', this)">👵 رعاية كبار السن والتمريض</button>
+                <button type="button" class="advisor-pill" data-priority="cooking" onclick="window.setAdvisorChoice('priority', 'cooking', this)">🍲 الطبخ الخليجي والضيافة</button>
+                <button type="button" class="advisor-pill" data-priority="driving" onclick="window.setAdvisorChoice('priority', 'driving', this)">🚗 سائق خاص للأسرة</button>
+              </div>
+
+              <span class="advisor-step-label">2️⃣ ما هو المعيار الأهم لديك؟</span>
+              <div class="advisor-pills" id="advisorBudgetPills">
+                <button type="button" class="advisor-pill active" data-budget="economy" onclick="window.setAdvisorChoice('budget', 'economy', this)">💰 أقل تكلفة استقدام وراتب اقتصادي</button>
+                <button type="button" class="advisor-pill" data-budget="experienced" onclick="window.setAdvisorChoice('budget', 'experienced', this)">⭐ خبرة سابقة بالسعودية والخليج</button>
+                <button type="button" class="advisor-pill" data-budget="educated" onclick="window.setAdvisorChoice('budget', 'educated', this)">🎓 تعليم عالٍ ولغة إنجليزية ممتازة</button>
+              </div>
+            </div>
+
+            <div class="advisor-result-box" id="advisorResultBox">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <span style="background: rgba(16, 185, 129, 0.12); color: #047857; font-size: 0.78rem; font-weight: 800; padding: 4px 12px; border-radius: 999px;">🎯 الترشيح الأمثل لأسرتك</span>
+                <span id="advFlag" style="font-size: 1.8rem;">🇪🇹</span>
+              </div>
+              <h3 id="advTitle" style="font-size: 1.3rem; font-weight: 900; color: #0b2545; margin: 0 0 6px 0;">إثيوبيا / بوروندي — عاملة منزلية</h3>
+              <p id="advDesc" style="font-size: 0.88rem; color: #475569; margin: 0 0 14px 0; font-weight: 600; line-height: 1.6;">
+                الخيار الأكثر اقتصادية وتوفيراً مع كفاءة عالية في التنظيف الشامل والغسيل والكي ورعاية المنزل.
+              </p>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; background: #f8fafc; padding: 12px; border-radius: 10px; border: 1px solid #e2e8f0; margin-bottom: 14px;">
+                <div>
+                  <span style="font-size: 0.75rem; color: #64748b; display: block; font-weight: 700;">تكلفة الاستقدام تبدأ من</span>
+                  <strong id="advCost" style="font-size: 1.05rem; color: #0b2545; font-weight: 900;">4,500 ر.س</strong>
+                </div>
+                <div>
+                  <span style="font-size: 0.75rem; color: #64748b; display: block; font-weight: 700;">الراتب الشهري</span>
+                  <strong id="advSalary" style="font-size: 1.05rem; color: #b48518; font-weight: 900;">800 – 1,000 ر.س</strong>
+                </div>
+              </div>
+              <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <a id="advBrowseBtn" href="resumes.html?nat=ethiopia" class="btn-gold" style="flex: 1; text-align: center; justify-content: center; text-decoration: none; padding: 10px 14px; font-size: 0.9rem;">
+                  تصفح السير المرشحة ↗
+                </a>
+                <a id="advWaBtn" href="https://wa.me/966555021298" target="_blank" rel="noopener noreferrer" class="btn-ghost-dark" style="padding: 10px 14px; font-size: 0.85rem; text-decoration: none; border-radius: 10px; font-weight: 800;">
+                  استشارة واتساب 💬
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 2. ميزة حديثة: أحدث السير الذاتية الجاهزة للاستقدام الفوري ===== -->
+    <section class="section bg-light" id="featured-cvs-section" style="padding-bottom: 30px;">
+      <div class="container">
+        <div class="section-head center">
+          <span class="eyebrow">🟢 متوفرة للحجز الفوري عبر مساند</span>
+          <h2 class="section-title">أحدث السير الذاتية المضافة حديثاً</h2>
+          <p class="section-desc">استعرض نماذج حقيقية من أحدث السير الذاتية المفحوصة والجاهزة للتعاقد المباشر في مكتب النجاح للاستقدام.</p>
+        </div>
+
+        <div class="home-cv-showcase-grid">
+          <!-- بطاقة 1: الفلبين تمريض -->
+          <div class="home-cv-mini-card">
+            <div class="home-cv-mini-img">
+              <img src="images/cv_angela.jpg" alt="أنجيلا ماي - الفلبين" loading="lazy" />
+              <span style="position: absolute; top: 10px; right: 10px; background: #10b981; color: #fff; font-size: 0.72rem; font-weight: 800; padding: 3px 10px; border-radius: 99px;">🟢 متاحة فوراً</span>
+              <span style="position: absolute; top: 10px; left: 10px; background: #071830; color: #fff; font-size: 0.75rem; font-weight: 800; padding: 3px 10px; border-radius: 99px;">🇵🇭 الفلبين</span>
+            </div>
+            <div style="padding: 16px; display: flex; flex-direction: column; gap: 8px; flex: 1;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h3 style="font-size: 1rem; font-weight: 800; color: #0b2545; margin: 0;">أنجيلا ماي ميغيل</h3>
+                <span style="font-size: 0.78rem; color: #64748b; font-weight: 700;">#NJ-132</span>
+              </div>
+              <span style="font-size: 0.8rem; color: #b48518; font-weight: 800;">ممرضة منزلية / رعاية كبار السن (بكالوريوس تمريض)</span>
+              <div style="font-size: 0.82rem; color: #334155; font-weight: 700;">العمر: 25 سنة • الراتب: 1,500 ر.س</div>
+              <a href="resumes.html?nat=philippines" class="btn-gold" style="margin-top: auto; text-align: center; justify-content: center; text-decoration: none; padding: 8px 12px; font-size: 0.85rem; border-radius: 8px;">عرض السيرة والحجز ↗</a>
+            </div>
+          </div>
+
+          <!-- بطاقة 2: إثيوبيا خبرة بالسعودية -->
+          <div class="home-cv-mini-card">
+            <div class="home-cv-mini-img">
+              <img src="images/cv_iftu.jpg" alt="إفتو محمد صادق - إثيوبيا" loading="lazy" />
+              <span style="position: absolute; top: 10px; right: 10px; background: #10b981; color: #fff; font-size: 0.72rem; font-weight: 800; padding: 3px 10px; border-radius: 99px;">🟢 متاحة فوراً</span>
+              <span style="position: absolute; top: 10px; left: 10px; background: #071830; color: #fff; font-size: 0.75rem; font-weight: 800; padding: 3px 10px; border-radius: 99px;">🇪🇹 إثيوبيا</span>
+            </div>
+            <div style="padding: 16px; display: flex; flex-direction: column; gap: 8px; flex: 1;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h3 style="font-size: 1rem; font-weight: 800; color: #0b2545; margin: 0;">إفتو محمد صادق</h3>
+                <span style="font-size: 0.78rem; color: #64748b; font-weight: 700;">#NJ-121</span>
+              </div>
+              <span style="font-size: 0.8rem; color: #b48518; font-weight: 800;">عاملة منزلية (خبرة سنتين بالسعودية)</span>
+              <div style="font-size: 0.82rem; color: #334155; font-weight: 700;">العمر: 27 سنة • مسلمة • الراتب: 1,200 ر.س</div>
+              <a href="resumes.html?nat=ethiopia" class="btn-gold" style="margin-top: auto; text-align: center; justify-content: center; text-decoration: none; padding: 8px 12px; font-size: 0.85rem; border-radius: 8px;">عرض السيرة والحجز ↗</a>
+            </div>
+          </div>
+
+          <!-- بطاقة 3: بوروندي -->
+          <div class="home-cv-mini-card">
+            <div class="home-cv-mini-img">
+              <img src="images/cv_carine.jpg" alt="نشيميريمانا كارين - بوروندي" loading="lazy" />
+              <span style="position: absolute; top: 10px; right: 10px; background: #10b981; color: #fff; font-size: 0.72rem; font-weight: 800; padding: 3px 10px; border-radius: 99px;">🟢 متاحة فوراً</span>
+              <span style="position: absolute; top: 10px; left: 10px; background: #071830; color: #fff; font-size: 0.75rem; font-weight: 800; padding: 3px 10px; border-radius: 99px;">🇧🇮 بوروندي</span>
+            </div>
+            <div style="padding: 16px; display: flex; flex-direction: column; gap: 8px; flex: 1;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h3 style="font-size: 1rem; font-weight: 800; color: #0b2545; margin: 0;">نشيميريمانا كارين</h3>
+                <span style="font-size: 0.78rem; color: #64748b; font-weight: 700;">#NJ-117</span>
+              </div>
+              <span style="font-size: 0.8rem; color: #b48518; font-weight: 800;">عاملة منزلية مدربة (تعليم ثانوي)</span>
+              <div style="font-size: 0.82rem; color: #334155; font-weight: 700;">العمر: 31 سنة • الراتب: 800 ر.س</div>
+              <a href="resumes.html?nat=burundi" class="btn-gold" style="margin-top: auto; text-align: center; justify-content: center; text-decoration: none; padding: 8px 12px; font-size: 0.85rem; border-radius: 8px;">عرض السيرة والحجز ↗</a>
+            </div>
+          </div>
+
+          <!-- بطاقة 4: بنجلاديش خبرة بالخليج -->
+          <div class="home-cv-mini-card">
+            <div class="home-cv-mini-img">
+              <img src="images/cv_nasima.jpg" alt="موسمات نسيمة بيبي - بنجلاديش" loading="lazy" />
+              <span style="position: absolute; top: 10px; right: 10px; background: #10b981; color: #fff; font-size: 0.72rem; font-weight: 800; padding: 3px 10px; border-radius: 99px;">🟢 متاحة فوراً</span>
+              <span style="position: absolute; top: 10px; left: 10px; background: #071830; color: #fff; font-size: 0.75rem; font-weight: 800; padding: 3px 10px; border-radius: 99px;">🇧🇩 بنجلاديش</span>
+            </div>
+            <div style="padding: 16px; display: flex; flex-direction: column; gap: 8px; flex: 1;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h3 style="font-size: 1rem; font-weight: 800; color: #0b2545; margin: 0;">موسمات نسيمة بيبي</h3>
+                <span style="font-size: 0.78rem; color: #64748b; font-weight: 700;">#NJ-119</span>
+              </div>
+              <span style="font-size: 0.8rem; color: #b48518; font-weight: 800;">عاملة منزلية وطباخة (خبرة 6 سنوات بالسعودية)</span>
+              <div style="font-size: 0.82rem; color: #334155; font-weight: 700;">العمر: 37 سنة • مسلمة • الراتب: 1,200 ر.س</div>
+              <a href="resumes.html?nat=bangladesh" class="btn-gold" style="margin-top: auto; text-align: center; justify-content: center; text-decoration: none; padding: 8px 12px; font-size: 0.85rem; border-radius: 8px;">عرض السيرة والحجز ↗</a>
+            </div>
+          </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 28px;">
+          <a href="resumes.html" class="btn-gold btn-gold-lg" style="text-decoration: none;">
+            تصفح جميع السير الذاتية المتاحة (+30 سيرة جاهزة) ↗
+          </a>
         </div>
       </div>
     </section>
@@ -1030,8 +1183,166 @@ document.addEventListener("DOMContentLoaded", () => {
       if (e.key === "Enter") doTrack();
     });
   }
+
+  // 8. مستشار الاستقدام الذكي (Smart Advisor)
+  const advisorState = { priority: "cleaning", budget: "economy" };
+  const advisorMatrix = {
+    cleaning_economy: {
+      flag: "🇪🇹 🇧🇮",
+      title: "إثيوبيا أو بوروندي — عاملة منزلية",
+      desc: "الخيار الأكثر اقتصادية وتوفيراً مع كفاءة عالية في التنظيف الشامل والغسيل والكي ورعاية المنزل.",
+      cost: "4,500 – 5,000 ر.س",
+      salary: "800 – 1,000 ر.س",
+      nat: "ethiopia"
+    },
+    cleaning_experienced: {
+      flag: "🇪🇹 🇧🇩",
+      title: "إثيوبيا أو بنجلاديش (خبرة سابقة بالخليج)",
+      desc: "عاملات منزليات سبق لهن العمل في السعودية ودول الخليج ولديهن دراية كاملة بنظام الأسرة السعودية.",
+      cost: "4,500 – 7,500 ر.س",
+      salary: "1,000 – 1,200 ر.س",
+      nat: "ethiopia"
+    },
+    cleaning_educated: {
+      flag: "🇵🇭 🇰🇪",
+      title: "الفلبين أو كينيا — عاملة منزلية",
+      desc: "كوادر متعلمة تتحدث اللغة الإنجليزية بطلاقة وتجيد استخدام كافة الأجهزة المنزلية الحديثة.",
+      cost: "5,000 – 14,500 ر.س",
+      salary: "900 – 1,500 ر.س",
+      nat: "philippines"
+    },
+    kids_economy: {
+      flag: "🇧🇮 🇺🇬",
+      title: "بوروندي أو أوغندا — عاملة ومربية أطفال",
+      desc: "كوادر هادئة ومدربة على العناية بالرضع والأطفال مع القيام بأعمال المنزل بتكلفة اقتصادية.",
+      cost: "5,000 ر.س",
+      salary: "800 – 900 ر.س",
+      nat: "burundi"
+    },
+    kids_experienced: {
+      flag: "🇵🇭 🇱🇰",
+      title: "الفلبين أو سريلانكا — مربية أطفال خبيرة",
+      desc: "خبرة عملية طويلة في رعاية الأطفال وحديثي الولادة وتنظيم أوقاتهم في منازل السعودية والخليج.",
+      cost: "13,500 – 14,500 ر.س",
+      salary: "1,200 – 1,500 ر.س",
+      nat: "philippines"
+    },
+    kids_educated: {
+      flag: "🇵🇭",
+      title: "الفلبين — مربية أطفال متخصصة",
+      desc: "مؤهلات تعليمية عالية وإتقان تام للغة الإنجليزية والتعامل التربوي الحديث مع الأطفال.",
+      cost: "14,500 ر.س",
+      salary: "1,500 ر.س",
+      nat: "philippines"
+    },
+    elderly_economy: {
+      flag: "🇪🇹 🇧🇩",
+      title: "إثيوبيا أو بنجلاديش — رعاية كبار السن",
+      desc: "عاملات رحيمات وصبورات لخدمة كبار السن ومتابعة شؤونهم اليومية بتكلفة مناسبة.",
+      cost: "4,500 – 7,500 ر.س",
+      salary: "1,000 – 1,200 ر.س",
+      nat: "bangladesh"
+    },
+    elderly_experienced: {
+      flag: "🇵🇭 🇧🇩",
+      title: "الفلبين أو بنجلاديش — رعاية صحية ومنزلية",
+      desc: "خبرة عملية في رعاية كبار السن ومتابعة الأدوية والوجبات الصحية والعناية اليومية.",
+      cost: "7,500 – 14,500 ر.س",
+      salary: "1,200 – 1,500 ر.س",
+      nat: "philippines"
+    },
+    elderly_educated: {
+      flag: "🇵🇭",
+      title: "الفلبين — ممرضة منزلية (بكالوريوس تمريض)",
+      desc: "خريجات تمريض مؤهلات لقياس العلامات الحيوية والضغط وإعطاء الحقن ورعاية كبار السن والمرضى.",
+      cost: "14,500 ر.س",
+      salary: "1,500 ر.س",
+      nat: "philippines"
+    },
+    cooking_economy: {
+      flag: "🇪🇹",
+      title: "إثيوبيا — طباخة وعاملة منزلية",
+      desc: "إتقان الأكلات السعودية والخليجية (الكبسة، الإيدامات، المعجنات) مع النظافة الشاملة.",
+      cost: "4,500 ر.س",
+      salary: "1,000 – 1,200 ر.س",
+      nat: "ethiopia"
+    },
+    cooking_experienced: {
+      flag: "🇧🇩 🇪🇹",
+      title: "بنجلاديش أو إثيوبيا — طباخة خبيرة بالخليج",
+      desc: "خبرة 4 إلى 6 سنوات في السعودية والخليج في إعداد المأكولات الخليجية والولائم والترتيب.",
+      cost: "4,500 – 7,500 ر.س",
+      salary: "1,200 ر.س",
+      nat: "bangladesh"
+    },
+    cooking_educated: {
+      flag: "🇵🇭",
+      title: "الفلبين — طاهية وعاملة منزلية (خبرة بالخليج)",
+      desc: "خبرة 7 سنوات بالرياض وأبوظبي في الطبخ المنوع وتقديم الضيافة الراقية والتحدث بالعربية والإنجليزية.",
+      cost: "14,500 ر.س",
+      salary: "1,500 ر.س",
+      nat: "philippines"
+    },
+    driving_economy: {
+      flag: "🇵🇰 🇧🇩",
+      title: "باكستان أو بنجلاديش — سائق خاص",
+      desc: "سائقون ملتزمون بأقل تكلفة استقدام مع معرفة بالطرق والقيادة الهادئة والآمنة.",
+      cost: "2,230 – 3,450 ر.س",
+      salary: "1,000 – 1,500 ر.س",
+      nat: "pakistan"
+    },
+    driving_experienced: {
+      flag: "🇮🇳 🇵🇰",
+      title: "الهند أو باكستان — سائق خاص (رخصة سعودية)",
+      desc: "سائقون بخبرة طويلة داخل المملكة العربية السعودية ورخصة قيادة سارية ومعرفة بشوارع الرياض والمدن.",
+      cost: "2,230 – 4,070 ر.س",
+      salary: "1,500 – 1,600 ر.س",
+      nat: "india"
+    },
+    driving_educated: {
+      flag: "🇺🇬 🇵🇭",
+      title: "أوغندا أو الفلبين — سائق خاص (إنجليزي ممتاز)",
+      desc: "سائقون يتحدثون الإنجليزية والعربية بطلاقة ويجيدون استخدام تطبيقات الخرائط الحديثة GPS.",
+      cost: "5,000 – 12,000 ر.س",
+      salary: "1,500 ر.س",
+      nat: "uganda"
+    }
+  };
+
+  window.setAdvisorChoice = function (type, val, btnEl) {
+    advisorState[type] = val;
+    const containerId = type === "priority" ? "advisorPriorityPills" : "advisorBudgetPills";
+    const container = document.getElementById(containerId);
+    if (container) {
+      container.querySelectorAll(".advisor-pill").forEach((b) => b.classList.remove("active"));
+    }
+    if (btnEl) btnEl.classList.add("active");
+
+    const key = `${advisorState.priority}_${advisorState.budget}`;
+    const rec = advisorMatrix[key] || advisorMatrix.cleaning_economy;
+
+    const flagEl = document.getElementById("advFlag");
+    const titleEl = document.getElementById("advTitle");
+    const descEl = document.getElementById("advDesc");
+    const costEl = document.getElementById("advCost");
+    const salEl = document.getElementById("advSalary");
+    const browseBtn = document.getElementById("advBrowseBtn");
+    const waBtn = document.getElementById("advWaBtn");
+
+    if (flagEl) flagEl.textContent = rec.flag;
+    if (titleEl) titleEl.textContent = rec.title;
+    if (descEl) descEl.textContent = rec.desc;
+    if (costEl) costEl.textContent = rec.cost;
+    if (salEl) salEl.textContent = rec.salary;
+    if (browseBtn) browseBtn.href = `resumes.html?nat=${rec.nat}`;
+    if (waBtn) {
+      const msg = `مرحباً مكتب النجاح، استخدمت مستشار الاستقدام الذكي بالموقع وظهر لي ترشيح: (${rec.title} — التكلفة: ${rec.cost} — الراتب: ${rec.salary}). أرغب بالاطلاع على السير المتاحة والبدء في الإجراءات.`;
+      waBtn.href = `https://wa.me/966555021298?text=${encodeURIComponent(msg)}`;
+    }
+  };
+  window.setAdvisorChoice("priority", "cleaning", document.querySelector("#advisorPriorityPills .advisor-pill.active"));
 });
 </script>
-  <script src="i18n.js?v=2.2"></script>
+  <script src="i18n.js?v=3.5"></script>
 </body>
 </html>

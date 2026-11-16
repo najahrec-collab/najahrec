@@ -1006,6 +1006,12 @@
               <button type="button" onclick="window.openCvImageLightbox('${photoSrc}', '${cv.fullname} - #${cv.id}')" style="background: #eef4fb; color: #0b2545; border: 1px solid #cbd5e1; border-radius: 8px; padding: 4px 10px; font-family: inherit; font-size: 0.8rem; font-weight: 700; cursor: pointer;">
                 🔍 تكبير صورة السيرة
               </button>
+              <button type="button" onclick="window.printCvSheet('${cv.id}')" style="background: #fefce8; color: #854d0e; border: 1px solid #fde047; border-radius: 8px; padding: 4px 10px; font-family: inherit; font-size: 0.8rem; font-weight: 700; cursor: pointer;">
+                🖨️ طباعة / حفظ PDF
+              </button>
+              <button type="button" onclick="window.shareCvProfile('${cv.id}')" style="background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; border-radius: 8px; padding: 4px 10px; font-family: inherit; font-size: 0.8rem; font-weight: 700; cursor: pointer;">
+                📤 مشاركة السيرة
+              </button>
             </div>
           </div>
         </div>
@@ -1122,10 +1128,258 @@
               ${isEn ? 'Details 👁️' : 'التفاصيل 👁️'}
             </button>
           </div>
+          <div class="cv-secondary-tools">
+            <button type="button" class="btn-cv-tool ${compareList.includes(cv.id) ? 'active-compare' : ''}" onclick="window.toggleCompareCv('${cv.id}')">
+              ⚖️ ${compareList.includes(cv.id) ? (isEn ? 'Selected' : 'مضافة للمقارنة ✓') : (isEn ? 'Compare' : 'مقارنة السيرة')}
+            </button>
+            <button type="button" class="btn-cv-tool" onclick="window.shareCvProfile('${cv.id}')">
+              📤 ${isEn ? 'Share CV' : 'مشاركة'}
+            </button>
+          </div>
         </div>
       </div>
     `;
   }
+
+  // ================= نظام مقارنة السير الذاتية والمشاركة والطباعة =================
+  let compareList = [];
+
+  function updateCompareBar() {
+    let bar = document.getElementById("cvCompareBar");
+    if (!bar) {
+      bar = document.createElement("div");
+      bar.id = "cvCompareBar";
+      bar.className = "cv-compare-bar";
+      document.body.appendChild(bar);
+    }
+
+    if (compareList.length === 0) {
+      bar.classList.remove("show");
+      return;
+    }
+
+    const selectedItems = compareList
+      .map((id) => allResumes.find((r) => r.id === id))
+      .filter(Boolean);
+
+    bar.innerHTML = `
+      <div style="display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 0.92rem;">
+        <span>⚖️ مقارنة السير الذاتية (${selectedItems.length}/3):</span>
+        <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+          ${selectedItems
+            .map(
+              (c) =>
+                `<span style="background: rgba(255,255,255,0.14); padding: 3px 10px; border-radius: 99px; font-size: 0.8rem;">${c.fullname.split("(")[0].trim()}</span>`
+            )
+            .join("")}
+        </div>
+      </div>
+      <div style="display: flex; gap: 8px;">
+        <button type="button" class="btn-gold" style="padding: 7px 16px; font-size: 0.85rem; border-radius: 8px;" onclick="window.openCompareModal()">
+          عرض جدول المقارنة الآن 📊
+        </button>
+        <button type="button" style="background: rgba(239,68,68,0.2); border: 1px solid #ef4444; color: #fecaca; padding: 7px 12px; border-radius: 8px; font-family: inherit; font-size: 0.8rem; font-weight: 700; cursor: pointer;" onclick="window.clearCompareCvs()">
+          مسح ✕
+        </button>
+      </div>
+    `;
+    bar.classList.add("show");
+  }
+
+  window.toggleCompareCv = function (cvId) {
+    const idx = compareList.indexOf(cvId);
+    if (idx !== -1) {
+      compareList.splice(idx, 1);
+    } else {
+      if (compareList.length >= 3) {
+        alert("يمكنك مقارنة 3 سير ذاتية كحد أقصى في نفس الوقت.");
+        return;
+      }
+      compareList.push(cvId);
+    }
+    updateCompareBar();
+    applyFilters();
+  };
+
+  window.clearCompareCvs = function () {
+    compareList = [];
+    updateCompareBar();
+    applyFilters();
+  };
+
+  window.openCompareModal = function () {
+    const selectedItems = compareList
+      .map((id) => allResumes.find((r) => r.id === id))
+      .filter(Boolean);
+    if (selectedItems.length === 0) return;
+
+    const cvModal = ensureCvModalExists();
+    const modalBody = document.getElementById("cvModalBody");
+    const modalTitle = document.getElementById("cvModalTitle");
+    if (modalTitle) modalTitle.textContent = "⚖️ مقارنة تفصيلية بين السير الذاتية المختارة";
+
+    if (modalBody) {
+      modalBody.innerHTML = `
+        <div class="compare-table-wrap">
+          <table class="compare-table">
+            <thead>
+              <tr>
+                <th>المعيار</th>
+                ${selectedItems
+                  .map(
+                    (c) => `
+                  <td style="font-weight: 900; color: #0b2545; background: #f8fafc;">
+                    <img src="${c.photo || 'images/logo.jpg'}" alt="${c.fullname}" style="width: 70px; height: 70px; object-fit: cover; object-position: top; border-radius: 50%; border: 2px solid #c9a227; display: block; margin: 0 auto 6px; cursor: zoom-in;" onclick="window.openCvImageLightbox('${c.photo || 'images/logo.jpg'}', '${c.fullname}')" />
+                    <div>${c.fullname}</div>
+                    <span style="font-size: 0.75rem; color: #64748b;">#${c.id}</span>
+                  </td>`
+                  )
+                  .join("")}
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th>الجنسية</th>
+                ${selectedItems
+                  .map((c) => {
+                    const nat = NATION_MAP[c.nationality] || { name: c.nationality, flag: "" };
+                    return `<td><b>${nat.flag} ${nat.name}</b></td>`;
+                  })
+                  .join("")}
+              </tr>
+              <tr>
+                <th>المهنة</th>
+                ${selectedItems.map((c) => `<td>${JOB_NAMES[c.job] || c.job}</td>`).join("")}
+              </tr>
+              <tr>
+                <th>الراتب الشهري</th>
+                ${selectedItems
+                  .map(
+                    (c) =>
+                      `<td style="color: #b48518; font-weight: 900;">${Number(c.salary).toLocaleString("en-US")} ر.س</td>`
+                  )
+                  .join("")}
+              </tr>
+              <tr>
+                <th>العمر</th>
+                ${selectedItems.map((c) => `<td>${c.age} سنة</td>`).join("")}
+              </tr>
+              <tr>
+                <th>الديانة</th>
+                ${selectedItems.map((c) => `<td>${c.religion || "—"}</td>`).join("")}
+              </tr>
+              <tr>
+                <th>الخبرة</th>
+                ${selectedItems
+                  .map(
+                    (c) =>
+                      `<td>${c.experience > 0 ? `خبرة (${c.experience} سنوات)` : "جديدة (لم يسبق لها العمل)"}</td>`
+                  )
+                  .join("")}
+              </tr>
+              <tr>
+                <th>اللغات</th>
+                ${selectedItems.map((c) => `<td>${c.languages || "—"}</td>`).join("")}
+              </tr>
+              <tr>
+                <th>المهارات</th>
+                ${selectedItems.map((c) => `<td style="font-size: 0.82rem;">${c.skills || "—"}</td>`).join("")}
+              </tr>
+              <tr>
+                <th>الإجراء</th>
+                ${selectedItems
+                  .map(
+                    (c) => `
+                  <td>
+                    <button type="button" class="btn-gold" style="padding: 6px 12px; font-size: 0.8rem; border-radius: 8px;" onclick="window.showCvDetails('${c.id}')">
+                      عرض وحجز السيرة
+                    </button>
+                  </td>`
+                  )
+                  .join("")}
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    cvModal.classList.add("open");
+    document.body.style.overflow = "hidden";
+  };
+
+  window.shareCvProfile = function (cvId) {
+    const cv = allResumes.find((r) => r.id === cvId);
+    if (!cv) return;
+    const nat = NATION_MAP[cv.nationality] || { name: cv.nationality, flag: "" };
+    const jobText = JOB_NAMES[cv.job] || cv.job;
+    const shareUrl = `${window.location.origin}${window.location.pathname}?nat=${cv.nationality}`;
+    const shareText = `سيرة ذاتية متاحة لدى مكتب النجاح للاستقدام:\n- الاسم: ${cv.fullname} (#${cv.id})\n- الجنسية: ${nat.flag} ${nat.name}\n- المهنة: ${jobText}\n- العمر: ${cv.age} سنة | الراتب: ${cv.salary} ر.س\n- الديانة: ${cv.religion}\nللاطلاع والحجز: ${shareUrl}`;
+
+    if (navigator.share) {
+      navigator
+        .share({
+          title: `سيرة ذاتية #${cv.id} - مكتب النجاح للاستقدام`,
+          text: shareText,
+          url: shareUrl
+        })
+        .catch(() => {});
+    } else if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(shareText).then(() => {
+        alert("✅ تم نسخ تفاصيل ورابط السيرة الذاتية! يمكنك الآن لصقها ومشاركتها عبر واتساب مع العائلة.");
+      });
+    } else {
+      window.open(`https://wa.me/?text=${encodeURIComponent(shareText)}`, "_blank");
+    }
+  };
+
+  window.printCvSheet = function (cvId) {
+    const cv = allResumes.find((r) => r.id === cvId);
+    if (!cv) return;
+    const nat = NATION_MAP[cv.nationality] || { name: cv.nationality, flag: "" };
+    const jobText = JOB_NAMES[cv.job] || cv.job;
+    const w = window.open("", "_blank");
+    if (!w) return;
+    w.document.write(`
+      <!DOCTYPE html>
+      <html lang="ar" dir="rtl">
+      <head>
+        <meta charset="UTF-8" />
+        <title>سيرة ذاتية #${cv.id} - ${cv.fullname}</title>
+        <style>
+          body { font-family: Tahoma, Arial, sans-serif; margin: 20px; color: #0b2545; text-align: right; }
+          .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid #c9a227; padding-bottom: 12px; margin-bottom: 16px; }
+          table { width: 100%; border-collapse: collapse; margin-bottom: 16px; }
+          th, td { border: 1px solid #cbd5e1; padding: 8px 12px; font-size: 14px; }
+          th { background: #f1f5f9; width: 160px; }
+          .sheet-img { width: 100%; max-height: 760px; object-fit: contain; border: 1px solid #cbd5e1; border-radius: 8px; }
+          @media print { .no-print { display: none; } }
+        </style>
+      </head>
+      <body>
+        <div class="no-print" style="margin-bottom: 15px; text-align: center;">
+          <button onclick="window.print()" style="background: #0b2545; color: #fff; border: none; padding: 10px 24px; border-radius: 8px; font-weight: bold; cursor: pointer;">🖨️ طباعة الآن أو حفظ كملف PDF</button>
+        </div>
+        <div class="header">
+          <div>
+            <h2 style="margin: 0;">مكتب النجاح للاستقدام — ترخيص مساند 3801328</h2>
+            <p style="margin: 4px 0 0 0; font-size: 13px;">الرياض — خدمة العملاء: 0555021298 | الرمز المرجعي: #${cv.id}</p>
+          </div>
+          <strong>${nat.flag} ${nat.name}</strong>
+        </div>
+        <table>
+          <tr><th>الاسم الكامل</th><td><b>${cv.fullname}</b></td><th>المهنة</th><td>${jobText}</td></tr>
+          <tr><th>العمر</th><td>${cv.age} سنة</td><th>الراتب الشهري</th><td><b>${cv.salary} ر.س</b></td></tr>
+          <tr><th>الديانة</th><td>${cv.religion || "—"}</td><th>الحالة الاجتماعية</th><td>${cv.marital || "—"}</td></tr>
+          <tr><th>الخبرة السابقة</th><td colspan="3">${cv.prevExp || "—"}</td></tr>
+          <tr><th>المهارات</th><td colspan="3">${cv.skills || "—"}</td></tr>
+        </table>
+        <img src="${cv.photo || 'images/logo.jpg'}" class="sheet-img" onload="setTimeout(() => window.print(), 400);" />
+      </body>
+      </html>
+    `);
+    w.document.close();
+  };
 
   // تصفية وعرض السير الذاتية طبقاً للجنسية المحددة
   function applyFilters() {
