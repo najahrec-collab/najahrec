@@ -6,7 +6,7 @@
 (function () {
   "use strict";
 
-  const STORAGE_KEY = "alnajah_resumes_v3";
+  const STORAGE_KEY = "alnajah_resumes_v4";
   const OLD_STORAGE_KEY_V2 = "alnajah_resumes_v2";
   const OLD_STORAGE_KEY = "alnajah_resumes_v1";
   const DELETED_IDS_KEY = "alnajah_deleted_cv_ids";
@@ -49,6 +49,63 @@
 
   // قاعدة البيانات الافتراضية للسير الذاتية
   const DEFAULT_RESUMES = [
+    {
+      id: "NJ-130",
+      fullname: "ماريا إيلينا جيباغا (MA. ELENA JAMELARIN GIBAGA)",
+      job: "maid",
+      nationality: "philippines",
+      age: 39,
+      experience: 2,
+      salary: 1500,
+      religion: "مسيحية",
+      education: "ثانوي (High School Graduate)",
+      marital: "عزباء (عدد الأطفال: 2)",
+      height: "157 سم",
+      weight: "72 كجم",
+      photo: "images/cv_elena.jpg",
+      languages: "الإنجليزية (جيد جداً)، التاغالوغ",
+      skills: "تنظيف المنزل، غسيل وكي الملابس، الطبخ، مساعدة الأطفال، العناية بكبار السن",
+      prevExp: "خبرة سنتين كعاملة منزلية في الفلبين (رقم الجواز: P2905296D)",
+      status: "available"
+    },
+    {
+      id: "NJ-131",
+      fullname: "روزاليا ماغلويان (ROSALIA HONTILANO MAGLUYAN)",
+      job: "maid",
+      nationality: "philippines",
+      age: 49,
+      experience: 7,
+      salary: 1500,
+      religion: "مسيحية",
+      education: "ثانوي (High School Graduate)",
+      marital: "أرملة (عدد الأطفال: 3)",
+      height: "155 سم",
+      weight: "72 كجم",
+      photo: "images/cv_rosalia.jpg",
+      languages: "العربية (جيد جداً)، الإنجليزية (جيد جداً)، التاغالوغ",
+      skills: "الطبخ، التنظيف الشامل، غسيل وكي الملابس، مساعدة الأطفال، العناية بكبار السن",
+      prevExp: "خبرة سابقة بالخليج 7 سنوات (3 سنوات في الرياض + 4 سنوات في أبوظبي كعاملة وطباخة — رقم الجواز: P0356465C)",
+      status: "available"
+    },
+    {
+      id: "NJ-132",
+      fullname: "أنجيلا ماي تامايو ميغيل (ANGELA MAE TAMAYO MIGUEL)",
+      job: "nurse",
+      nationality: "philippines",
+      age: 25,
+      experience: 2,
+      salary: 1500,
+      religion: "مسيحية",
+      education: "بكالوريوس تمريض (Nursing Graduate)",
+      marital: "عزباء (عدد الأطفال: 0)",
+      height: "155 سم",
+      weight: "55 كجم",
+      photo: "images/cv_angela.jpg",
+      languages: "الإنجليزية (جيد جداً)، التاغالوغ",
+      skills: "رعاية كبار السن والمرضى، قياس العلامات الحيوية والضغط، إعطاء الحقن والأدوية، التمريض المنزلي الشامل",
+      prevExp: "خريجة تمريض مع خبرة سنتين كممرضة في الفلبين (رقم الجواز: P1891436D)",
+      status: "available"
+    },
     {
       id: "NJ-120",
       fullname: "رهيمة وريتو ديتي (REHIMA WARITU DETI)",
